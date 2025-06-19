@@ -34,11 +34,10 @@
 - 📢 **Announcements**: Important updates and news
 - 🎉 **Showcase**: Share project use cases
 
-### 3. 🔗 Social Media
+### 3. 📱 Flutter Community
 
-**Purpose**: Community news and quick communication
+**Purpose**: Participate in existing Flutter developer communities
 
-- 🐦 **Twitter**: [@FlutterLiveLogger](https://twitter.com/FlutterLiveLogger) (coming soon)
 - 📱 **Flutter Community**: Participate in Flutter Korea, Flutter Developers groups
 
 ## 👨‍💻 How to Participate

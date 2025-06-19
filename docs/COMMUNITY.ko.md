@@ -34,11 +34,10 @@
 - 📢 **공지사항**: 중요한 업데이트와 소식
 - 🎉 **쇼케이스**: 프로젝트 사용 사례 공유
 
-### 3. 🔗 소셜 미디어
+### 3. 📱 Flutter 커뮤니티
 
-**목적**: 커뮤니티 소식과 빠른 소통
+**목적**: 기존 Flutter 개발자 커뮤니티 참여
 
-- 🐦 **Twitter**: [@FlutterLiveLogger](https://twitter.com/FlutterLiveLogger) (예정)
 - 📱 **Flutter 커뮤니티**: Flutter Korea, Flutter Developers 그룹 참여
 
 ## 👨‍💻 참여 방법
