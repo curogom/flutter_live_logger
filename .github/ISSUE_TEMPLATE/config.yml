@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 💬 GitHub Discussions
+    url: https://github.com/[owner]/flutter_live_logger/discussions
+    about: 일반적인 질문이나 아이디어 공유는 여기에서 / Ask questions and share ideas
+  - name: 📚 Documentation
+    url: https://github.com/[owner]/flutter_live_logger/wiki
+    about: 프로젝트 문서와 가이드 확인 / Check out our documentation and guides 

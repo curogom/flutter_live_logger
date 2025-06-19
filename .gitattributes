@@ -1,0 +1,58 @@
+# Git 속성 설정
+# 이 파일은 Git이 파일을 처리하는 방식을 정의합니다
+
+# 기본 설정: 자동 줄 끝 변환
+* text=auto eol=lf
+
+# Dart 파일
+*.dart text eol=lf
+
+# 설정 파일
+*.yaml text eol=lf
+*.yml text eol=lf
+*.json text eol=lf
+*.xml text eol=lf
+
+# 문서 파일
+*.md text eol=lf
+*.txt text eol=lf
+LICENSE text eol=lf
+
+# 스크립트 파일
+*.sh text eol=lf
+*.bat text eol=crlf
+
+# 바이너리 파일
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.svg text eol=lf
+*.ttf binary
+*.otf binary
+*.woff binary
+*.woff2 binary
+
+# Flutter/Dart 특정 파일
+*.arb text eol=lf
+pubspec.lock text eol=lf -diff
+
+# IDE 파일
+.idea/* text eol=lf
+.vscode/* text eol=lf
+
+# Git 파일
+.gitignore text eol=lf
+.gitattributes text eol=lf
+
+# CI/CD 파일
+.github/**/*.yml text eol=lf
+.github/**/*.yaml text eol=lf
+
+# 언어 통계에서 제외
+*.g.dart linguist-generated=true
+*.freezed.dart linguist-generated=true
+*.gen.dart linguist-generated=true
+docs/* linguist-documentation
+example/* linguist-documentation 

@@ -1,0 +1,55 @@
+{
+  // Editor configuration
+  "editor.formatOnSave": true,
+  "editor.rulers": [80],
+  
+  // Dart & Flutter
+  "dart.flutterSdkPath": null,
+  "[dart]": {
+    "editor.formatOnSave": true,
+    "editor.formatOnType": true,
+    "editor.selectionHighlight": false,
+    "editor.suggest.snippetsPreventQuickSuggestions": false,
+    "editor.suggestSelection": "first",
+    "editor.tabCompletion": "onlySnippets",
+    "editor.wordBasedSuggestions": false
+  },
+  
+  // Files to exclude from explorer
+  "files.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/CVS": true,
+    "**/.DS_Store": true,
+    "**/Thumbs.db": true,
+    "**/.dart_tool": true,
+    "**/.idea": true,
+    "**/.vscode": false,
+    "**/node_modules": true,
+    ".cursorrules": true,
+    "*.local": true,
+    ".idearc": true
+  },
+  
+  // Files to exclude from search
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/bower_components": true,
+    "**/*.code-search": true,
+    "**/.dart_tool": true,
+    "**/.flutter-plugins*": true,
+    ".cursorrules": true,
+    "*.local": true
+  },
+  
+  // Files to exclude from watcher
+  "files.watcherExclude": {
+    "**/.git/objects/**": true,
+    "**/.git/subtree-cache/**": true,
+    "**/node_modules/*/**": true,
+    "**/.dart_tool/**": true,
+    ".cursorrules": true,
+    "*.local": true
+  }
+} 

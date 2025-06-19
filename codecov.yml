@@ -1,0 +1,61 @@
+# Codecov 설정
+# Flutter Live Logger 프로젝트의 코드 커버리지 목표와 규칙
+
+codecov:
+  # 최대 보고서 수
+  max_report_age: 24  # 24시간
+  
+  # 커버리지 상태 업데이트
+  require_ci_to_pass: true
+  
+  # 브랜치별 설정
+  branch: main
+
+coverage:
+  # 전체 프로젝트 커버리지 목표
+  precision: 2
+  round: down
+  range: "70...100"
+  
+  # 상태 체크 설정
+  status:
+    project:
+      default:
+        # 프로젝트 전체 커버리지 목표
+        target: 95%
+        threshold: 1%
+        base: auto
+        if_ci_failed: error
+        if_not_found: success
+        only_pulls: false
+        
+    patch:
+      default:
+        # 새로 추가된 코드의 커버리지 목표
+        target: 95%
+        threshold: 1%
+        base: auto
+        if_ci_failed: error
+        if_not_found: success
+        only_pulls: true
+
+# 커버리지에서 제외할 파일들
+ignore:
+  - "**/*.g.dart"           # 생성된 파일
+  - "**/*.freezed.dart"     # Freezed 생성 파일
+  - "**/*.gen.dart"         # 생성된 파일
+  - "example/**"            # 예제 코드
+  - "test/**"               # 테스트 파일 자체
+  - "tool/**"               # 도구 스크립트
+  - "lib/src/generated/**"  # 생성된 코드
+
+# 커버리지 리포트 설정
+comment:
+  layout: "header, diff, flags, files, footer"
+  behavior: default
+  require_changes: false
+  require_base: no
+  require_head: yes
+  
+  # PR 코멘트 템플릿
+  after_n_builds: 1 

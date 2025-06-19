@@ -1,0 +1,27 @@
+[files]
+extend-exclude = [
+  "*.g.dart",
+  "*.freezed.dart", 
+  "*.gen.dart",
+  "pubspec.lock",
+  "CHANGELOG.md",
+]
+
+[default]
+# 기본 언어는 영어, 한국어 텍스트는 무시
+locale = "en"
+
+[default.extend-words]
+# 프로젝트 특정 용어들
+FlutterLiveLogger = "FlutterLiveLogger"
+Codecov = "Codecov"
+dartdoc = "dartdoc"
+pub-dev = "pub.dev"
+
+# 한국어 용어들 (맞춤법 검사 제외)
+"기여자" = "기여자"
+"행동" = "행동" 
+"강령" = "강령"
+"서약" = "서약"
+"커뮤니티" = "커뮤니티"
+"리더" = "리더" 

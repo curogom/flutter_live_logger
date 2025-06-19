@@ -1,0 +1,178 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+  workflow_dispatch:
+
+env:
+  FLUTTER_VERSION: '3.16.x'
+
+jobs:
+  # 코드 품질 검사
+  analyze:
+    name: 📊 Code Analysis
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    
+    steps:
+      - name: 📚 Git Checkout
+        uses: actions/checkout@v4
+        
+      - name: 🐦 Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: 'stable'
+          cache: true
+          
+      - name: 📦 Install Dependencies
+        run: flutter pub get
+        
+      - name: ✨ Verify Formatting
+        run: dart format --output=none --set-exit-if-changed .
+        
+      - name: 🔍 Analyze Project Source
+        run: dart analyze --fatal-infos
+        
+      - name: 📋 Check pub.dev Score
+        run: |
+          dart pub global activate pana
+          pana --json --no-warning
+
+  # 테스트 실행 (Flutter 프로젝트가 생성되면 활성화)
+  test:
+    name: 🧪 Run Tests  
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    
+    steps:
+      - name: 📚 Git Checkout
+        uses: actions/checkout@v4
+        
+      - name: 🐦 Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: 'stable'
+          cache: true
+          
+      - name: 📦 Install Dependencies
+        run: flutter pub get
+        
+      # Flutter 프로젝트가 생성되면 활성화
+      # - name: 🧪 Run Tests
+      #   run: flutter test --coverage
+      
+      # - name: 📊 Upload Coverage to Codecov
+      #   uses: codecov/codecov-action@v3
+      #   with:
+      #     token: ${{ secrets.CODECOV_TOKEN }}
+      #     file: coverage/lcov.info
+      #     fail_ci_if_error: true
+
+  # 크로스 플랫폼 호환성 검사 (Flutter 프로젝트가 생성되면 활성화)
+  compatibility:
+    name: 🔧 Platform Compatibility
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        
+    steps:
+      - name: 📚 Git Checkout
+        uses: actions/checkout@v4
+        
+      - name: 🐦 Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: 'stable'
+          cache: true
+          
+      - name: 📦 Install Dependencies
+        run: flutter pub get
+        
+      # Flutter 프로젝트가 생성되면 활성화
+      # - name: 🧪 Run Tests
+      #   run: flutter test
+      
+      # - name: 🏗️ Build Example (Web)
+      #   run: flutter build web --release
+      #   working-directory: example
+      #   if: matrix.os == 'ubuntu-latest'
+
+  # 의존성 보안 검사  
+  security:
+    name: 🔒 Security Scan
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    
+    steps:
+      - name: 📚 Git Checkout
+        uses: actions/checkout@v4
+        
+      - name: 🐦 Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: 'stable'
+          cache: true
+          
+      - name: 📦 Install Dependencies
+        run: flutter pub get
+        
+      # Flutter 프로젝트가 생성되면 활성화
+      # - name: 🔒 Run Security Audit
+      #   run: |
+      #     dart pub global activate security_audit
+      #     security_audit
+
+  # 문서 검증
+  docs:
+    name: 📖 Documentation Check
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    
+    steps:
+      - name: 📚 Git Checkout
+        uses: actions/checkout@v4
+        
+      - name: 🔍 Check Documentation Links
+        uses: gaurav-nelson/github-action-markdown-link-check@v1
+        with:
+          use-quiet-mode: 'yes'
+          use-verbose-mode: 'yes'
+          config-file: '.github/workflows/markdown-link-check.json'
+          
+      - name: 📝 Check Spelling
+        uses: crate-ci/typos@master
+        with:
+          config: .github/workflows/typos.toml
+
+  # 모든 체크가 성공했을 때만 실행
+  all-checks-pass:
+    name: ✅ All Checks Passed
+    needs: [analyze, test, compatibility, security, docs]
+    runs-on: ubuntu-latest
+    if: always()
+    
+    steps:
+      - name: 🎉 All Checks Successful
+        if: ${{ !(contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled')) }}
+        run: echo "🎊 All quality checks passed successfully!"
+        
+      - name: ❌ Some Checks Failed  
+        if: ${{ contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled') }}
+        run: |
+          echo "❌ Some quality checks failed:"
+          echo "Analyze: ${{ needs.analyze.result }}"
+          echo "Test: ${{ needs.test.result }}"
+          echo "Compatibility: ${{ needs.compatibility.result }}"
+          echo "Security: ${{ needs.security.result }}"
+          echo "Docs: ${{ needs.docs.result }}"
+          exit 1 
