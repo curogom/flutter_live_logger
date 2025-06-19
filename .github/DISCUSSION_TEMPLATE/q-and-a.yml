@@ -1,0 +1,115 @@
+title: "Q&A - 질문과 답변"
+labels: ["question"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## 🤝 Flutter Live Logger Q&A에 오신 것을 환영합니다!
+
+        궁금한 점이 있으시면 언제든지 물어보세요. 커뮤니티가 함께 도와드릴게요!
+
+        ### 질문하기 전에 확인해 주세요:
+        - 📖 [문서](../docs/README.md)를 먼저 확인해 주세요
+        - 🔍 이미 답변된 질문인지 검색해 주세요
+        - 🐛 버그라면 [Issue](../issues)로 리포트해 주세요
+
+  - type: dropdown
+    id: category
+    attributes:
+      label: "📂 질문 카테고리"
+      description: 어떤 주제에 대한 질문인가요?
+      options:
+        - 설치 및 설정
+        - API 사용법
+        - Transport 설정
+        - 성능 최적화
+        - Flutter 통합
+        - 테스트 작성
+        - 배포 관련
+        - 기타
+    validations:
+      required: true
+
+  - type: dropdown
+    id: experience
+    attributes:
+      label: "👨‍💻 Flutter 경험 수준"
+      description: Flutter 사용 경험이 어느 정도인가요?
+      options:
+        - 초보자 (0-6개월)
+        - 중급자 (6개월-2년)
+        - 고급자 (2년 이상)
+        - 전문가 (4년 이상)
+    validations:
+      required: false
+
+  - type: textarea
+    id: question
+    attributes:
+      label: "❓ 질문 내용"
+      description: |
+        구체적인 질문을 작성해 주세요.
+        - 무엇을 하려고 하시나요?
+        - 어떤 문제가 발생했나요?
+        - 기대하는 결과는 무엇인가요?
+      placeholder: |
+        예시:
+        Flutter Live Logger를 사용해서 네트워크 요청을 로깅하고 싶은데,
+        HttpTransport를 설정하는 방법을 알고 싶습니다.
+        
+        현재 다음과 같이 설정했는데:
+        ```dart
+        await FlutterLiveLogger.init(
+          config: LoggerConfig(
+            transports: [HttpTransport(...)],
+          ),
+        );
+        ```
+        
+        어떤 설정이 더 필요한가요?
+    validations:
+      required: true
+
+  - type: textarea
+    id: code_snippet
+    attributes:
+      label: "💻 관련 코드 (선택사항)"
+      description: 관련된 코드가 있다면 공유해 주세요
+      render: dart
+      placeholder: |
+        // 코드를 여기에 붙여넣어 주세요
+        FlutterLiveLogger.info('예시 로그');
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: "🔧 환경 정보 (선택사항)"
+      description: 환경 관련 정보가 도움이 될 수 있습니다
+      placeholder: |
+        - Flutter 버전: 3.16.0
+        - Dart 버전: 3.2.0
+        - 플랫폼: iOS/Android/Web/Desktop
+        - Flutter Live Logger 버전: 1.0.0
+
+  - type: checkboxes
+    id: searched
+    attributes:
+      label: "🔍 사전 확인"
+      description: 질문하기 전에 이미 확인하신 것들을 체크해 주세요
+      options:
+        - label: 공식 문서를 확인했습니다
+        - label: 기존 Discussions를 검색했습니다
+        - label: GitHub Issues를 확인했습니다
+        - label: 예제 코드를 참고했습니다
+
+  - type: markdown
+    attributes:
+      value: |
+        ---
+        
+        💡 **팁**: 좋은 질문은 좋은 답변을 얻는 첫걸음입니다!
+        
+        - 🎯 **구체적으로**: "작동하지 않아요" 보다는 "XXX 에러가 발생해요"
+        - 📖 **맥락 제공**: 무엇을 하려고 했는지 설명해 주세요
+        - 🔬 **재현 가능**: 문제를 재현할 수 있는 최소한의 코드 제공
+        - 🙏 **예의**: 서로 존중하는 커뮤니티를 만들어가요 

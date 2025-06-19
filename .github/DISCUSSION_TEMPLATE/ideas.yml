@@ -1,0 +1,174 @@
+title: "💡 아이디어 및 기능 제안"
+labels: ["enhancement", "idea"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## 💡 새로운 아이디어를 공유해 주세요!
+
+        Flutter Live Logger를 더 좋게 만들 수 있는 아이디어가 있으신가요?
+        커뮤니티와 함께 논의해봐요! 🚀
+
+        ### 제안하기 전에:
+        - 🔍 [기존 Issues](../issues)와 [Discussions](../discussions)를 검색해 주세요
+        - 📋 [로드맵](../ROADMAP.md)을 확인해 주세요
+        - 🎯 구체적이고 실현 가능한 제안이면 더 좋아요
+
+  - type: dropdown
+    id: category
+    attributes:
+      label: "🏷️ 아이디어 카테고리"
+      description: 어떤 영역의 개선사항인가요?
+      options:
+        - 새로운 API 기능
+        - Transport 개선
+        - 성능 최적화
+        - 개발자 경험 개선
+        - 문서 개선
+        - 테스트 도구
+        - 개발 도구
+        - 통합 기능
+        - 보안 강화
+        - 기타
+    validations:
+      required: true
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: "⭐ 우선순위"
+      description: 이 기능이 얼마나 중요하다고 생각하시나요?
+      options:
+        - "낮음 - 있으면 좋을 기능"
+        - "보통 - 유용한 기능"
+        - "높음 - 많은 사용자에게 도움"
+        - "긴급 - 필수적인 기능"
+    validations:
+      required: true
+
+  - type: textarea
+    id: summary
+    attributes:
+      label: "📋 아이디어 요약"
+      description: 핵심 아이디어를 간단히 설명해 주세요
+      placeholder: |
+        예시: "로그 레벨별로 다른 색상을 지원하는 ConsoleTransport 추가"
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: "🎯 해결하고자 하는 문제"
+      description: |
+        이 아이디어가 어떤 문제를 해결하거나 어떤 가치를 제공하나요?
+        - 현재 어떤 불편함이 있나요?
+        - 사용자들이 어떤 어려움을 겪고 있나요?
+      placeholder: |
+        예시:
+        현재 콘솔에서 로그를 확인할 때 로그 레벨을 구분하기 어려워서
+        디버깅 시간이 오래 걸립니다. 색상으로 구분할 수 있다면
+        개발자가 더 빠르게 문제를 파악할 수 있을 것 같습니다.
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: "💡 제안하는 해결책"
+      description: |
+        구체적인 해결 방안을 설명해 주세요
+        - 어떻게 구현될 수 있을까요?
+        - API는 어떤 모습일까요?
+      placeholder: |
+        예시:
+        ConsoleTransport에 색상 설정 옵션을 추가:
+        
+        ```dart
+        ConsoleTransport(
+          colorScheme: LogColorScheme(
+            error: ConsoleColor.red,
+            warn: ConsoleColor.yellow,
+            info: ConsoleColor.blue,
+            debug: ConsoleColor.gray,
+          ),
+        )
+        ```
+        
+        각 플랫폼의 콘솔 색상 지원 기능을 활용해서 구현
+    validations:
+      required: true
+
+  - type: textarea
+    id: use_cases
+    attributes:
+      label: "🏗️ 사용 사례"
+      description: 이 기능이 어떤 상황에서 사용될까요?
+      placeholder: |
+        예시:
+        1. 로컬 개발 중 콘솔에서 로그 확인
+        2. Flutter Inspector와 함께 사용
+        3. CI/CD 파이프라인에서 테스트 로그 분석
+        4. 프로덕션 디버깅 시 로그 레벨별 필터링
+
+  - type: textarea
+    id: implementation
+    attributes:
+      label: "🛠️ 구현 방안 (선택사항)"
+      description: 기술적인 구현 아이디어가 있다면 공유해 주세요
+      placeholder: |
+        예시:
+        - dart:io의 stdout.supportsAnsiEscapes 확인
+        - ANSI 색상 코드 사용
+        - 플랫폼별 폴백 구현
+        - 색상 비활성화 옵션 제공
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: "🔀 대안 (선택사항)"
+      description: 다른 접근 방법이나 기존 해결책이 있나요?
+      placeholder: |
+        예시:
+        - 외부 로그 뷰어 사용
+        - IDE 플러그인 개발
+        - 웹 기반 로그 대시보드
+
+  - type: checkboxes
+    id: considerations
+    attributes:
+      label: "🤔 고려사항"
+      description: 다음 사항들을 고려해 주세요
+      options:
+        - label: 기존 API와의 호환성을 고려했습니다
+        - label: 성능에 미치는 영향을 생각해봤습니다
+        - label: 모든 플랫폼(iOS/Android/Web/Desktop)을 고려했습니다
+        - label: 테스트 가능성을 고려했습니다
+        - label: 문서화 방안을 생각해봤습니다
+
+  - type: checkboxes
+    id: contribution
+    attributes:
+      label: "🤝 기여 의사"
+      description: 이 기능 구현에 참여하고 싶으신가요?
+      options:
+        - label: 구현에 직접 참여하고 싶습니다
+        - label: 테스트 및 피드백을 제공할 수 있습니다
+        - label: 문서 작성을 도와줄 수 있습니다
+        - label: 아이디어 제공만 하고 싶습니다
+
+  - type: markdown
+    attributes:
+      value: |
+        ---
+        
+        🎉 **감사합니다!** 
+        
+        좋은 아이디어는 프로젝트를 발전시키는 원동력입니다. 
+        커뮤니티와 함께 논의하고 발전시켜 나가요!
+        
+        ### 다음 단계:
+        1. 💬 커뮤니티 피드백 수집
+        2. 🎯 우선순위 결정
+        3. 📋 Issue로 전환 (필요시)
+        4. 🛠️ 구현 계획 수립 
