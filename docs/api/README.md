@@ -1,20 +1,20 @@
 # Flutter Live Logger API Documentation
 
-> **📋 상태**: 문서 템플릿 (Phase 1 개발 예정)  
-> **🎯 목적**: 개발자를 위한 완전한 API 레퍼런스 제공
+> **📋 Status**: Documentation Template (Implementation planned for Phase 1)  
+> **🎯 Purpose**: Complete API reference for developers
 
-## 📚 API 문서 구조
+## 📚 API Documentation Structure
 
-### 1. 핵심 클래스 (Core Classes)
+### 1. Core Classes
 
 #### `FlutterLiveLogger`
 
-메인 로거 클래스 - 모든 로깅 기능의 진입점
+Main logger class - Entry point for all logging functionality
 
 ```dart
-/// Flutter Live Logger의 메인 클래스
+/// Main class for Flutter Live Logger
 /// 
-/// 앱의 모든 로깅 활동을 관리하고 실시간 로그 전송을 제공합니다.
+/// Manages all logging activities in your app and provides real-time log transmission.
 /// 
 /// Example:
 /// ```dart
@@ -25,120 +25,120 @@
 ///   ),
 /// );
 /// 
-/// FlutterLiveLogger.info('사용자가 로그인했습니다', data: {
+/// FlutterLiveLogger.info('User logged in', data: {
 ///   'userId': user.id,
 ///   'timestamp': DateTime.now().toIso8601String(),
 /// });
 /// ```
 class FlutterLiveLogger {
-  // API 구현 예정 (Phase 1)
+  // API implementation planned (Phase 1)
 }
 ```
 
 #### `LoggerConfig`
 
-로거 설정을 위한 구성 클래스
+Configuration class for logger behavior
 
 ```dart
-/// 로거의 동작을 설정하는 구성 클래스
+/// Configuration class for logger behavior
 /// 
-/// 로그 레벨, 자동 추적, 전송 옵션 등을 설정할 수 있습니다.
+/// Configure log levels, auto tracking, transport options, etc.
 class LoggerConfig {
-  // 구현 예정
+  // Implementation planned
 }
 ```
 
 #### `LogEntry`
 
-개별 로그 항목을 나타내는 데이터 클래스
+Data class representing individual log entries
 
 ```dart
-/// 단일 로그 항목을 나타내는 불변 클래스
+/// Immutable class representing a single log entry
 /// 
-/// 로그 메시지, 메타데이터, 타임스탬프 등을 포함합니다.
+/// Contains log message, metadata, timestamp, etc.
 @immutable
 class LogEntry {
-  // 구현 예정
+  // Implementation planned
 }
 ```
 
-### 2. 로그 레벨 (Log Levels)
+### 2. Log Levels
 
 ```dart
-/// 로그의 심각도를 나타내는 열거형
+/// Enumeration representing log severity levels
 enum LogLevel {
-  /// 추적 레벨 - 매우 상세한 디버깅 정보
+  /// Trace level - Very detailed debugging information
   trace,
   
-  /// 디버그 레벨 - 개발 중 유용한 정보
+  /// Debug level - Useful information during development
   debug,
   
-  /// 정보 레벨 - 일반적인 애플리케이션 흐름
+  /// Info level - General application flow
   info,
   
-  /// 경고 레벨 - 주의가 필요한 상황
+  /// Warning level - Situations requiring attention
   warn,
   
-  /// 오류 레벨 - 오류 상황이지만 앱은 계속 실행
+  /// Error level - Error situations but app continues running
   error,
   
-  /// 치명적 레벨 - 앱이 중단될 수 있는 심각한 오류
+  /// Fatal level - Critical errors that may cause app termination
   fatal,
 }
 ```
 
-### 3. 전송 시스템 (Transport System)
+### 3. Transport System
 
-#### `LogTransport` (추상 클래스)
+#### `LogTransport` (Abstract Class)
 
-로그를 목적지로 전송하는 기본 인터페이스
+Base interface for log transmission to destinations
 
 ```dart
-/// 로그 전송을 위한 추상 기본 클래스
+/// Abstract base class for log transmission
 /// 
-/// 다양한 전송 방식(HTTP, WebSocket, 로컬 파일 등)을 지원하기 위한
-/// 플러그인 아키텍처의 기반이 됩니다.
+/// Foundation of plugin architecture supporting various transport methods
+/// (HTTP, WebSocket, local files, etc.)
 abstract class LogTransport {
-  /// 로그 항목 배치를 전송합니다
+  /// Send batch of log entries
   /// 
-  /// [entries] 전송할 로그 항목들
+  /// [entries] Log entries to send
   /// 
-  /// Returns: 성공적으로 전송된 항목 수
-  /// Throws: [TransportException] 전송 실패 시
+  /// Returns: Number of successfully sent entries
+  /// Throws: [TransportException] on transmission failure
   Future<int> send(List<LogEntry> entries);
   
-  /// 전송기의 리소스를 정리합니다
+  /// Clean up transport resources
   Future<void> dispose();
 }
 ```
 
-#### 구현 예정 Transport
+#### Planned Transport Implementations
 
-- `HttpTransport` - REST API 전송
-- `WebSocketTransport` - 실시간 WebSocket 전송
-- `FileTransport` - 로컬 파일 저장
-- `MemoryTransport` - 메모리 내 임시 저장
+- `HttpTransport` - REST API transmission
+- `WebSocketTransport` - Real-time WebSocket transmission
+- `FileTransport` - Local file storage
+- `MemoryTransport` - In-memory temporary storage
 
-### 4. Flutter 통합 (Flutter Integration)
+### 4. Flutter Integration
 
 #### `NavigatorObserver`
 
-자동 화면 추적을 위한 Observer
+Observer for automatic screen tracking
 
 ```dart
-/// Flutter 네비게이션을 자동으로 추적하는 Observer
+/// Observer that automatically tracks Flutter navigation
 /// 
-/// MaterialApp의 navigatorObservers에 추가하여 
-/// 자동으로 화면 전환을 로깅합니다.
+/// Add to MaterialApp's navigatorObservers to automatically
+/// log screen transitions.
 class FlutterLiveLoggerNavigatorObserver extends NavigatorObserver {
-  // 구현 예정
+  // Implementation planned
 }
 ```
 
 #### Widget Error Handling
 
 ```dart
-/// Flutter 위젯 오류를 자동으로 캐치하고 로깅
+/// Automatically catch and log Flutter widget errors
 void setupFlutterErrorHandling() {
   FlutterError.onError = (FlutterErrorDetails details) {
     FlutterLiveLogger.error(
@@ -153,15 +153,15 @@ void setupFlutterErrorHandling() {
 }
 ```
 
-## 🎯 사용 패턴 (Usage Patterns)
+## 🎯 Usage Patterns
 
-### 기본 설정
+### Basic Setup
 
 ```dart
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   
-  // 로거 초기화
+  // Initialize logger
   await FlutterLiveLogger.init(
     config: LoggerConfig(
       logLevel: LogLevel.info,
@@ -184,12 +184,12 @@ void main() async {
 }
 ```
 
-### 로깅 사용 예시
+### Logging Usage Examples
 
 ```dart
 class UserService {
   Future<User> login(String email) async {
-    FlutterLiveLogger.info('사용자 로그인 시도', data: {
+    FlutterLiveLogger.info('User login attempt', data: {
       'email': email,
       'timestamp': DateTime.now().toIso8601String(),
     });
@@ -197,14 +197,14 @@ class UserService {
     try {
       final user = await _authService.login(email);
       
-      FlutterLiveLogger.info('로그인 성공', data: {
+      FlutterLiveLogger.info('Login successful', data: {
         'userId': user.id,
         'userRole': user.role,
       });
       
       return user;
     } catch (e) {
-      FlutterLiveLogger.error('로그인 실패', data: {
+      FlutterLiveLogger.error('Login failed', data: {
         'email': email,
         'error': e.toString(),
       });
@@ -214,7 +214,7 @@ class UserService {
 }
 ```
 
-### 커스텀 이벤트 추적
+### Custom Event Tracking
 
 ```dart
 class AnalyticsService {
@@ -235,17 +235,17 @@ class AnalyticsService {
 }
 ```
 
-## 🔧 고급 기능 (Advanced Features)
+## 🔧 Advanced Features
 
-### 1. 로그 필터링
+### 1. Log Filtering
 
 ```dart
-// 개발 중에만 민감한 정보 로깅
+// Log sensitive information only during development
 if (kDebugMode) {
   FlutterLiveLogger.debug('API Response', data: response.data);
 }
 
-// 조건부 로깅
+// Conditional logging
 FlutterLiveLogger.when(
   condition: user.isAdmin,
   level: LogLevel.info,
@@ -253,64 +253,64 @@ FlutterLiveLogger.when(
 );
 ```
 
-### 2. 배치 로깅
+### 2. Batch Logging
 
 ```dart
-// 성능 최적화를 위한 배치 로깅
+// Batch logging for performance optimization
 FlutterLiveLogger.batchBegin();
 for (int i = 0; i < items.length; i++) {
   FlutterLiveLogger.trace('Processing item $i');
 }
-FlutterLiveLogger.batchEnd(); // 한 번에 모든 로그 전송
+FlutterLiveLogger.batchEnd(); // Send all logs at once
 ```
 
-### 3. 로그 컨텍스트
+### 3. Log Context
 
 ```dart
-// 글로벌 컨텍스트 설정
+// Set global context
 FlutterLiveLogger.setGlobalContext({
   'app_version': '1.0.0',
   'device_id': deviceId,
   'user_id': currentUser?.id,
 });
 
-// 로컬 컨텍스트로 로깅
+// Log with local context
 FlutterLiveLogger.withContext({
   'feature': 'checkout',
   'step': 'payment',
 }, () {
-  FlutterLiveLogger.info('결제 시작');
-  // 이 블록 내의 모든 로그는 자동으로 컨텍스트 정보 포함
+  FlutterLiveLogger.info('Payment started');
+  // All logs in this block automatically include context information
 });
 ```
 
-## 📊 성능 고려사항
+## 📊 Performance Considerations
 
-### 메모리 사용량
+### Memory Usage
 
-- 로그 큐 최대 크기: 1000개 항목
-- 메모리 사용량 목표: < 10MB
-- 백그라운드에서 자동 정리
+- Maximum log queue size: 1000 entries
+- Memory usage target: < 10MB
+- Automatic cleanup in background
 
-### 네트워크 최적화
+### Network Optimization
 
-- 배치 전송 (기본 100개씩)
-- 압축 지원 (gzip)
-- 재시도 로직 (지수 백오프)
-- 오프라인 지원
+- Batch transmission (default 100 entries)
+- Compression support (gzip)
+- Retry logic (exponential backoff)
+- Offline support
 
-### 앱 성능 영향
+### App Performance Impact
 
-- 메인 스레드 차단 시간: < 1ms
-- 백그라운드 스레드에서 처리
-- 비동기 I/O 작업
+- Main thread blocking time: < 1ms
+- Background thread processing
+- Asynchronous I/O operations
 
-## 🧪 테스트 지원
+## 🧪 Testing Support
 
 ### Mock Transport
 
 ```dart
-// 테스트용 Mock Transport
+// Mock Transport for testing
 class MockTransport extends LogTransport {
   List<LogEntry> sentLogs = [];
   
@@ -321,27 +321,26 @@ class MockTransport extends LogTransport {
   }
 }
 
-// 테스트에서 사용
-testWidgets('로그 전송 테스트', (tester) async {
+// Usage in tests
+testWidgets('log transmission test', (tester) async {
   final mockTransport = MockTransport();
   await FlutterLiveLogger.init(
     config: LoggerConfig(transports: [mockTransport]),
   );
   
-  FlutterLiveLogger.info('테스트 로그');
+  FlutterLiveLogger.info('test log');
   
   expect(mockTransport.sentLogs, hasLength(1));
-  expect(mockTransport.sentLogs.first.message, '테스트 로그');
+  expect(mockTransport.sentLogs.first.message, 'test log');
 });
 ```
 
-## 📖 다음 단계
+## 📖 Next Steps
 
-이 API 문서는 **Phase 1 개발**과 함께 실제 구현으로 업데이트될 예정입니다.
+This API documentation will be updated with actual implementation during **Phase 1 development**.
 
-- **Phase 1** (Week 3-4): 기본 로깅 기능 구현
-- **Phase 2** (Week 5-6): 전송 시스템 및 오프라인 지원
-- **Phase 3** (Week 7-8): Flutter 통합 및 자동 추적
+- **Phase 1** (Week 3-4): Basic logging functionality implementation
+- **Phase 2** (Week 5-6): Transport system and offline support
+- **Phase 3** (Week 7-8): Flutter integration and auto tracking
 
-각 단계에서 이 문서는 실제 API와 함께 업데이트되며,
-코드 예시는 동작하는 실제 코드로 대체됩니다.
+Each phase will update this documentation with actual API alongside working code examples.

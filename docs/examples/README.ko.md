@@ -1,11 +1,11 @@
 # Flutter Live Logger - Examples & Tutorials
 
-> **📖 Examples and Tutorial Guide**  
-> **🎯 Purpose**: Provide hands-on examples for quick developer onboarding
+> **📖 예제 및 튜토리얼 가이드**  
+> **🎯 목적**: 개발자가 빠르게 시작할 수 있는 실전 예제 제공
 
-## 🚀 Quick Start
+## 🚀 빠른 시작 (Quick Start)
 
-### 1. Basic Setup
+### 1. 기본 설정
 
 ```dart
 // main.dart
@@ -15,7 +15,7 @@ import 'package:flutter_live_logger/flutter_live_logger.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   
-  // Initialize Flutter Live Logger
+  // Flutter Live Logger 초기화
   await FlutterLiveLogger.init(
     config: LoggerConfig(
       logLevel: LogLevel.info,
@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Live Logger Demo',
-      // Enable automatic screen tracking
+      // 자동 화면 추적 활성화
       navigatorObservers: [
         FlutterLiveLogger.navigatorObserver,
       ],
@@ -41,29 +41,29 @@ class MyApp extends StatelessWidget {
 }
 ```
 
-### 2. Basic Logging
+### 2. 기본 로깅
 
 ```dart
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Home Page')),
+      appBar: AppBar(title: Text('홈페이지')),
       body: Column(
         children: [
           ElevatedButton(
             onPressed: () {
-              // Simple log
-              FlutterLiveLogger.info('User clicked button');
+              // 정보 로그
+              FlutterLiveLogger.info('사용자가 버튼을 클릭했습니다');
               
-              // Structured logging with data
-              FlutterLiveLogger.info('Button click', data: {
+              // 구조화된 데이터와 함께 로그
+              FlutterLiveLogger.info('버튼 클릭', data: {
                 'button_id': 'home_cta',
                 'screen': 'home',
                 'timestamp': DateTime.now().toIso8601String(),
               });
             },
-            child: Text('Generate Log'),
+            child: Text('로그 생성'),
           ),
         ],
       ),
@@ -72,43 +72,43 @@ class HomePage extends StatelessWidget {
 }
 ```
 
-## 📚 Detailed Examples
+## 📚 상세 예제
 
-### 1. Log Level Usage
+### 1. 로그 레벨별 사용법
 
 ```dart
 class LogLevelExamples {
   void demonstrateLogLevels() {
-    // Trace level - Very detailed debugging information
-    FlutterLiveLogger.trace('Function entry: calculateTotal()');
+    // 추적 레벨 - 매우 상세한 디버깅
+    FlutterLiveLogger.trace('함수 진입: calculateTotal()');
     
-    // Debug level - Useful information during development
-    FlutterLiveLogger.debug('User input validation completed', data: {
+    // 디버그 레벨 - 개발 중 유용한 정보
+    FlutterLiveLogger.debug('사용자 입력 검증 완료', data: {
       'input_length': 10,
       'validation_passed': true,
     });
     
-    // Info level - General application flow
-    FlutterLiveLogger.info('User login successful', data: {
+    // 정보 레벨 - 일반적인 애플리케이션 흐름
+    FlutterLiveLogger.info('사용자 로그인 성공', data: {
       'user_id': 'user123',
       'login_method': 'email',
     });
     
-    // Warning level - Situations requiring attention
-    FlutterLiveLogger.warn('API response time is slow', data: {
+    // 경고 레벨 - 주의가 필요한 상황
+    FlutterLiveLogger.warn('API 응답 시간이 느림', data: {
       'response_time_ms': 3500,
       'threshold_ms': 2000,
     });
     
-    // Error level - Error situations but app continues running
-    FlutterLiveLogger.error('Network request failed', data: {
+    // 오류 레벨 - 오류 상황이지만 앱은 계속 실행
+    FlutterLiveLogger.error('네트워크 요청 실패', data: {
       'error_code': 404,
       'endpoint': '/api/users',
       'retry_count': 2,
     });
     
-    // Fatal level - Critical errors that may cause app termination
-    FlutterLiveLogger.fatal('Database connection failed', data: {
+    // 치명적 레벨 - 앱이 중단될 수 있는 심각한 오류
+    FlutterLiveLogger.fatal('데이터베이스 연결 실패', data: {
       'database_host': 'prod-db.example.com',
       'error': 'Connection timeout',
     });
@@ -116,13 +116,13 @@ class LogLevelExamples {
 }
 ```
 
-### 2. Custom Event Tracking
+### 2. 커스텀 이벤트 추적
 
 ```dart
 class EventTrackingExamples {
-  // User behavior tracking
+  // 사용자 행동 추적
   void trackUserActions() {
-    // Button click tracking
+    // 버튼 클릭 추적
     FlutterLiveLogger.event('button_click', {
       'button_id': 'purchase_now',
       'screen': 'product_detail',
@@ -130,14 +130,14 @@ class EventTrackingExamples {
       'price': 29.99,
     });
     
-    // Screen view tracking
+    // 화면 조회 추적
     FlutterLiveLogger.event('screen_view', {
       'screen_name': 'ProductDetailPage',
       'product_category': 'electronics',
       'user_type': 'premium',
     });
     
-    // Feature usage tracking
+    // 기능 사용 추적
     FlutterLiveLogger.event('feature_used', {
       'feature_name': 'search',
       'search_query': 'flutter logging',
@@ -145,9 +145,9 @@ class EventTrackingExamples {
     });
   }
   
-  // Business metrics tracking
+  // 비즈니스 메트릭 추적
   void trackBusinessMetrics() {
-    // Purchase completion
+    // 구매 완료
     FlutterLiveLogger.event('purchase_completed', {
       'order_id': 'ORD-2024-001',
       'total_amount': 89.97,
@@ -156,7 +156,7 @@ class EventTrackingExamples {
       'payment_method': 'credit_card',
     });
     
-    // Add to cart
+    // 장바구니 추가
     FlutterLiveLogger.event('add_to_cart', {
       'product_id': 'SKU456',
       'price': 19.99,
@@ -167,20 +167,20 @@ class EventTrackingExamples {
 }
 ```
 
-### 3. Error Handling and Exception Logging
+### 3. 오류 처리 및 예외 로깅
 
 ```dart
 class ErrorHandlingExamples {
   Future<User> loginUser(String email, String password) async {
     try {
-      FlutterLiveLogger.info('Login attempt started', data: {
+      FlutterLiveLogger.info('로그인 시도 시작', data: {
         'email': email,
         'timestamp': DateTime.now().toIso8601String(),
       });
       
       final user = await _authService.login(email, password);
       
-      FlutterLiveLogger.info('Login successful', data: {
+      FlutterLiveLogger.info('로그인 성공', data: {
         'user_id': user.id,
         'user_role': user.role,
         'login_duration_ms': 1250,
@@ -188,7 +188,7 @@ class ErrorHandlingExamples {
       
       return user;
     } on NetworkException catch (e) {
-      FlutterLiveLogger.error('Login failed due to network error', data: {
+      FlutterLiveLogger.error('네트워크 오류로 로그인 실패', data: {
         'email': email,
         'error_type': 'network',
         'error_message': e.message,
@@ -196,14 +196,14 @@ class ErrorHandlingExamples {
       });
       rethrow;
     } on AuthenticationException catch (e) {
-      FlutterLiveLogger.warn('Authentication failed', data: {
+      FlutterLiveLogger.warn('인증 실패', data: {
         'email': email,
         'error_type': 'authentication',
         'reason': e.reason,
       });
       rethrow;
     } catch (e, stackTrace) {
-      FlutterLiveLogger.fatal('Unexpected login error', data: {
+      FlutterLiveLogger.fatal('예상치 못한 로그인 오류', data: {
         'email': email,
         'error': e.toString(),
         'stack_trace': stackTrace.toString(),
@@ -212,10 +212,10 @@ class ErrorHandlingExamples {
     }
   }
   
-  // Automatically catch Flutter widget errors
+  // Flutter 위젯 오류 자동 캐치
   void setupFlutterErrorHandling() {
     FlutterError.onError = (FlutterErrorDetails details) {
-      FlutterLiveLogger.error('Flutter Widget Error', data: {
+      FlutterLiveLogger.error('Flutter 위젯 오류', data: {
         'error': details.exception.toString(),
         'stack_trace': details.stack.toString(),
         'library': details.library,
@@ -226,21 +226,21 @@ class ErrorHandlingExamples {
 }
 ```
 
-### 4. Performance Monitoring
+### 4. 성능 모니터링
 
 ```dart
 class PerformanceTrackingExamples {
-  // Measure function execution time
+  // 함수 실행 시간 측정
   Future<List<Product>> loadProducts() async {
     final stopwatch = Stopwatch()..start();
     
     try {
-      FlutterLiveLogger.info('Product loading started');
+      FlutterLiveLogger.info('상품 로딩 시작');
       
       final products = await _productService.getProducts();
       
       stopwatch.stop();
-      FlutterLiveLogger.info('Product loading completed', data: {
+      FlutterLiveLogger.info('상품 로딩 완료', data: {
         'products_count': products.length,
         'loading_time_ms': stopwatch.elapsedMilliseconds,
       });
@@ -248,7 +248,7 @@ class PerformanceTrackingExamples {
       return products;
     } catch (e) {
       stopwatch.stop();
-      FlutterLiveLogger.error('Product loading failed', data: {
+      FlutterLiveLogger.error('상품 로딩 실패', data: {
         'error': e.toString(),
         'failed_after_ms': stopwatch.elapsedMilliseconds,
       });
@@ -256,15 +256,15 @@ class PerformanceTrackingExamples {
     }
   }
   
-  // Track memory usage
+  // 메모리 사용량 추적
   void trackMemoryUsage() {
-    FlutterLiveLogger.info('Memory usage', data: {
+    FlutterLiveLogger.info('메모리 사용량', data: {
       'heap_size_mb': _getHeapSizeMB(),
       'timestamp': DateTime.now().toIso8601String(),
     });
   }
   
-  // Track app startup time
+  // 앱 시작 시간 추적
   void trackAppStartup() {
     FlutterLiveLogger.event('app_startup_completed', {
       'startup_time_ms': _getStartupTime(),
@@ -275,12 +275,12 @@ class PerformanceTrackingExamples {
 }
 ```
 
-## 🔧 Advanced Usage
+## 🔧 고급 사용법
 
-### 1. Custom Transport Implementation
+### 1. 커스텀 Transport 구현
 
 ```dart
-// Custom Transport example - Slack notifications
+// 커스텀 Transport 예제 - Slack 알림
 class SlackTransport extends LogTransport {
   final String webhookUrl;
   final LogLevel minLevel;
@@ -321,12 +321,12 @@ class SlackTransport extends LogTransport {
           'color': _getColorForLevel(entry.level),
           'fields': [
             {
-              'title': 'Time',
+              'title': '시간',
               'value': entry.timestamp.toString(),
               'short': true,
             },
             {
-              'title': 'Data',
+              'title': '데이터',
               'value': jsonEncode(entry.data),
               'short': false,
             },
@@ -343,7 +343,7 @@ class SlackTransport extends LogTransport {
   }
 }
 
-// Usage
+// 사용법
 await FlutterLiveLogger.init(
   config: LoggerConfig(
     transports: [
@@ -357,9 +357,85 @@ await FlutterLiveLogger.init(
 );
 ```
 
-## 🧪 Testing Examples
+### 2. 로그 필터링 및 조건부 로깅
 
-### 1. Unit Tests
+```dart
+class ConditionalLoggingExamples {
+  void demonstrateFiltering() {
+    // 개발 모드에서만 로깅
+    if (kDebugMode) {
+      FlutterLiveLogger.debug('디버그 모드 전용 로그');
+    }
+    
+    // 사용자 권한에 따른 로깅
+    if (currentUser.isAdmin) {
+      FlutterLiveLogger.info('관리자 작업 수행', data: {
+        'admin_action': 'user_data_export',
+        'target_user_id': 'user456',
+      });
+    }
+    
+    // 성능 기반 조건부 로깅
+    if (responseTime > Duration(seconds: 2)) {
+      FlutterLiveLogger.warn('느린 API 응답', data: {
+        'response_time_ms': responseTime.inMilliseconds,
+      });
+    }
+  }
+  
+  // 커스텀 필터 구현
+  void setupCustomFilters() {
+    FlutterLiveLogger.addFilter((entry) {
+      // PII 데이터 자동 마스킹
+      if (entry.data?.containsKey('email') == true) {
+        entry = entry.copyWith(
+          data: {
+            ...entry.data!,
+            'email': _maskEmail(entry.data!['email']),
+          },
+        );
+      }
+      return entry;
+    });
+  }
+}
+```
+
+### 3. 배치 로깅 및 성능 최적화
+
+```dart
+class BatchLoggingExamples {
+  // 배치 로깅으로 성능 최적화
+  Future<void> processBulkData(List<DataItem> items) async {
+    FlutterLiveLogger.batchBegin();
+    
+    try {
+      for (int i = 0; i < items.length; i++) {
+        FlutterLiveLogger.trace('아이템 처리 중: $i/${items.length}');
+        
+        await _processItem(items[i]);
+        
+        // 주기적으로 진행 상황 로깅
+        if (i % 100 == 0) {
+          FlutterLiveLogger.info('진행 상황: ${(i / items.length * 100).toInt()}%');
+        }
+      }
+      
+      FlutterLiveLogger.info('벌크 데이터 처리 완료', data: {
+        'total_items': items.length,
+        'processing_time_ms': stopwatch.elapsedMilliseconds,
+      });
+    } finally {
+      // 배치의 모든 로그를 한 번에 전송
+      FlutterLiveLogger.batchEnd();
+    }
+  }
+}
+```
+
+## 🧪 테스트 예제
+
+### 1. 단위 테스트
 
 ```dart
 import 'package:flutter_test/flutter_test.dart';
@@ -378,23 +454,23 @@ void main() {
       );
     });
     
-    testWidgets('log transmission test', (tester) async {
+    testWidgets('로그 전송 테스트', (tester) async {
       // When
-      FlutterLiveLogger.info('test message');
+      FlutterLiveLogger.info('테스트 메시지');
       
       // Then
       await tester.pumpAndSettle();
       expect(mockTransport.sentLogs, hasLength(1));
-      expect(mockTransport.sentLogs.first.message, 'test message');
+      expect(mockTransport.sentLogs.first.message, '테스트 메시지');
     });
     
-    testWidgets('log level filtering test', (tester) async {
+    testWidgets('로그 레벨 필터링 테스트', (tester) async {
       // Given
       await FlutterLiveLogger.setLogLevel(LogLevel.warn);
       
       // When
-      FlutterLiveLogger.debug('debug message'); // filtered out
-      FlutterLiveLogger.error('error message');  // sent
+      FlutterLiveLogger.debug('디버그 메시지'); // 필터링됨
+      FlutterLiveLogger.error('오류 메시지');   // 전송됨
       
       // Then
       await tester.pumpAndSettle();
@@ -421,13 +497,39 @@ class MockTransport extends LogTransport {
 }
 ```
 
-## 📱 Real-world Use Cases
+### 2. 통합 테스트
 
-### 1. E-commerce App
+```dart
+import 'package:flutter/services.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:integration_test/integration_test.dart';
+
+void main() {
+  IntegrationTestWidgetsFlutterBinding.ensureInitialized();
+  
+  group('로깅 통합 테스트', () {
+    testWidgets('실제 앱에서 로깅 동작 확인', (tester) async {
+      await tester.pumpWidget(MyApp());
+      
+      // 화면 자동 추적 확인
+      await tester.tap(find.byType(ElevatedButton));
+      await tester.pumpAndSettle();
+      
+      // 로그가 생성되었는지 확인
+      // (실제로는 테스트 transport를 통해 확인)
+      expect(find.text('로그 생성됨'), findsOneWidget);
+    });
+  });
+}
+```
+
+## 📱 실제 사용 사례
+
+### 1. E-commerce 앱
 
 ```dart
 class EcommerceLoggingExamples {
-  // Product search logging
+  // 상품 검색 로깅
   void logProductSearch(String query, List<Product> results) {
     FlutterLiveLogger.event('product_search', {
       'query': query,
@@ -437,7 +539,7 @@ class EcommerceLoggingExamples {
     });
   }
   
-  // Payment process logging
+  // 결제 프로세스 로깅
   void logPaymentFlow(String step, Map<String, dynamic> data) {
     FlutterLiveLogger.event('payment_step', {
       'step': step,
@@ -449,11 +551,11 @@ class EcommerceLoggingExamples {
 }
 ```
 
-### 2. Social Media App
+### 2. 소셜 미디어 앱
 
 ```dart
 class SocialMediaLoggingExamples {
-  // Post interaction logging
+  // 게시물 상호작용 로깅
   void logPostInteraction(String action, String postId) {
     FlutterLiveLogger.event('post_interaction', {
       'action': action, // 'like', 'share', 'comment'
@@ -463,9 +565,9 @@ class SocialMediaLoggingExamples {
     });
   }
   
-  // Feed loading performance logging
+  // 피드 로딩 성능 로깅
   void logFeedPerformance(int postsLoaded, Duration loadTime) {
-    FlutterLiveLogger.info('Feed loading completed', data: {
+    FlutterLiveLogger.info('피드 로딩 완료', data: {
       'posts_loaded': postsLoaded,
       'load_time_ms': loadTime.inMilliseconds,
       'cache_hit_rate': _getCacheHitRate(),
@@ -474,42 +576,42 @@ class SocialMediaLoggingExamples {
 }
 ```
 
-## 🎯 Best Practices
+## 🎯 모범 사례 (Best Practices)
 
-### 1. Log Message Writing Guide
+### 1. 로그 메시지 작성 가이드
 
 ```dart
-// ✅ Good example
-FlutterLiveLogger.info('User profile update completed', data: {
+// ✅ 좋은 예
+FlutterLiveLogger.info('사용자 프로필 업데이트 완료', data: {
   'user_id': user.id,
   'updated_fields': ['name', 'email'],
   'update_duration_ms': 150,
 });
 
-// ❌ Bad example
-FlutterLiveLogger.info('Updated'); // Too vague
+// ❌ 나쁜 예
+FlutterLiveLogger.info('업데이트됨'); // 너무 모호함
 ```
 
-### 2. Sensitive Information Handling
+### 2. 민감한 정보 처리
 
 ```dart
-// ✅ Good example - Mask sensitive information
-FlutterLiveLogger.info('Login attempt', data: {
+// ✅ 좋은 예 - 민감한 정보 마스킹
+FlutterLiveLogger.info('로그인 시도', data: {
   'email': maskEmail(user.email), // a***@example.com
   'ip_address': maskIP(request.ip), // 192.168.***.***
 });
 
-// ❌ Bad example - Expose sensitive information
-FlutterLiveLogger.info('Login attempt', data: {
-  'email': user.email, // Full email exposure
-  'password': user.password, // Never do this!
+// ❌ 나쁜 예 - 민감한 정보 노출
+FlutterLiveLogger.info('로그인 시도', data: {
+  'email': user.email, // 전체 이메일 노출
+  'password': user.password, // 절대 하면 안됨!
 });
 ```
 
-### 3. Structured Logging
+### 3. 구조화된 로깅
 
 ```dart
-// ✅ Good example - Consistent structure
+// ✅ 좋은 예 - 일관된 구조
 class LoggingHelper {
   static void logUserAction(String action, {Map<String, dynamic>? metadata}) {
     FlutterLiveLogger.event('user_action', {
@@ -523,4 +625,4 @@ class LoggingHelper {
 }
 ```
 
-These examples will be updated with actual working code during **Phase 1 development**. Each example demonstrates various Flutter Live Logger features and provides patterns that can be used in production environments.
+이 예제들은 **Phase 1 개발**과 함께 실제 동작하는 코드로 업데이트될 예정입니다. 각 예제는 Flutter Live Logger의 다양한 기능을 보여주며, 실제 프로덕션 환경에서 사용할 수 있는 패턴을 제공합니다.

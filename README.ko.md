@@ -3,14 +3,14 @@
 [![pub package](https://img.shields.io/pub/v/flutter_live_logger.svg)](https://pub.dev/packages/flutter_live_logger)
 [![popularity](https://img.shields.io/pub/popularity/flutter_live_logger.svg)](https://pub.dev/packages/flutter_live_logger)
 [![likes](https://img.shields.io/pub/likes/flutter_live_logger.svg)](https://pub.dev/packages/flutter_live_logger)
-[![CI](https://github.com/your-username/flutter_live_logger/workflows/CI/badge.svg)](https://github.com/your-username/flutter_live_logger/actions)
-[![codecov](https://codecov.io/gh/your-username/flutter_live_logger/branch/main/graph/badge.svg)](https://codecov.io/gh/your-username/flutter_live_logger)
+[![CI](https://github.com/curogom/flutter_live_logger/workflows/CI/badge.svg)](https://github.com/curogom/flutter_live_logger/actions)
+[![codecov](https://codecov.io/gh/curogom/flutter_live_logger/branch/main/graph/badge.svg)](https://codecov.io/gh/curogom/flutter_live_logger)
 
 **상용 환경에서도 Flutter 앱 로그를 실시간으로 확인하세요!**
 
 Flutter Live Logger는 Release 빌드된 앱에서도 로그를 안전하게 수집하고, 실시간으로 웹 대시보드에서 모니터링할 수 있는 오픈소스 로깅 솔루션입니다.
 
-> 📖 **언어**: [English](README.md) • [**한국어**](README.ko.md) • [日本語](README.ja.md) • [Español](README.es.md)
+> 📖 **Languages**: [English](README.md) • [**한국어**](README.ko.md)
 
 ---
 

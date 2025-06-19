@@ -3,14 +3,14 @@
 [![pub package](https://img.shields.io/pub/v/flutter_live_logger.svg)](https://pub.dev/packages/flutter_live_logger)
 [![popularity](https://img.shields.io/pub/popularity/flutter_live_logger.svg)](https://pub.dev/packages/flutter_live_logger)
 [![likes](https://img.shields.io/pub/likes/flutter_live_logger.svg)](https://pub.dev/packages/flutter_live_logger)
-[![CI](https://github.com/your-username/flutter_live_logger/workflows/CI/badge.svg)](https://github.com/your-username/flutter_live_logger/actions)
-[![codecov](https://codecov.io/gh/your-username/flutter_live_logger/branch/main/graph/badge.svg)](https://codecov.io/gh/your-username/flutter_live_logger)
+[![CI](https://github.com/curogom/flutter_live_logger/workflows/CI/badge.svg)](https://github.com/curogom/flutter_live_logger/actions)
+[![codecov](https://codecov.io/gh/curogom/flutter_live_logger/branch/main/graph/badge.svg)](https://codecov.io/gh/curogom/flutter_live_logger)
 
 **Real-time logging for Flutter apps in production environments!**
 
 Flutter Live Logger is an open-source logging solution that safely collects logs from release builds and provides real-time monitoring through a web dashboard.
 
-> 📖 **Languages**: [**English**](README.md) • [한국어](README.ko.md) • [日本語](README.ja.md) • [Español](README.es.md)
+> 📖 **Languages**: [**English**](README.md) • [한국어](README.ko.md)
 
 ---
 
