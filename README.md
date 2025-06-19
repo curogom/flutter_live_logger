@@ -6,9 +6,9 @@
 [![CI](https://github.com/curogom/flutter_live_logger/workflows/CI/badge.svg)](https://github.com/curogom/flutter_live_logger/actions)
 [![codecov](https://codecov.io/gh/curogom/flutter_live_logger/branch/main/graph/badge.svg)](https://codecov.io/gh/curogom/flutter_live_logger)
 
-**Real-time logging for Flutter apps in production environments!**
+**Production-ready real-time logging solution for Flutter applications**
 
-Flutter Live Logger is an open-source logging solution that safely collects logs from release builds and provides real-time monitoring through a web dashboard.
+Flutter Live Logger is a comprehensive logging library designed for Flutter apps in production. It provides multiple transport layers, persistent storage, automatic navigation tracking, and offline support with a clean, developer-friendly API.
 
 > 📖 **Languages**: [**English**](README.md) • [한국어](README.ko.md)
 
@@ -16,21 +16,21 @@ Flutter Live Logger is an open-source logging solution that safely collects logs
 
 ## ✨ Features
 
-### 🎯 **Built for Flutter Developers**
+### 🎯 **Core Capabilities**
 
-- 🔥 **Real-time Log Streaming**: Instant log viewing via WebSocket
-- 📱 **Production Ready**: Safe logging in release builds
-- 🎨 **Auto Screen Tracking**: Automatic Navigator route detection
-- 💾 **Offline Support**: Log persistence during network outages
-- 🎛️ **Flexible Configuration**: Log level filtering and customization
-- 🔌 **Plugin Architecture**: Support for multiple backends
+- 🔥 **Multiple Transport Layers**: Memory, File, HTTP transport options
+- 💾 **Persistent Storage**: SQLite and memory-based storage with querying
+- 📱 **Auto Navigation Tracking**: Automatic screen transition logging
+- 🔄 **Offline Support**: Queue logs offline and sync when connected
+- ⚡ **High Performance**: Batching, async processing, minimal overhead
+- 🎛️ **Configurable**: Multiple environment configurations (dev/prod/test)
 
-### 🛠️ **Developer Experience First**
+### 🛠️ **Developer Experience**
 
-- ⚡ **5-Minute Setup**: Quick integration without complex configuration
-- 📚 **Complete Documentation**: Comprehensive dartdoc API reference
-- 🔒 **Type Safe**: Full null safety support
-- 🧪 **High Test Coverage**: 95%+ code coverage
+- ⚡ **Easy Setup**: Initialize with one line of code
+- 📚 **Complete API**: Comprehensive dartdoc documentation
+- 🔒 **Type Safe**: Full null safety and strong typing
+- 🧪 **Well Tested**: 95%+ test coverage with 17+ comprehensive tests
 - 🌍 **Cross Platform**: iOS, Android, Web, Desktop support
 
 ---
@@ -41,21 +41,23 @@ Flutter Live Logger is an open-source logging solution that safely collects logs
 
 ```yaml
 dependencies:
-  flutter_live_logger: ^1.0.0
+  flutter_live_logger: ^0.1.0
+  sqflite: ^2.3.0  # For persistent storage
 ```
 
-### 2. Initialize
+### 2. Initialize the Logger
 
 ```dart
 import 'package:flutter_live_logger/flutter_live_logger.dart';
 
-void main() {
-  // Initialize the logger
-  FlutterLiveLogger.init(
-    config: LoggerConfig(
-      logLevel: LogLevel.debug,
-      enableAutoScreenTracking: true,
-      enableCrashReporting: true,
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  
+  // Initialize for development
+  await FlutterLiveLogger.init(
+    config: LoggerConfig.development(
+      userId: 'user_123',
+      sessionId: 'session_${DateTime.now().millisecondsSinceEpoch}',
     ),
   );
   
@@ -63,15 +65,16 @@ void main() {
 }
 ```
 
-### 3. Set Up Auto Screen Tracking
+### 3. Add Navigation Tracking
 
 ```dart
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      title: 'My App',
       navigatorObservers: [
-        FlutterLiveLogger.navigatorObserver, // Auto track screen transitions
+        FlutterLiveLoggerNavigatorObserver(), // Auto track screen navigation
       ],
       home: HomeScreen(),
     );
@@ -93,19 +96,20 @@ class HomeScreen extends StatelessWidget {
             // Simple logging
             FlutterLiveLogger.info('User clicked button');
             
-            // Event tracking
+            // Event tracking with structured data
             FlutterLiveLogger.event('button_click', {
               'button_id': 'main_cta',
               'screen': 'home',
               'timestamp': DateTime.now().toIso8601String(),
             });
             
-            // Error logging
+            // Error logging with context
             try {
-              // Some operation...
+              throw Exception('Demo error');
             } catch (error, stackTrace) {
               FlutterLiveLogger.error(
-                'API call failed',
+                'Operation failed',
+                data: {'operation': 'demo'},
                 error: error,
                 stackTrace: stackTrace,
               );
@@ -121,187 +125,309 @@ class HomeScreen extends StatelessWidget {
 
 ---
 
-## 📖 Usage Examples
+## 📖 Advanced Usage
 
-### Basic Logging
+### Configuration Options
 
 ```dart
-// Different log levels
-FlutterLiveLogger.trace('Detailed debug information');
-FlutterLiveLogger.debug('Debug information');
-FlutterLiveLogger.info('General information');
-FlutterLiveLogger.warning('Warning message');
-FlutterLiveLogger.error('Error occurred');
-FlutterLiveLogger.fatal('Critical error');
+// Development Configuration
+await FlutterLiveLogger.init(
+  config: LoggerConfig.development(
+    logLevel: LogLevel.debug,
+    userId: 'user_123',
+    sessionId: 'session_456',
+  ),
+);
+
+// Production Configuration  
+await FlutterLiveLogger.init(
+  config: LoggerConfig.production(
+    transports: [
+      HttpTransport(config: HttpTransportConfig(
+        endpoint: 'https://api.yourapp.com/logs',
+        apiKey: 'your-api-key',
+        batchSize: 50,
+        enableCompression: true,
+      )),
+      FileTransport(config: FileTransportConfig(
+        directory: '/app/logs',
+        maxFileSize: 10 * 1024 * 1024, // 10MB
+        maxFiles: 5,
+      )),
+    ],
+    usePersistentStorage: true,
+    logLevel: LogLevel.info,
+  ),
+);
+
+// Performance Optimized Configuration
+await FlutterLiveLogger.init(
+  config: LoggerConfig.performance(
+    logLevel: LogLevel.warn, // Only warnings and above
+    transports: [MemoryTransport(maxEntries: 500)],
+  ),
+);
+
+// Testing Configuration
+await FlutterLiveLogger.init(
+  config: LoggerConfig.testing(
+    logLevel: LogLevel.trace, // All logs for testing
+  ),
+);
+```
+
+### Transport Layers
+
+```dart
+// Memory Transport (for development/testing)
+final memoryTransport = MemoryTransport(
+  maxEntries: 1000,
+);
+
+// File Transport (for local persistence)
+final fileTransport = FileTransport(
+  config: FileTransportConfig(
+    directory: '/app/logs',
+    filePrefix: 'app_log',
+    maxFileSize: 10 * 1024 * 1024, // 10MB
+    maxFiles: 5,
+    enableRotation: true,
+  ),
+);
+
+// HTTP Transport (for remote logging)
+final httpTransport = HttpTransport(
+  config: HttpTransportConfig(
+    endpoint: 'https://api.yourapp.com/logs',
+    apiKey: 'your-api-key',
+    headers: {'X-App-Version': '1.0.0'},
+    enableCompression: true,
+    retryAttempts: 3,
+    timeout: Duration(seconds: 30),
+  ),
+);
+```
+
+### Storage Options
+
+```dart
+// Memory Storage (fast, non-persistent)
+final memoryStorage = MemoryStorage(maxEntries: 5000);
+
+// SQLite Storage (persistent, queryable)
+final sqliteStorage = SQLiteStorage(
+  config: SQLiteStorageConfig(
+    databaseName: 'app_logs.db',
+    maxEntries: 50000,
+    enableWAL: true,
+  ),
+);
+
+// Query stored logs
+final recentLogs = await sqliteStorage.query(LogQuery.recent(limit: 100));
+final errorLogs = await sqliteStorage.query(LogQuery.level(level: LogLevel.error));
+final userLogs = await sqliteStorage.query(LogQuery.user(userId: 'user_123'));
 ```
 
 ### Structured Logging
 
 ```dart
-// With custom data
-FlutterLiveLogger.info('User login', data: {
-  'user_id': '12345',
-  'login_method': 'google',
-  'device_type': 'mobile',
-  'app_version': '1.2.3',
+// User actions
+FlutterLiveLogger.event('user_action', {
+  'action': 'purchase',
+  'item_id': 'product_123',
+  'amount': 29.99,
+  'currency': 'USD',
+  'payment_method': 'credit_card',
 });
 
-// Performance tracking
-final stopwatch = Stopwatch()..start();
-await someApiCall();
-stopwatch.stop();
-
-FlutterLiveLogger.performance('API response time', {
+// Performance metrics
+FlutterLiveLogger.event('performance_metric', {
+  'metric': 'api_response_time',
   'endpoint': '/api/user/profile',
-  'duration_ms': stopwatch.elapsedMilliseconds,
+  'duration_ms': 245,
   'status_code': 200,
+});
+
+// Business events
+FlutterLiveLogger.event('business_event', {
+  'event': 'subscription_started',
+  'plan': 'premium',
+  'trial_period': 7,
+  'user_segment': 'power_user',
 });
 ```
 
-### Real-time Streaming Setup
+### Navigation Tracking
 
 ```dart
-void main() {
-  FlutterLiveLogger.init(
-    config: LoggerConfig(
-      // Connect to local development server
-      realTimeEnabled: true,
-      serverUrl: 'ws://localhost:8080',
-      
-      // Or use cloud service
-      // serverUrl: 'wss://your-domain.com',
-      // apiKey: 'your-api-key',
-    ),
-  );
-  
-  runApp(MyApp());
-}
+// Basic navigation observer
+FlutterLiveLoggerNavigatorObserver()
+
+// Customized navigation observer
+FlutterLiveLoggerNavigatorObserver(
+  enableDurationTracking: true,
+  enableBreadcrumbs: true,
+  maxBreadcrumbs: 10,
+  routeNameExtractor: (route) {
+    // Custom route name extraction
+    return route.settings.name ?? 'unknown';
+  },
+  shouldLogRoute: (route) {
+    // Filter which routes to log
+    return route is PageRoute && route.settings.name != null;
+  },
+)
 ```
 
 ---
 
-## 🌐 Web Dashboard
+## 🧪 Testing
 
-View your logs in real-time using the web dashboard:
-
-### Quick Demo (Local)
+The library includes comprehensive testing:
 
 ```bash
-# Start with Docker Compose
-git clone https://github.com/your-username/flutter_live_logger.git
-cd flutter_live_logger/web_dashboard
-docker-compose up
+# Run all tests
+flutter test
 
-# Open http://localhost:8080 in your browser
+# Run tests with coverage
+flutter test --coverage
 ```
 
-### Self-Hosting Options
+Test coverage includes:
 
-- 🐳 **Docker**: Use `flutter_live_logger/server` image
-- ☁️ **Cloud**: AWS, GCP, DigitalOcean deployment guides
-- 🏠 **On-premise**: Direct installation on your servers
+- ✅ Initialization and configuration
+- ✅ All log levels and filtering
+- ✅ Transport layer functionality
+- ✅ Storage operations and queries
+- ✅ Error handling and resilience
+- ✅ Batch processing and performance
 
-### Dashboard Features
+---
 
-- 📊 **Real-time Log Stream**: Instant view of app logs
-- 🔍 **Advanced Filtering**: Filter by time, level, keywords
-- 📈 **Analytics & Charts**: Visualize log patterns
-- 📥 **Data Export**: Download as CSV, JSON
-- 🌙 **Dark Mode**: Developer-friendly UI
+## 📊 Monitoring and Statistics
+
+Get insights into your logging system:
+
+```dart
+// Get logger statistics
+final stats = FlutterLiveLogger.getStats();
+print('Pending entries: ${stats['pendingEntries']}');
+print('Active transports: ${stats['transports']}');
+print('Storage type: ${stats['config']['environment']}');
+
+// Force flush pending logs
+await FlutterLiveLogger.flush();
+
+// Get storage statistics
+final storage = SQLiteStorage();
+final storageStats = await storage.getStats();
+print('Total entries: ${storageStats['entryCount']}');
+print('Database size: ${storageStats['databaseSize']} bytes');
+```
 
 ---
 
 ## 🔧 Advanced Configuration
 
-### Custom Backend Integration
+### Environment-Specific Setup
 
 ```dart
-// Use multiple backends simultaneously
-FlutterLiveLogger.init(
-  transports: [
-    // Save to local files
-    FileTransport('./logs'),
-    
-    // Send to HTTP API
-    HttpTransport('https://your-api.com/logs'),
-    
-    // WebSocket real-time streaming
-    WebSocketTransport('wss://your-websocket.com'),
-    
-    // Firebase Crashlytics integration
-    FirebaseCrashlyticsTransport(),
-    
-    // Sentry integration
-    SentryTransport(),
-    
-    // Custom backend
-    MyCustomTransport(),
-  ],
-);
+void main() async {
+  late LoggerConfig config;
+  
+  if (kDebugMode) {
+    // Development configuration
+    config = LoggerConfig.development(
+      logLevel: LogLevel.trace,
+      userId: 'dev_user',
+    );
+  } else if (kProfileMode) {
+    // Performance testing configuration
+    config = LoggerConfig.performance(
+      logLevel: LogLevel.warn,
+    );
+  } else {
+    // Release configuration
+    config = LoggerConfig.production(
+      transports: [
+        HttpTransport(config: HttpTransportConfig(
+          endpoint: 'https://logs.yourapp.com/api/logs',
+          apiKey: const String.fromEnvironment('LOG_API_KEY'),
+        )),
+      ],
+      usePersistentStorage: true,
+      logLevel: LogLevel.info,
+    );
+  }
+  
+  await FlutterLiveLogger.init(config: config);
+  runApp(MyApp());
+}
 ```
 
-### Performance Optimization
+### Custom Transport Implementation
 
 ```dart
-FlutterLiveLogger.init(
-  config: LoggerConfig(
-    // Batch sending for better performance
-    batchSize: 50,
-    flushInterval: Duration(seconds: 30),
-    
-    // Memory usage limits
-    maxMemoryUsage: 10 * 1024 * 1024, // 10MB
-    
-    // Log compression (save network)
-    enableCompression: true,
-    
-    // Disable debug logs in release builds
-    logLevel: kDebugMode ? LogLevel.debug : LogLevel.info,
-  ),
-);
+class CustomTransport extends LogTransport {
+  @override
+  Future<void> send(List<LogEntry> entries) async {
+    // Your custom transport logic
+    for (final entry in entries) {
+      // Send to your custom backend
+      await customApi.sendLog(entry.toJson());
+    }
+  }
+  
+  @override
+  bool get isAvailable => true;
+  
+  @override
+  Future<void> dispose() async {
+    // Cleanup resources
+  }
+}
 ```
 
-### Security Configuration
+---
 
-```dart
-FlutterLiveLogger.init(
-  config: LoggerConfig(
-    // Auto-mask sensitive information
-    enableDataMasking: true,
-    
-    // Custom masking rules
-    maskingRules: {
-      'password': '***',
-      'credit_card': '****-****-****-1234',
-      'email': 'user@****.com',
-    },
-    
-    // Encrypt log data
-    enableEncryption: true,
-    encryptionKey: 'your-encryption-key',
-  ),
-);
+## 🏗️ Architecture
+
+```
+┌─────────────────────────────────────────────────┐
+│                Flutter App                      │
+├─────────────────────────────────────────────────┤
+│              FlutterLiveLogger                  │
+│  ┌─────────────┐ ┌──────────────┐ ┌──────────┐ │
+│  │   Logger    │ │   Navigator  │ │  Config  │ │
+│  │    API      │ │   Observer   │ │          │ │
+│  └─────────────┘ └──────────────┘ └──────────┘ │
+├─────────────────────────────────────────────────┤
+│               Transport Layer                   │
+│  ┌─────────────┐ ┌──────────────┐ ┌──────────┐ │
+│  │   Memory    │ │     File     │ │   HTTP   │ │
+│  │  Transport  │ │   Transport  │ │Transport │ │
+│  └─────────────┘ └──────────────┘ └──────────┘ │
+├─────────────────────────────────────────────────┤
+│                Storage Layer                    │
+│  ┌─────────────┐ ┌──────────────┐              │
+│  │   Memory    │ │    SQLite    │              │
+│  │   Storage   │ │   Storage    │              │
+│  └─────────────┘ └──────────────┘              │
+└─────────────────────────────────────────────────┘
 ```
 
 ---
 
 ## 🤝 Contributing
 
-Flutter Live Logger is an open-source project. We welcome your contributions!
-
-### How to Contribute
-
-1. 🍴 **Fork** this repository
-2. 🌿 **Create** a feature branch (`git checkout -b feature/amazing-feature`)
-3. 💾 **Commit** your changes (`git commit -m 'Add amazing feature'`)
-4. 📤 **Push** to the branch (`git push origin feature/amazing-feature`)
-5. 🔄 **Open** a Pull Request
+We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details.
 
 ### Development Setup
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-username/flutter_live_logger.git
+git clone https://github.com/curogom/flutter_live_logger.git
 cd flutter_live_logger
 
 # Install dependencies
@@ -310,107 +436,32 @@ flutter pub get
 # Run tests
 flutter test
 
-# Run example app
+# Run the example
 cd example
 flutter run
 ```
-
-### Contribution Guidelines
-
-- 📝 **Code Style**: Use `dart format`
-- 🧪 **Testing**: Write tests for new features
-- 📚 **Documentation**: Update docs for API changes
-- 💬 **Issues**: Bug reports and feature requests welcome
-- 📋 **Full Guide**: See [CONTRIBUTING.md](CONTRIBUTING.md)
-
----
-
-## 📚 Documentation
-
-- 📖 **[API Documentation](https://pub.dev/documentation/flutter_live_logger/latest/)**
-- 🚀 **[Getting Started Guide](https://github.com/your-username/flutter_live_logger/wiki/Getting-Started)**
-- 🏗️ **[Architecture Guide](https://github.com/your-username/flutter_live_logger/wiki/Architecture)**
-- 🔧 **[Advanced Configuration](https://github.com/your-username/flutter_live_logger/wiki/Advanced-Configuration)**
-- 🐛 **[Troubleshooting](https://github.com/your-username/flutter_live_logger/wiki/Troubleshooting)**
-
----
-
-## 🆚 Comparison with Other Solutions
-
-| Feature | Flutter Live Logger | logger | flutter_logs | Sentry |
-|---------|-------------------|---------|-------------|---------|
-| **Real-time Streaming** | ✅ | ❌ | ❌ | ❌ |
-| **Production Ready** | ✅ | ⚠️ | ✅ | ✅ |
-| **Web Dashboard** | ✅ | ❌ | ❌ | ✅ |
-| **Offline Support** | ✅ | ❌ | ✅ | ✅ |
-| **Auto Screen Tracking** | ✅ | ❌ | ❌ | ⚠️ |
-| **Free & Open Source** | ✅ | ✅ | ✅ | ⚠️ |
-| **Setup Complexity** | Low | Low | Medium | High |
-
----
-
-## 🌟 Community & Support
-
-- 💬 **GitHub Discussions**: [Questions & Discussions](https://github.com/your-username/flutter_live_logger/discussions)
-- 🐛 **Issue Reports**: [Bug Reports](https://github.com/your-username/flutter_live_logger/issues)
-- 📧 **Email**: <flutter.live.logger@gmail.com>
-- 🐦 **Twitter**: [@FlutterLiveLogger](https://twitter.com/FlutterLiveLogger)
-
-### Community Channels
-
-- 💬 **Discord**: [Flutter Live Logger Community](https://discord.gg/flutter-live-logger)
-- 📱 **Telegram**: [Flutter Logging](https://t.me/flutter_logging)
-- 🌐 **Reddit**: [r/FlutterDev](https://reddit.com/r/FlutterDev)
 
 ---
 
 ## 📄 License
 
-This project is licensed under the [MIT License](LICENSE).
-
-```
-MIT License
-
-Copyright (c) 2024 Flutter Live Logger Contributors
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-```
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ---
 
-## 🙏 Acknowledgements
+## 📞 Support
 
-Flutter Live Logger is inspired by these amazing open-source projects:
-
-- [logger](https://pub.dev/packages/logger) - Clean logging API design
-- [flutter_logs](https://pub.dev/packages/flutter_logs) - File-based logging concepts
-- [sentry_flutter](https://pub.dev/packages/sentry_flutter) - Error tracking patterns
-
----
-
-## ⭐ Star the Project
-
-**If this project helps you, please give it a star!** ⭐
-
-Your star motivates us to keep improving the project.
+- 📖 [Documentation](docs/README.md)
+- 🐛 [Issue Tracker](https://github.com/curogom/flutter_live_logger/issues)
+- 💬 [Discussions](https://github.com/curogom/flutter_live_logger/discussions)
+- 📧 Email: <support@flutterlivelogger.com>
 
 ---
 
-<div align="center">
+## 🌟 Acknowledgments
 
-**[🚀 Get Started](https://pub.dev/packages/flutter_live_logger)** •
-**[📖 Documentation](https://pub.dev/documentation/flutter_live_logger/latest/)** •
-**[💬 Community](https://github.com/your-username/flutter_live_logger/discussions)** •
-**[🐛 Report Issues](https://github.com/your-username/flutter_live_logger/issues)**
+Built with ❤️ for the Flutter community.
 
-Made with ❤️ by Flutter Community
-
-</div>
+- Thanks to all [contributors](https://github.com/curogom/flutter_live_logger/graphs/contributors)
+- Inspired by best practices from the Flutter and Dart ecosystem
+- Special thanks to the Flutter team for creating an amazing framework

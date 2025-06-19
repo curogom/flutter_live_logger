@@ -11,11 +11,91 @@ env:
   FLUTTER_VERSION: '3.16.x'
 
 jobs:
-  # 코드 품질 검사
+  # 프로젝트 상태 체크
+  project-check:
+    name: 🔍 Project Status Check
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      has-flutter-project: ${{ steps.check-flutter.outputs.has-project }}
+    
+    steps:
+      - name: 📚 Git Checkout
+        uses: actions/checkout@v4
+        
+      - name: 🔍 Check Flutter Project Exists
+        id: check-flutter
+        run: |
+          if [ -f "pubspec.yaml" ]; then
+            echo "has-project=true" >> $GITHUB_OUTPUT
+            echo "✅ Flutter project detected"
+          else
+            echo "has-project=false" >> $GITHUB_OUTPUT
+            echo "ℹ️ Flutter project not yet created - skipping Flutter-specific checks"
+          fi
+
+  # 문서 및 기본 구조 검증 (항상 실행)
+  docs-and-structure:
+    name: 📖 Documentation & Structure Check
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    
+    steps:
+      - name: 📚 Git Checkout
+        uses: actions/checkout@v4
+        
+      - name: 🔍 Check Documentation Links
+        uses: gaurav-nelson/github-action-markdown-link-check@v1
+        with:
+          use-quiet-mode: 'yes'
+          use-verbose-mode: 'yes'
+          config-file: '.github/workflows/markdown-link-check.json'
+          
+      - name: 📝 Check Spelling
+        uses: crate-ci/typos@master
+        with:
+          config: .github/workflows/typos.toml
+          
+      - name: 📋 Verify Project Structure
+        run: |
+          echo "📁 Checking project structure..."
+          
+          # 필수 파일들 확인
+          required_files=(
+            "README.md"
+            "README.ko.md" 
+            "LICENSE"
+            "CONTRIBUTING.md"
+            "CODE_OF_CONDUCT.md"
+            "ROADMAP.md"
+          )
+          
+          for file in "${required_files[@]}"; do
+            if [ -f "$file" ]; then
+              echo "✅ $file exists"
+            else
+              echo "❌ $file missing"
+              exit 1
+            fi
+          done
+          
+          # 문서 디렉토리 확인
+          if [ -d "docs" ]; then
+            echo "✅ docs/ directory exists"
+          else
+            echo "❌ docs/ directory missing"
+            exit 1
+          fi
+          
+          echo "🎉 Project structure verification passed!"
+
+  # 코드 품질 검사 (Flutter 프로젝트가 있을 때만 실행)
   analyze:
     name: 📊 Code Analysis
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    needs: project-check
+    if: needs.project-check.outputs.has-flutter-project == 'true'
     
     steps:
       - name: 📚 Git Checkout
@@ -42,11 +122,13 @@ jobs:
           dart pub global activate pana
           pana --json --no-warning
 
-  # 테스트 실행 (Flutter 프로젝트가 생성되면 활성화)
+  # 테스트 실행 (Flutter 프로젝트가 있을 때만 실행)
   test:
     name: 🧪 Run Tests  
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    needs: project-check
+    if: needs.project-check.outputs.has-flutter-project == 'true'
     
     steps:
       - name: 📚 Git Checkout
@@ -62,22 +144,23 @@ jobs:
       - name: 📦 Install Dependencies
         run: flutter pub get
         
-      # Flutter 프로젝트가 생성되면 활성화
-      # - name: 🧪 Run Tests
-      #   run: flutter test --coverage
+      - name: 🧪 Run Tests
+        run: flutter test --coverage
       
-      # - name: 📊 Upload Coverage to Codecov
-      #   uses: codecov/codecov-action@v3
-      #   with:
-      #     token: ${{ secrets.CODECOV_TOKEN }}
-      #     file: coverage/lcov.info
-      #     fail_ci_if_error: true
+      - name: 📊 Upload Coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          file: coverage/lcov.info
+          fail_ci_if_error: true
 
-  # 크로스 플랫폼 호환성 검사 (Flutter 프로젝트가 생성되면 활성화)
+  # 크로스 플랫폼 호환성 검사 (Flutter 프로젝트가 있을 때만 실행)
   compatibility:
     name: 🔧 Platform Compatibility
     runs-on: ${{ matrix.os }}
     timeout-minutes: 20
+    needs: project-check
+    if: needs.project-check.outputs.has-flutter-project == 'true'
     strategy:
       fail-fast: false
       matrix:
@@ -97,20 +180,21 @@ jobs:
       - name: 📦 Install Dependencies
         run: flutter pub get
         
-      # Flutter 프로젝트가 생성되면 활성화
-      # - name: 🧪 Run Tests
-      #   run: flutter test
+      - name: 🧪 Run Tests
+        run: flutter test
       
-      # - name: 🏗️ Build Example (Web)
-      #   run: flutter build web --release
-      #   working-directory: example
-      #   if: matrix.os == 'ubuntu-latest'
+      - name: 🏗️ Build Example (Web)
+        run: flutter build web --release
+        working-directory: example
+        if: matrix.os == 'ubuntu-latest'
 
-  # 의존성 보안 검사  
+  # 의존성 보안 검사 (Flutter 프로젝트가 있을 때만 실행)
   security:
     name: 🔒 Security Scan
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    needs: project-check
+    if: needs.project-check.outputs.has-flutter-project == 'true'
     
     steps:
       - name: 📚 Git Checkout
@@ -126,53 +210,33 @@ jobs:
       - name: 📦 Install Dependencies
         run: flutter pub get
         
-      # Flutter 프로젝트가 생성되면 활성화
-      # - name: 🔒 Run Security Audit
-      #   run: |
-      #     dart pub global activate security_audit
-      #     security_audit
+      - name: 🔒 Run Security Audit
+        run: |
+          dart pub global activate security_audit
+          security_audit
 
-  # 문서 검증
-  docs:
-    name: 📖 Documentation Check
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    
-    steps:
-      - name: 📚 Git Checkout
-        uses: actions/checkout@v4
-        
-      - name: 🔍 Check Documentation Links
-        uses: gaurav-nelson/github-action-markdown-link-check@v1
-        with:
-          use-quiet-mode: 'yes'
-          use-verbose-mode: 'yes'
-          config-file: '.github/workflows/markdown-link-check.json'
-          
-      - name: 📝 Check Spelling
-        uses: crate-ci/typos@master
-        with:
-          config: .github/workflows/typos.toml
-
-  # 모든 체크가 성공했을 때만 실행
+  # 모든 체크가 성공했을 때만 실행 (조건부 needs)
   all-checks-pass:
     name: ✅ All Checks Passed
-    needs: [analyze, test, compatibility, security, docs]
+    needs: [project-check, docs-and-structure]
     runs-on: ubuntu-latest
     if: always()
     
     steps:
       - name: 🎉 All Checks Successful
         if: ${{ !(contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled')) }}
-        run: echo "🎊 All quality checks passed successfully!"
+        run: |
+          echo "🎊 All available quality checks passed successfully!"
+          if [ "${{ needs.project-check.outputs.has-flutter-project }}" == "true" ]; then
+            echo "✅ Flutter project checks included"
+          else
+            echo "ℹ️ Flutter project not yet created - basic structure checks only"
+          fi
         
       - name: ❌ Some Checks Failed  
         if: ${{ contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled') }}
         run: |
           echo "❌ Some quality checks failed:"
-          echo "Analyze: ${{ needs.analyze.result }}"
-          echo "Test: ${{ needs.test.result }}"
-          echo "Compatibility: ${{ needs.compatibility.result }}"
-          echo "Security: ${{ needs.security.result }}"
-          echo "Docs: ${{ needs.docs.result }}"
+          echo "Project Check: ${{ needs.project-check.result }}"
+          echo "Docs & Structure: ${{ needs.docs-and-structure.result }}"
           exit 1 
