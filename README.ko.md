@@ -1,10 +1,11 @@
 # 🚀 Flutter Live Logger
 
-[![pub package](https://img.shields.io/pub/v/flutter_live_logger.svg)](https://pub.dev/packages/flutter_live_logger)
-[![popularity](https://img.shields.io/pub/popularity/flutter_live_logger.svg)](https://pub.dev/packages/flutter_live_logger)
-[![likes](https://img.shields.io/pub/likes/flutter_live_logger.svg)](https://pub.dev/packages/flutter_live_logger)
-[![CI](https://github.com/curogom/flutter_live_logger/workflows/CI/badge.svg)](https://github.com/curogom/flutter_live_logger/actions)
-[![codecov](https://codecov.io/gh/curogom/flutter_live_logger/branch/main/graph/badge.svg)](https://codecov.io/gh/curogom/flutter_live_logger)
+<!-- pub.dev 패키지 출시 후 배지가 활성화됩니다 -->
+<!-- [![pub package](https://img.shields.io/pub/v/flutter_live_logger.svg)](https://pub.dev/packages/flutter_live_logger) -->
+<!-- [![popularity](https://img.shields.io/pub/popularity/flutter_live_logger.svg)](https://pub.dev/packages/flutter_live_logger) -->
+<!-- [![likes](https://img.shields.io/pub/likes/flutter_live_logger.svg)](https://pub.dev/packages/flutter_live_logger) -->
+[![CI](https://github.com/curogom/flutter_live_logger/actions/workflows/ci.yml/badge.svg)](https://github.com/curogom/flutter_live_logger/actions)
+<!-- [![codecov](https://codecov.io/gh/curogom/flutter_live_logger/branch/main/graph/badge.svg)](https://codecov.io/gh/curogom/flutter_live_logger) -->
 
 **Flutter 애플리케이션을 위한 프로덕션 준비 완료 실시간 로깅 솔루션**
 
@@ -451,7 +452,7 @@ flutter run
 
 ## 📞 지원
 
-- 📖 [문서](docs/README.md)
+- 📖 [문서](docs/api/README.md)
 - 🐛 [이슈 트래커](https://github.com/curogom/flutter_live_logger/issues)
 - 💬 [토론](https://github.com/curogom/flutter_live_logger/discussions)
 - 📧 이메일: <support@flutterlivelogger.com>

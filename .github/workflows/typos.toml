@@ -5,6 +5,12 @@ extend-exclude = [
   "*.gen.dart",
   "pubspec.lock",
   "CHANGELOG.md",
+  "*.lock",
+  "*.log",
+  "coverage/*",
+  ".dart_tool/*",
+  "build/*",
+  ".git/*"
 ]
 
 [default]
@@ -24,4 +30,38 @@ pub-dev = "pub.dev"
 "강령" = "강령"
 "서약" = "서약"
 "커뮤니티" = "커뮤니티"
-"리더" = "리더" 
+"리더" = "리더"
+
+[default]
+extend-ignore-identifiers-re = [
+    # Technical terms and proper nouns
+    "FlutterLiveLogger",
+    "SQLite",
+    "pub.dev",
+    "dartdoc",
+    "sqflite",
+    "codecov",
+    "Crashlytics",
+    "Firebase",
+    "WebSocket",
+    "GitHub",
+    "curogom",
+    # Korean words that might be flagged
+    "로깅",
+    "로그",
+    "프로덕션",
+    "애플리케이션",
+    "디버깅",
+    # Common abbreviations
+    "async",
+    "await",
+    "impl",
+    "config",
+    "init",
+    "params",
+    "nullable",
+    "stacktrace"
+]
+
+[default.extend-words]
+# Add any custom words that should be ignored 

@@ -1,10 +1,11 @@
 # 🚀 Flutter Live Logger
 
-[![pub package](https://img.shields.io/pub/v/flutter_live_logger.svg)](https://pub.dev/packages/flutter_live_logger)
-[![popularity](https://img.shields.io/pub/popularity/flutter_live_logger.svg)](https://pub.dev/packages/flutter_live_logger)
-[![likes](https://img.shields.io/pub/likes/flutter_live_logger.svg)](https://pub.dev/packages/flutter_live_logger)
-[![CI](https://github.com/curogom/flutter_live_logger/workflows/CI/badge.svg)](https://github.com/curogom/flutter_live_logger/actions)
-[![codecov](https://codecov.io/gh/curogom/flutter_live_logger/branch/main/graph/badge.svg)](https://codecov.io/gh/curogom/flutter_live_logger)
+<!-- Badges will be enabled once package is published on pub.dev -->
+<!-- [![pub package](https://img.shields.io/pub/v/flutter_live_logger.svg)](https://pub.dev/packages/flutter_live_logger) -->
+<!-- [![popularity](https://img.shields.io/pub/popularity/flutter_live_logger.svg)](https://pub.dev/packages/flutter_live_logger) -->
+<!-- [![likes](https://img.shields.io/pub/likes/flutter_live_logger.svg)](https://pub.dev/packages/flutter_live_logger) -->
+[![CI](https://github.com/curogom/flutter_live_logger/actions/workflows/ci.yml/badge.svg)](https://github.com/curogom/flutter_live_logger/actions)
+<!-- [![codecov](https://codecov.io/gh/curogom/flutter_live_logger/branch/main/graph/badge.svg)](https://codecov.io/gh/curogom/flutter_live_logger) -->
 
 **Production-ready real-time logging solution for Flutter applications**
 
@@ -451,7 +452,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📞 Support
 
-- 📖 [Documentation](docs/README.md)
+- 📖 [Documentation](docs/api/README.md)
 - 🐛 [Issue Tracker](https://github.com/curogom/flutter_live_logger/issues)
 - 💬 [Discussions](https://github.com/curogom/flutter_live_logger/discussions)
 - 📧 Email: <support@flutterlivelogger.com>

@@ -1,35 +1,30 @@
 {
     "ignorePatterns": [
         {
-            "pattern": "^http://localhost"
+            "pattern": "^https://pub.dev/packages/flutter_live_logger"
         },
         {
-            "pattern": "^https://localhost"
+            "pattern": "^https://docs.flutterlivelogger.dev"
         },
         {
-            "pattern": "\\[INSERT"
+            "pattern": "^mailto:"
         },
         {
-            "pattern": "\\[연락 방법"
+            "pattern": "^https://github.com/your-username/"
         }
     ],
-    "replacementPatterns": [
-        {
-            "pattern": "^/",
-            "replacement": "https://github.com/your-username/flutter_live_logger/blob/main/"
-        }
-    ],
+    "replacementPatterns": [],
     "httpHeaders": [
         {
             "urls": [
-                "https://github.com"
+                "https://github.com/"
             ],
             "headers": {
-                "Accept-Encoding": "zstd, br, gzip, deflate"
+                "Accept": "text/html"
             }
         }
     ],
-    "timeout": "20s",
+    "timeout": "10s",
     "retryOn429": true,
     "retryCount": 3,
     "fallbackRetryDelay": "30s",

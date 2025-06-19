@@ -5,6 +5,7 @@ Thank you for your interest in contributing to Flutter Live Logger! This documen
 ## 🚀 Getting Started
 
 ### Prerequisites
+
 - Flutter 3.16+ LTS
 - Dart 3.0+
 - Git
@@ -13,17 +14,20 @@ Thank you for your interest in contributing to Flutter Live Logger! This documen
 ### Setup Development Environment
 
 1. **Fork and Clone**
+
    ```bash
    git clone https://github.com/your-username/flutter_live_logger.git
    cd flutter_live_logger
    ```
 
 2. **Install Dependencies**
+
    ```bash
    flutter pub get
    ```
 
 3. **Verify Setup**
+
    ```bash
    flutter test
    flutter analyze
@@ -31,6 +35,7 @@ Thank you for your interest in contributing to Flutter Live Logger! This documen
    ```
 
 4. **Run Example App**
+
    ```bash
    cd example
    flutter run
@@ -39,6 +44,7 @@ Thank you for your interest in contributing to Flutter Live Logger! This documen
 ## 📋 Development Workflow
 
 ### Before You Start
+
 1. Check existing [issues](https://github.com/your-username/flutter_live_logger/issues)
 2. Create an issue for new features or bug reports
 3. Fork the repository
@@ -47,12 +53,14 @@ Thank you for your interest in contributing to Flutter Live Logger! This documen
 ### Making Changes
 
 #### Code Standards
+
 - **Formatting**: Use `dart format` before committing
 - **Analysis**: Pass `flutter analyze` with no issues
 - **Testing**: Maintain 95%+ test coverage
 - **Documentation**: Update dartdoc comments for public APIs
 
 #### Commit Convention
+
 We use [Conventional Commits](https://www.conventionalcommits.org/):
 
 ```
@@ -66,16 +74,19 @@ refactor: improve error handling patterns
 ### Testing Requirements
 
 #### Unit Tests
+
 ```bash
 flutter test
 ```
 
 #### Integration Tests
+
 ```bash
 flutter test integration_test/
 ```
 
 #### Coverage Report
+
 ```bash
 flutter test --coverage
 genhtml coverage/lcov.info -o coverage/html
@@ -105,18 +116,21 @@ genhtml coverage/lcov.info -o coverage/html
 ## 🎯 Project Standards
 
 ### Code Quality
+
 - **Null Safety**: All code must be null safe
 - **Type Safety**: Use strong typing throughout
 - **Performance**: Optimize for minimal memory and CPU usage
 - **Error Handling**: Graceful error handling with clear messages
 
 ### Architecture Guidelines
+
 - **Plugin Architecture**: Maintain extensible transport system
 - **Minimal Dependencies**: Avoid unnecessary external packages
 - **Platform Support**: Ensure iOS, Android, Web, Desktop compatibility
 - **Backwards Compatibility**: No breaking changes in minor versions
 
 ### Documentation Standards
+
 - **API Documentation**: Comprehensive dartdoc for all public APIs
 - **Usage Examples**: Provide clear usage examples
 - **Parameters**: Document all parameters and return values
@@ -125,6 +139,7 @@ genhtml coverage/lcov.info -o coverage/html
 ## 🔧 Common Development Tasks
 
 ### Adding a New Transport
+
 1. Create class extending `LogTransport`
 2. Implement required methods
 3. Add comprehensive tests
@@ -132,6 +147,7 @@ genhtml coverage/lcov.info -o coverage/html
 5. Add usage example
 
 ### Adding New Log Levels
+
 1. Update `LogLevel` enum
 2. Add corresponding methods
 3. Update filtering logic
@@ -139,6 +155,7 @@ genhtml coverage/lcov.info -o coverage/html
 5. Update API documentation
 
 ### Performance Optimization
+
 1. Profile with Flutter DevTools
 2. Use `flutter analyze --suggestions`
 3. Benchmark critical paths
@@ -148,7 +165,9 @@ genhtml coverage/lcov.info -o coverage/html
 ## 🐛 Reporting Issues
 
 ### Bug Reports
+
 Include the following information:
+
 - Flutter/Dart version
 - Platform (iOS/Android/Web/Desktop)
 - Steps to reproduce
@@ -157,6 +176,7 @@ Include the following information:
 - Minimal reproduction example
 
 ### Feature Requests
+
 - Clear description of the feature
 - Use cases and benefits
 - Proposed API design (if applicable)
@@ -165,12 +185,14 @@ Include the following information:
 ## 🌟 Community Guidelines
 
 ### Code of Conduct
+
 - Be respectful and inclusive
 - Help others learn and grow
 - Provide constructive feedback
 - Follow our [Code of Conduct](CODE_OF_CONDUCT.md)
 
 ### Communication
+
 - Use clear, descriptive language
 - Be patient with newcomers
 - Share knowledge and best practices
@@ -179,17 +201,20 @@ Include the following information:
 ## 📚 Resources
 
 ### Documentation
-- [API Reference](https://pub.dev/documentation/flutter_live_logger/latest/)
-- [Architecture Guide](docs/architecture.md)
-- [Performance Guide](docs/performance.md)
-- [Troubleshooting](docs/troubleshooting.md)
+
+- [API Reference](docs/api/README.md)
+- [Architecture Guide](docs/ARCHITECTURE.md)
+- [Community Guide](docs/COMMUNITY.md)
+- [Examples & Tutorials](docs/examples/README.md)
 
 ### Development Tools
+
 - [Flutter DevTools](https://docs.flutter.dev/development/tools/devtools/overview)
 - [Dart Analyzer](https://dart.dev/guides/language/analysis-options)
 - [pub.dev Scoring](https://pub.dev/help/scoring)
 
 ### Learning Resources
+
 - [Flutter Documentation](https://docs.flutter.dev/)
 - [Dart Language Tour](https://dart.dev/guides/language/language-tour)
 - [Effective Dart](https://dart.dev/guides/language/effective-dart)
@@ -197,6 +222,7 @@ Include the following information:
 ## ✅ Checklist for Contributors
 
 Before submitting a PR:
+
 - [ ] Code follows project style guidelines
 - [ ] Tests pass locally
 - [ ] Code coverage maintained/improved
@@ -209,9 +235,10 @@ Before submitting a PR:
 ## 🎉 Recognition
 
 Contributors will be:
+
 - Listed in our [Contributors](CONTRIBUTORS.md) file
 - Mentioned in release notes
 - Invited to join our Discord community
 - Eligible for maintainer status (active contributors)
 
-Thank you for contributing to Flutter Live Logger! 🚀 
+Thank you for contributing to Flutter Live Logger! 🚀
