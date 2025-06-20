@@ -1,67 +1,61 @@
 ---
-name: 버그 리포트 / Bug Report
-about: 문제를 해결하는 데 도움이 되는 리포트를 작성해주세요 / Create a report to help us improve
+name: 🐛 Bug Report
+about: 버그를 발견하셨나요? 여기서 신고해주세요!
 title: '[BUG] '
-labels: 'bug'
-assignees: ''
+labels: ['bug', 'triage']
+assignees: ['curogom']
 ---
 
-## 버그 설명 / Describe the bug
+## 🐛 버그 설명
 <!-- 버그에 대한 명확하고 간결한 설명을 작성해주세요 -->
-<!-- A clear and concise description of what the bug is -->
 
-## 재현 방법 / To Reproduce
+## 🔄 재현 단계
 
-재현 단계 / Steps to reproduce the behavior:
+재현하는 단계:
 
 1. '...'로 이동
-2. '...'를 클릭
-3. '...'까지 스크롤
+2. '....'를 클릭  
+3. '....'까지 스크롤
 4. 오류 확인
 
-## 예상 동작 / Expected behavior
-<!-- 예상했던 동작에 대한 명확하고 간결한 설명을 작성해주세요 -->
-<!-- A clear and concise description of what you expected to happen -->
+## ✅ 예상 동작
+<!-- 무엇이 일어나야 하는지 명확하고 간결한 설명을 작성해주세요 -->
 
-## 스크린샷 / Screenshots
-<!-- 해당되는 경우, 문제를 설명하는 스크린샷을 추가해주세요 -->
-<!-- If applicable, add screenshots to help explain your problem -->
+## ❌ 실제 동작
+<!-- 실제로 무엇이 일어났는지 명확하고 간결한 설명을 작성해주세요 -->
 
-## 환경 정보 / Environment
+## 📱 환경 정보
 
-**Flutter 버전 / Flutter version:**
-<!-- flutter doctor -v 의 출력 결과를 붙여넣어주세요 -->
+**Flutter Live Logger 버전:** [예: 0.1.0]
+**Flutter 버전:** [예: 3.16.0]
+**Dart 버전:** [예: 3.2.0]
+**플랫폼:** [예: iOS, Android, Web, Desktop]
+**OS:** [예: iOS 17.0, Android 14, macOS 14.0]
+**기기:** [예: iPhone 15, Pixel 8, Chrome 브라우저]
+
+## 📋 추가 컨텍스트
+<!-- 문제에 대한 다른 컨텍스트를 여기에 추가하세요 -->
+
+## 📄 로그 출력
+<!-- 관련 로그 출력이 있다면 여기에 추가하세요 -->
 ```
-[여기에 flutter doctor -v 결과를 붙여넣으세요]
+로그를 여기에 붙여넣기
 ```
 
-**영향받는 플랫폼 / Affected platforms:**
-
-- [ ] iOS
-- [ ] Android  
-- [ ] Web
-- [ ] macOS
-- [ ] Linux
-- [ ] Windows
-
-**디바이스 정보 / Device:**
-
-- 기기명: [예: iPhone 12]
-- OS: [예: iOS 14.4]
-
-## 추가 정보 / Additional context
-<!-- 문제에 대한 다른 맥락이나 정보를 추가해주세요 -->
-<!-- Add any other context about the problem here -->
-
-## 코드 샘플 / Code sample
-<!-- 가능하다면 문제를 재현할 수 있는 최소한의 코드를 제공해주세요 -->
-<!-- If possible, please provide a minimal code sample that reproduces the issue -->
-
-<details>
-<summary>코드 예제 / Code example</summary>
-
+## 🔧 설정 정보
+<!-- 사용 중인 LoggerConfig나 Transport 설정을 공유해주세요 -->
 ```dart
-// 여기에 코드를 작성하세요
+// 설정 정보를 여기에 붙여넣기
+LoggerConfig.production(
+  // your config
+)
 ```
 
-</details>
+## 📸 스크린샷
+<!-- 해당하는 경우 스크린샷을 추가하여 문제 설명에 도움이 되도록 하세요 -->
+
+## 🔍 추가 정보
+
+- [ ] 이 버그가 재현 가능합니다
+- [ ] 이 버그가 다른 플랫폼에서도 발생합니다
+- [ ] 이 버그가 이전 버전에서는 발생하지 않았습니다

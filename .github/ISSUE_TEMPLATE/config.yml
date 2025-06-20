@@ -1,8 +1,14 @@
 blank_issues_enabled: false
 contact_links:
-  - name: 💬 GitHub Discussions
-    url: https://github.com/[owner]/flutter_live_logger/discussions
-    about: 일반적인 질문이나 아이디어 공유는 여기에서 / Ask questions and share ideas
-  - name: 📚 Documentation
-    url: https://github.com/[owner]/flutter_live_logger/wiki
-    about: 프로젝트 문서와 가이드 확인 / Check out our documentation and guides 
+  - name: 💬 질문하기 / Ask a Question  
+    url: https://github.com/curogom/flutter_live_logger/discussions
+    about: 사용법이나 일반적인 질문이 있으시면 GitHub Discussions를 이용해주세요
+  - name: 🔒 보안 이슈 신고 / Security Issue
+    url: mailto:i_am@curogom.dev
+    about: 보안 관련 문제는 이메일로 비공개 신고해주세요
+  - name: 📚 문서 / Documentation
+    url: https://github.com/curogom/flutter_live_logger/blob/main/doc/api/README.md
+    about: API 문서와 사용 가이드를 확인하세요
+  - name: 📦 pub.dev 패키지
+    url: https://pub.dev/packages/flutter_live_logger
+    about: pub.dev에서 패키지 정보를 확인하세요 

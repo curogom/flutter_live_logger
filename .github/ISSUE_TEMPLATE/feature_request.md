@@ -1,32 +1,77 @@
 ---
-name: 기능 요청 / Feature Request
-about: 이 프로젝트를 위한 아이디어를 제안해주세요 / Suggest an idea for this project
+name: ✨ Feature Request
+about: 새로운 기능을 제안해주세요!
 title: '[FEATURE] '
-labels: 'enhancement'
-assignees: ''
+labels: ['enhancement', 'triage']
+assignees: ['curogom']
 ---
 
-## 문제 설명 / Is your feature request related to a problem?
-<!-- 문제가 무엇인지 명확하고 간결하게 설명해주세요. 예: [...] 할 때 항상 불편합니다 -->
-<!-- A clear and concise description of what the problem is. Ex. I'm always frustrated when [...] -->
+## 🚀 기능 요청
 
-## 제안하는 해결책 / Describe the solution you'd like
-<!-- 원하는 해결책에 대한 명확하고 간결한 설명을 작성해주세요 -->
-<!-- A clear and concise description of what you want to happen -->
+### 📝 원하는 기능
+<!-- 원하는 기능에 대한 명확하고 간결한 설명을 작성해주세요 -->
 
-## 고려한 대안들 / Describe alternatives you've considered
-<!-- 고려한 다른 대안이나 기능에 대한 명확하고 간결한 설명을 작성해주세요 -->
-<!-- A clear and concise description of any alternative solutions or features you've considered -->
+### 🎯 문제/동기
+<!-- 이 기능 요청과 관련된 문제가 있나요? 예: "...할 때 항상 짜증나요" -->
+<!-- 아니면 이 기능이 어떤 가치를 제공하는지 설명해주세요 -->
 
-## 추가 정보 / Additional context
-<!-- 기능 요청에 대한 다른 맥락이나 스크린샷을 추가해주세요 -->
-<!-- Add any other context or screenshots about the feature request here -->
+### 💡 제안하는 해결책
+<!-- 원하는 결과에 대한 명확하고 간결한 설명을 작성해주세요 -->
 
-## 사용 사례 / Use case
-<!-- 이 기능이 어떻게 사용될지 구체적인 예시를 제공해주세요 -->
-<!-- Provide specific examples of how this feature would be used -->
-
+### 🔄 사용 예시
+<!-- 이 기능이 어떻게 사용될지 코드 예시를 보여주세요 -->
 ```dart
-// 예상되는 사용 예시 코드
-// Expected usage example
+// 예상되는 API 사용법
+FLL.newFeature(
+  // 설정 예시
+);
 ```
+
+### 🔀 고려된 대안
+<!-- 고려한 다른 대안적 해결책이나 기능에 대해 설명해주세요 -->
+
+### 📊 우선순위
+
+이 기능이 얼마나 중요한가요?
+
+- [ ] 🔥 Critical (프로젝트 사용을 막는 수준)
+- [ ] 🎯 High (일상적인 사용에 큰 영향)
+- [ ] 📈 Medium (개선되면 좋을 기능)
+- [ ] 💡 Low (아이디어 수준)
+
+### 🏗️ 구현 복잡도 (추정)
+
+- [ ] 🟢 Simple (몇 시간 내)
+- [ ] 🟡 Medium (며칠 소요)
+- [ ] 🟠 Complex (몇 주 소요)
+- [ ] 🔴 Very Complex (아키텍처 변경 필요)
+
+### 📱 영향받는 플랫폼
+
+- [ ] Android
+- [ ] iOS
+- [ ] Web
+- [ ] Desktop (Windows/macOS/Linux)
+- [ ] 모든 플랫폼
+
+### 🔄 Breaking Changes
+
+- [ ] 이 기능은 기존 API에 영향을 주지 않습니다
+- [ ] 이 기능은 minor breaking change가 필요할 수 있습니다
+- [ ] 이 기능은 major breaking change가 필요합니다
+
+### 📚 관련 리소스
+<!-- 관련 문서, 라이브러리, 또는 참조 링크가 있다면 추가해주세요 -->
+- 관련 이슈: #
+- 참조 라이브러리:
+- 문서:
+
+### 💬 추가 컨텍스트
+<!-- 기능 요청에 대한 다른 컨텍스트나 스크린샷을 여기에 추가하세요 -->
+
+### 🤝 기여 의향
+
+- [ ] 이 기능을 직접 구현하고 싶습니다
+- [ ] 이 기능 구현에 도움을 줄 수 있습니다
+- [ ] 테스트와 피드백을 제공할 수 있습니다
+- [ ] 아이디어만 제안합니다

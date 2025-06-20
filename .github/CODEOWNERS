@@ -1,0 +1,33 @@
+# Flutter Live Logger - Code Owners
+# 
+# 이 파일은 코드베이스의 각 부분에 대한 소유자를 정의합니다.
+# PR이 생성되면 해당 영역의 소유자가 자동으로 리뷰어로 지정됩니다.
+
+# 전체 프로젝트 기본 소유자
+* @curogom
+
+# 핵심 라이브러리 코드 - 엄격한 리뷰 필요
+/lib/ @curogom
+/lib/src/core/ @curogom
+
+# 테스트 코드 - 높은 품질 보장
+/test/ @curogom
+
+# 문서 - 정확성과 명확성 보장  
+/doc/ @curogom
+/README*.md @curogom
+/CHANGELOG.md @curogom
+
+# GitHub 설정 - 워크플로우 안정성
+/.github/ @curogom
+
+# 패키지 메타데이터 - pub.dev 호환성
+/pubspec.yaml @curogom
+/analysis_options.yaml @curogom
+
+# 예제 코드 - 사용자 경험
+/example/ @curogom
+
+# 보안 관련 파일
+/SECURITY.md @curogom
+/.github/workflows/ @curogom 
