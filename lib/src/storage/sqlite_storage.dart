@@ -12,13 +12,15 @@
 /// final recentLogs = await storage.query(LogQuery.recent(limit: 100));
 /// ```
 
+import 'dart:async';
 import 'dart:convert';
-import 'dart:io';
-import 'package:sqflite/sqflite.dart';
+
 import 'package:path/path.dart' as path;
-import '../core/log_entry.dart';
-import '../core/log_level.dart';
-import 'storage_interface.dart';
+import 'package:sqflite/sqflite.dart';
+
+import 'package:flutter_live_logger/src/core/log_entry.dart';
+import 'package:flutter_live_logger/src/core/log_level.dart';
+import 'package:flutter_live_logger/src/storage/storage_interface.dart';
 
 /// Configuration for SQLite storage
 class SQLiteStorageConfig {

@@ -75,7 +75,7 @@ class FlutterLiveLoggerNavigatorObserver extends NavigatorObserver {
       'navigation_type': 'push',
       'timestamp': now.toIso8601String(),
       'breadcrumbs':
-          _enableBreadcrumbs ? List.from(_navigationBreadcrumbs) : null,
+          _enableBreadcrumbs ? List<String>.from(_navigationBreadcrumbs) : null,
       'route_type': route.runtimeType.toString(),
     });
 
@@ -98,7 +98,7 @@ class FlutterLiveLoggerNavigatorObserver extends NavigatorObserver {
       'navigation_type': 'pop',
       'timestamp': now.toIso8601String(),
       'breadcrumbs':
-          _enableBreadcrumbs ? List.from(_navigationBreadcrumbs) : null,
+          _enableBreadcrumbs ? List<String>.from(_navigationBreadcrumbs) : null,
       'route_type': route.runtimeType.toString(),
     };
 
@@ -149,7 +149,7 @@ class FlutterLiveLoggerNavigatorObserver extends NavigatorObserver {
       'navigation_type': 'replace',
       'timestamp': now.toIso8601String(),
       'breadcrumbs':
-          _enableBreadcrumbs ? List.from(_navigationBreadcrumbs) : null,
+          _enableBreadcrumbs ? List<String>.from(_navigationBreadcrumbs) : null,
       'new_route_type': newRoute.runtimeType.toString(),
       'old_route_type': oldRoute?.runtimeType.toString(),
     });
@@ -280,7 +280,7 @@ class FlutterLiveLoggerNavigatorObserver extends NavigatorObserver {
     return {
       'active_routes': _routeStartTimes.length,
       'breadcrumbs_count': _navigationBreadcrumbs.length,
-      'current_breadcrumbs': List.from(_navigationBreadcrumbs),
+      'current_breadcrumbs': List<String>.from(_navigationBreadcrumbs),
       'duration_tracking_enabled': _enableDurationTracking,
       'breadcrumbs_enabled': _enableBreadcrumbs,
     };

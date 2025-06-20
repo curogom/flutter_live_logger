@@ -75,7 +75,7 @@ void main() {
         FlutterLiveLogger.fatal('Test fatal message');
 
         // Allow time for processing
-        await Future.delayed(const Duration(milliseconds: 200));
+        await Future<void>.delayed(const Duration(milliseconds: 200));
 
         final stats = FlutterLiveLogger.getStats();
         expect(stats['isInitialized'], true);
@@ -89,7 +89,7 @@ void main() {
         });
 
         // Allow time for processing
-        await Future.delayed(const Duration(milliseconds: 200));
+        await Future<void>.delayed(const Duration(milliseconds: 200));
 
         final stats = FlutterLiveLogger.getStats();
         expect(stats['isInitialized'], true);
@@ -108,7 +108,7 @@ void main() {
         }
 
         // Allow time for processing
-        await Future.delayed(const Duration(milliseconds: 200));
+        await Future<void>.delayed(const Duration(milliseconds: 200));
 
         final stats = FlutterLiveLogger.getStats();
         expect(stats['isInitialized'], true);
@@ -132,7 +132,7 @@ void main() {
         FlutterLiveLogger.error('Should pass');
         FlutterLiveLogger.fatal('Should pass');
 
-        await Future.delayed(const Duration(milliseconds: 200));
+        await Future<void>.delayed(const Duration(milliseconds: 200));
 
         final stats = FlutterLiveLogger.getStats();
         expect(stats['isInitialized'], true);
@@ -155,7 +155,7 @@ void main() {
         FlutterLiveLogger.info('Test message 2');
 
         // Allow time for processing
-        await Future.delayed(const Duration(milliseconds: 200));
+        await Future<void>.delayed(const Duration(milliseconds: 200));
 
         final entries = memoryTransport.getAllEntries();
         expect(entries.length, greaterThanOrEqualTo(2));
@@ -179,7 +179,7 @@ void main() {
           FlutterLiveLogger.info('Test message $i');
         }
 
-        await Future.delayed(const Duration(milliseconds: 200));
+        await Future<void>.delayed(const Duration(milliseconds: 200));
 
         final entries = memoryTransport.getAllEntries();
         expect(entries.length, lessThanOrEqualTo(3));
@@ -313,7 +313,7 @@ void main() {
         FlutterLiveLogger.info('Message 1');
         FlutterLiveLogger.info('Message 2');
 
-        await Future.delayed(const Duration(milliseconds: 100));
+        await Future<void>.delayed(const Duration(milliseconds: 100));
 
         // Should have pending entries
         var stats = FlutterLiveLogger.getStats();
@@ -322,7 +322,7 @@ void main() {
         // Send third message (should trigger batch)
         FlutterLiveLogger.info('Message 3');
 
-        await Future.delayed(const Duration(milliseconds: 200));
+        await Future<void>.delayed(const Duration(milliseconds: 200));
 
         // Should have processed the batch
         stats = FlutterLiveLogger.getStats();
@@ -348,7 +348,7 @@ void main() {
 
         FlutterLiveLogger.info('Test message');
 
-        await Future.delayed(const Duration(milliseconds: 200));
+        await Future<void>.delayed(const Duration(milliseconds: 200));
 
         // Message should be stored offline since transport failed
         final storedEntries = await memoryStorage.query(LogQuery.recent());

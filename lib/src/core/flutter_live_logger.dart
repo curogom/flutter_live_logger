@@ -1,11 +1,12 @@
 import 'dart:async';
 import 'dart:collection';
-import 'log_level.dart';
-import 'log_entry.dart';
-import 'logger_config.dart';
-import '../transport/log_transport.dart';
-import '../storage/storage_interface.dart';
-import '../storage/sqlite_storage.dart';
+
+import 'package:flutter_live_logger/src/core/log_entry.dart';
+import 'package:flutter_live_logger/src/core/log_level.dart';
+import 'package:flutter_live_logger/src/core/logger_config.dart';
+import 'package:flutter_live_logger/src/storage/sqlite_storage.dart';
+import 'package:flutter_live_logger/src/storage/storage_interface.dart';
+import 'package:flutter_live_logger/src/transport/log_transport.dart';
 
 /// Main Flutter Live Logger class
 ///
@@ -47,6 +48,7 @@ class FlutterLiveLogger {
         await _retryOfflineEntries();
       } catch (e) {
         // Ignore errors during offline retry
+        // In production, avoid print statements
       }
     }
   }

@@ -150,7 +150,7 @@ class _LoggerDemoPageState extends State<LoggerDemoPage> {
 
     if (!mounted) return;
 
-    showDialog(
+    showDialog<void>(
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('Logger Statistics'),

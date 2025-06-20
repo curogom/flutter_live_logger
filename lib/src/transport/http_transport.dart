@@ -208,7 +208,7 @@ class HttpTransport extends LogTransport {
 
       if (response.statusCode >= 200 && response.statusCode < 300) {
         // Consume response to free connection
-        await response.drain();
+        await response.drain<void>();
       } else {
         final body = await response.transform(utf8.decoder).join();
         throw HttpException(
@@ -231,7 +231,7 @@ class HttpTransport extends LogTransport {
             .round();
     final totalDelay = exponentialDelay + jitter;
 
-    await Future.delayed(Duration(milliseconds: totalDelay));
+    await Future<void>.delayed(Duration(milliseconds: totalDelay));
   }
 
   bool _isRetryableError(HttpException e) {
@@ -276,7 +276,7 @@ class HttpTransport extends LogTransport {
       });
 
       final response = await request.close();
-      await response.drain();
+      await response.drain<void>();
 
       return response.statusCode >= 200 && response.statusCode < 400;
     } catch (e) {
