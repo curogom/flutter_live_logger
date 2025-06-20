@@ -1,0 +1,68 @@
+# Pub ignore file
+# Files and directories to exclude from pub.dev package
+
+# Development and IDE files
+.vscode/
+.idea/
+*.iml
+.cursorrules*
+.DS_Store
+
+# Git and CI/CD
+.git/
+.github/
+codecov.yml
+
+# Build and cache
+build/
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+
+# Temporary and log files
+*.log
+*.tmp
+*.temp
+
+# Coverage reports
+coverage/
+
+# Development scripts and tools
+scripts/
+tools/
+
+# Local environment files
+.env*
+*.local
+
+# Mac system files
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows system files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Linux system files
+*~
+
+# Development roadmap (internal planning)
+roadmap.ko.md
+
+# Keep essential files for pub.dev:
+# - README.md, README.ko.md
+# - LICENSE
+# - CHANGELOG.md
+# - AUTHORS
+# - SECURITY.md
+# - CODE_OF_CONDUCT.md
+# - CONTRIBUTING.md
+# - CONTRIBUTORS.md
+# - ROADMAP.md (public roadmap)
+# - pubspec.yaml
+# - lib/
+# - doc/
+# - example/
+# - test/ 

@@ -1,0 +1,29 @@
+# Authors
+
+This file lists the contributors to Flutter Live Logger.
+
+## Main Author & Maintainer
+
+**curogom** <i_am@curogom.dev>
+
+- Original author and primary maintainer
+- GitHub: [@curogom](https://github.com/curogom)
+- Project Lead & Core Developer
+
+## Core Team
+
+Currently, this is a solo project maintained by curogom.
+
+## Contributing
+
+We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+
+## Contact
+
+- **Primary Contact**: <i_am@curogom.dev>
+- **Issues**: [GitHub Issues](https://github.com/curogom/flutter_live_logger/issues)
+- **Repository**: [GitHub](https://github.com/curogom/flutter_live_logger)
+
+---
+
+*This project follows the [Dart Code of Conduct](CODE_OF_CONDUCT.md).*
