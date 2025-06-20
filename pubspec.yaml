@@ -1,6 +1,6 @@
 name: flutter_live_logger
 description: Production-ready real-time logging for Flutter with HTTP, File, Memory transports, offline support, and developer-friendly APIs.
-version: 0.1.0
+version: 0.1.1
 
 # Repository and documentation links
 homepage: https://github.com/curogom/flutter_live_logger

@@ -5,6 +5,39 @@ All notable changes to Flutter Live Logger will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.1] - 2025-06-21
+
+### Improved - Pub.dev Package Quality
+
+#### Package Optimization
+
+- **Enhanced pub score** - Optimized package metadata for better discoverability
+- **Description refinement** - Shortened package description to meet pub.dev requirements (60-180 characters)
+- **Documentation improvements** - Fixed documentation URLs and added comprehensive documentation section
+- **Link validation** - Resolved markdown link check issues for CI/CD reliability
+
+#### Technical Improvements
+
+- **API documentation** - Added missing API documentation files to git repository
+- **Link consistency** - Fixed inconsistent documentation links across all markdown files  
+- **Build process** - Improved CI/CD pipeline stability with proper link validation
+- **Package structure** - Better organization of documentation and examples
+
+#### Developer Experience
+
+- **Better discoverability** - Enhanced package metadata for improved search ranking on pub.dev
+- **Clearer documentation** - More accessible documentation structure with proper navigation
+- **Reliable CI** - Fixed GitHub Actions workflow issues for consistent quality checks
+
+### Fixed
+
+- Fixed `.gitignore` excluding documentation files
+- Resolved markdown link check failures in CI/CD
+- Fixed broken documentation URLs in package configuration
+- Corrected relative path issues in documentation links
+
+---
+
 ## [0.1.0] - 2025-06-20
 
 ### Added - Initial Release 🚀
