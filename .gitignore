@@ -22,7 +22,6 @@ migrate_working_dir/
 #.vscode/
 
 # Flutter/Dart/Pub related
-**/doc/api/
 **/ios/Flutter/flutter_assets/
 **/ios/Flutter/flutter_export_environment.sh
 .dart_tool/
@@ -144,9 +143,6 @@ logs/
 # Temporary files
 tmp/
 temp/
-
-# Generated documentation
-doc/api/
 
 # Build artifacts
 *.dSYM/

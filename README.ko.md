@@ -452,7 +452,7 @@ flutter run
 
 ## 📞 지원
 
-- 📖 [문서](docs/api/README.md)
+- 📖 [문서](doc/api/README.md)
 - 🐛 [이슈 트래커](https://github.com/curogom/flutter_live_logger/issues)
 - 📧 이메일: <i_am@curogom.dev>
 <!-- GitHub Discussions는 초기 릴리스 후 활성화됩니다 -->
