@@ -498,3 +498,38 @@ Built with ❤️ for the Flutter community.
 - Special thanks to the Flutter team for creating an amazing framework
 
 <!-- Link check test -->
+
+---
+
+## 📚 Documentation
+
+Complete documentation and guides:
+
+- 📖 [API Documentation](doc/api/README.md) - Complete API reference with examples
+- 🏗️ [Architecture Guide](doc/ARCHITECTURE.md) - System design and architecture
+- 👥 [Community Guidelines](doc/COMMUNITY.md) - How to contribute and get involved
+- 🚀 [Getting Started](#-quick-start) - Installation and basic usage
+- 🔧 [Advanced Configuration](#-advanced-configuration) - Environment-specific setup
+
+---
+
+## 🧪 Testing
+
+The library includes comprehensive testing:
+
+```bash
+# Run all tests
+flutter test
+
+# Run tests with coverage
+flutter test --coverage
+```
+
+Test coverage includes:
+
+- ✅ Initialization and configuration
+- ✅ All log levels and filtering
+- ✅ Transport layer functionality
+- ✅ Storage operations and queries
+- ✅ Error handling and resilience
+- ✅ Batch processing and performance
