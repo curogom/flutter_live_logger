@@ -454,8 +454,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 - 📖 [Documentation](docs/api/README.md)
 - 🐛 [Issue Tracker](https://github.com/curogom/flutter_live_logger/issues)
-- 💬 [Discussions](https://github.com/curogom/flutter_live_logger/discussions)
-- 📧 Email: <support@flutterlivelogger.com>
+- 📧 Email: <i_am@curogom.dev>
+<!-- GitHub Discussions will be enabled after initial release -->
+<!-- - 💬 [Discussions](https://github.com/curogom/flutter_live_logger/discussions) -->
 
 ---
 

@@ -342,8 +342,9 @@ flutter run
 ## 📞 연결 및 기여
 
 - **GitHub**: [flutter_live_logger](https://github.com/curogom/flutter_live_logger)
-- **pub.dev**: 곧 출시 (버전 0.1.0)
-- **이슈**: [버그 신고 및 기능 요청](https://github.com/curogom/flutter_live_logger/issues)
-- **토론**: [커뮤니티 토론](https://github.com/curogom/flutter_live_logger/discussions)
+- **pub.dev**: 곧 출시 예정 (버전 0.1.0)
+- **이슈**: [버그 리포트 및 기능 요청](https://github.com/curogom/flutter_live_logger/issues)
+<!-- GitHub Discussions는 초기 릴리스 후 활성화됩니다 -->
+<!-- - **토론**: [커뮤니티 토론](https://github.com/curogom/flutter_live_logger/discussions) -->
 
 **기반이 완성되었습니다. 함께 Flutter 로깅 생태계를 구축해봅시다! 🚀**

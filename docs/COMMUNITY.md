@@ -159,13 +159,13 @@ Tools to enhance developer experience:
 - 🚫 **Copyright Infringement**: Unauthorized copying of other project code
 - 🚫 **Secret Disclosure**: Sharing sensitive information or personal data
 
-### 🚨 Reporting Process
+### 🚨 Reporting Issues
 
-Report issues through the following methods:
+If you encounter problems, report them using:
 
-1. **📧 Email**: <conduct@flutterlivelogger.dev> (coming soon)
-2. **💬 Private Message**: Contact maintainers directly
-3. **📋 Private Issue**: Use private for sensitive content
+1. **📧 Email**: <i_am@curogom.dev> - For sensitive issues
+2. **💬 Direct Message**: Contact maintainers directly
+3. **📋 Private Issue**: For confidential matters
 
 ## 📈 Community Growth Plan
 
@@ -195,7 +195,7 @@ Report issues through the following methods:
 ### 🎯 Maintainers
 
 - **🏗️ Lead Maintainer**: [@curogom](https://github.com/curogom)
-- **📧 Email**: <maintainers@flutterlivelogger.dev> (coming soon)
+- **📧 Email**: <i_am@curogom.dev>
 - **💬 Discord**: Flutter Live Logger Server (coming soon)
 
 ### 🌐 Official Channels
@@ -206,7 +206,7 @@ Report issues through the following methods:
 
 ### 🆘 Need Help?
 
-1. **📖 Check Documentation**: [docs/README.md](./README.md)
+1. **📖 Check Documentation**: [README.md](README.md)
 2. **🔍 Search Existing Issues**: Check if similar issues exist
 3. **💬 Join Discussions**: Ask questions in Q&A section
 4. **📋 Create New Issue**: Bug reports or feature requests
@@ -223,3 +223,10 @@ Let's build the **standard logging tool for the Flutter ecosystem** together! �
 ---
 
 *This guide is continuously updated. Improvement suggestions are always welcome!*
+
+## 📚 Documentation Resources
+
+- [**Main Documentation**](README.md) - Documentation overview
+- [**API Reference**](api/README.md) - Complete API documentation
+- [**Architecture Guide**](ARCHITECTURE.md) - Technical architecture
+- [**Examples & Tutorials**](examples/README.md) - Code examples

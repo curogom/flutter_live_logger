@@ -454,8 +454,9 @@ flutter run
 
 - 📖 [문서](docs/api/README.md)
 - 🐛 [이슈 트래커](https://github.com/curogom/flutter_live_logger/issues)
-- 💬 [토론](https://github.com/curogom/flutter_live_logger/discussions)
-- 📧 이메일: <support@flutterlivelogger.com>
+- 📧 이메일: <i_am@curogom.dev>
+<!-- GitHub Discussions는 초기 릴리스 후 활성화됩니다 -->
+<!-- - 💬 [토론](https://github.com/curogom/flutter_live_logger/discussions) -->
 
 ---
 

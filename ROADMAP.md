@@ -344,6 +344,14 @@ flutter run
 - **GitHub**: [flutter_live_logger](https://github.com/curogom/flutter_live_logger)
 - **pub.dev**: Coming soon (Version 0.1.0)
 - **Issues**: [Report bugs & request features](https://github.com/curogom/flutter_live_logger/issues)
-- **Discussions**: [Community discussions](https://github.com/curogom/flutter_live_logger/discussions)
+<!-- GitHub Discussions will be enabled after initial release -->
+<!-- - **Discussions**: [Community discussions](https://github.com/curogom/flutter_live_logger/discussions) -->
 
 **The foundation is complete. Let's build the Flutter logging ecosystem together! 🚀**
+
+## 🤝 Community & Support
+
+- 🐛 [Issue Tracker](https://github.com/curogom/flutter_live_logger/issues) - Report bugs and request features
+- 📧 [Email Support](mailto:i_am@curogom.dev) - Direct support
+<!-- GitHub Discussions will be enabled after initial release -->
+<!-- - 💬 [Community Discussions](https://github.com/curogom/flutter_live_logger/discussions) - Ask questions and share ideas -->

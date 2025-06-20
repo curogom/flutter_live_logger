@@ -163,7 +163,7 @@ git push origin feature/your-feature-name
 
 문제가 있을 때는 다음 방법으로 신고:
 
-1. **📧 이메일**: <conduct@flutterlivelogger.dev> (예정)
+1. **📧 이메일**: <i_am@curogom.dev> - 민감한 문제용
 2. **💬 개인 메시지**: 메인테이너에게 직접 연락
 3. **📋 비공개 Issue**: 민감한 내용은 비공개로
 
@@ -195,7 +195,7 @@ git push origin feature/your-feature-name
 ### 🎯 메인테이너
 
 - **🏗️ Lead Maintainer**: [@curogom](https://github.com/curogom)
-- **📧 이메일**: <maintainers@flutterlivelogger.dev> (예정)
+- **📧 이메일**: <i_am@curogom.dev>
 - **💬 Discord**: Flutter Live Logger Server (예정)
 
 ### 🌐 공식 채널
@@ -204,12 +204,11 @@ git push origin feature/your-feature-name
 - **📦 pub.dev**: [flutter_live_logger](https://pub.dev/packages/flutter_live_logger) (예정)
 - **📖 문서**: [docs.flutterlivelogger.dev](https://docs.flutterlivelogger.dev) (예정)
 
-### 🆘 도움이 필요하신가요?
+### 🆘 도움이 필요할 때
 
-1. **📖 문서 확인**: [docs/README.md](./README.md)
-2. **🔍 기존 Issues 검색**: 비슷한 문제가 있었는지 확인
-3. **💬 Discussions 참여**: Q&A 섹션에서 질문
-4. **📋 새 Issue 생성**: 버그나 기능 요청
+1. **📖 문서 확인**: [README.md](README.md)
+2. **🔍 기존 이슈 검색**: 유사한 문제가 있는지 확인
+3. **💬 토론 참여**: Q&A 섹션에서 질문
 
 ---
 
@@ -223,3 +222,10 @@ Flutter Live Logger는 **커뮤니티가 만들어가는 프로젝트**입니다
 ---
 
 *이 가이드는 지속적으로 업데이트됩니다. 개선 제안은 언제든지 환영합니다!*
+
+## 📚 문서 리소스
+
+- [**메인 문서**](README.md) - 문서 개요
+- [**API 레퍼런스**](api/README.md) - 완전한 API 문서
+- [**아키텍처 가이드**](ARCHITECTURE.md) - 기술 아키텍처
+- [**예제 및 튜토리얼**](examples/README.md) - 코드 예제
