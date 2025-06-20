@@ -80,10 +80,10 @@ jobs:
           done
           
           # 문서 디렉토리 확인
-          if [ -d "docs" ]; then
-            echo "✅ docs/ directory exists"
+          if [ -d "doc" ]; then
+            echo "✅ doc/ directory exists"
           else
-            echo "❌ docs/ directory missing"
+            echo "❌ doc/ directory missing"
             exit 1
           fi
           
