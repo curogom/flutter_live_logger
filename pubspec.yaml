@@ -14,19 +14,10 @@ documentation: https://github.com/curogom/flutter_live_logger/blob/main/doc/api/
 # Package metadata for better discoverability
 topics:
   - logging
-  - logger
-  - analytics
+  - flutter
   - debugging
   - monitoring
-  - flutter
-  - transport
-  - offline
-  - sqlite
-  - http
-  - navigation
-  - real-time
-  - production
-  - error-tracking
+  - analytics
 
 # Platform compatibility
 platforms:
