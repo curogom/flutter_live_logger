@@ -480,7 +480,10 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 - 📖 [Documentation](docs/api/README.md)
 - 🐛 [Issue Tracker](https://github.com/curogom/flutter_live_logger/issues)
-- 📧 Email: <i_am@curogom.dev>
+- 📧 [Email Support](mailto:i_am@curogom.dev) - Direct support
+- 🔗 [API Documentation](doc/api/README.md) - Complete API reference
+- 🏗️ [Architecture Guide](doc/ARCHITECTURE.md) - System design and architecture  
+- 👥 [Community Guidelines](doc/COMMUNITY.md) - How to contribute and get involved
 <!-- GitHub Discussions will be enabled after initial release -->
 <!-- - 💬 [Discussions](https://github.com/curogom/flutter_live_logger/discussions) -->
 
