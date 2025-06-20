@@ -4,19 +4,20 @@ import 'package:flutter_live_logger/flutter_live_logger.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Initialize logger with development configuration
-  await FlutterLiveLogger.init(
+  // Initialize Flutter Live Logger with development configuration
+  await FLL.init(
     config: LoggerConfig.development(
-      logLevel: LogLevel.debug,
-      userId: 'demo_user_123',
-      sessionId: 'session_${DateTime.now().millisecondsSinceEpoch}',
+      userId: 'demo_user_${DateTime.now().millisecondsSinceEpoch}',
+      sessionId: 'demo_session_${DateTime.now().millisecondsSinceEpoch}',
     ),
   );
 
-  // Test different log levels
-  FlutterLiveLogger.trace('App starting up');
-  FlutterLiveLogger.debug('Debug information');
-  FlutterLiveLogger.info('Application initialized successfully');
+  // Log app initialization
+  FLL.info('Flutter Live Logger Demo App Started', data: {
+    'version': '1.0.0',
+    'platform': 'demo',
+    'timestamp': DateTime.now().toIso8601String(),
+  });
 
   runApp(const MyApp());
 }
@@ -63,7 +64,7 @@ class _LoggerDemoPageState extends State<LoggerDemoPage> {
   @override
   void initState() {
     super.initState();
-    FlutterLiveLogger.info('LoggerDemoPage initialized');
+    FLL.info('LoggerDemoPage initialized');
   }
 
   @override
@@ -78,18 +79,18 @@ class _LoggerDemoPageState extends State<LoggerDemoPage> {
     });
 
     // Log the counter increment with structured data
-    FlutterLiveLogger.event('counter_increment', {
+    FLL.event('counter_increment', {
       'counter_value': _counter,
       'timestamp': DateTime.now().toIso8601String(),
       'widget': 'LoggerDemoPage',
     });
 
     if (_counter % 5 == 0) {
-      FlutterLiveLogger.warn('Counter reached multiple of 5: $_counter');
+      FLL.warn('Counter reached multiple of 5: $_counter');
     }
 
     if (_counter >= 10) {
-      FlutterLiveLogger.error('Counter is getting high!', data: {
+      FLL.error('Counter is getting high!', data: {
         'counter': _counter,
         'threshold': 10,
       });
@@ -99,7 +100,7 @@ class _LoggerDemoPageState extends State<LoggerDemoPage> {
   void _sendCustomLog() {
     final message = _messageController.text.trim();
     if (message.isNotEmpty) {
-      FlutterLiveLogger.info('Custom message: $message', data: {
+      FLL.info('Custom message: $message', data: {
         'source': 'user_input',
         'length': message.length,
       });
@@ -116,7 +117,7 @@ class _LoggerDemoPageState extends State<LoggerDemoPage> {
       // Intentionally cause an error for demonstration
       throw Exception('This is a demo error for testing');
     } catch (error, stackTrace) {
-      FlutterLiveLogger.error(
+      FLL.error(
         'Demo error occurred',
         data: {
           'error_type': 'demo',
@@ -136,17 +137,17 @@ class _LoggerDemoPageState extends State<LoggerDemoPage> {
   }
 
   void _navigateToSettings() {
-    FlutterLiveLogger.info('Navigating to settings');
+    FLL.info('Navigating to settings');
     Navigator.of(context).pushNamed('/settings');
   }
 
   void _navigateToProfile() {
-    FlutterLiveLogger.info('Navigating to profile');
+    FLL.info('Navigating to profile');
     Navigator.of(context).pushNamed('/profile');
   }
 
   Future<void> _showLoggerStats() async {
-    final stats = FlutterLiveLogger.getStats();
+    final stats = FLL.getStats();
 
     if (!mounted) return;
 
@@ -380,7 +381,7 @@ class SettingsPage extends StatelessWidget {
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                FlutterLiveLogger.info('Settings back button pressed');
+                FLL.info('Settings back button pressed');
                 Navigator.of(context).pop();
               },
               child: const Text('Go Back'),
@@ -415,7 +416,7 @@ class ProfilePage extends StatelessWidget {
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                FlutterLiveLogger.info('Profile back button pressed');
+                FLL.info('Profile back button pressed');
                 Navigator.of(context).pop();
               },
               child: const Text('Go Back'),

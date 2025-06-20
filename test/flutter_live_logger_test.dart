@@ -381,6 +381,110 @@ void main() {
         FlutterLiveLogger.info('Message after disposal');
       });
     });
+
+    group('Convenience Aliases', () {
+      setUp(() async {
+        // Reset logger state before each test
+        await FlutterLiveLogger.dispose();
+      });
+
+      test('FLL alias should work identically to FlutterLiveLogger', () async {
+        final transport = MemoryTransport(maxEntries: 100);
+        await FLL.init(
+          config: LoggerConfig(
+            logLevel: LogLevel.trace, // Enable all log levels
+            transports: [transport],
+            userId: 'test_user',
+            sessionId: 'test_session',
+          ),
+        );
+
+        // Test all log levels with FLL
+        FLL.trace('Trace message');
+        FLL.debug('Debug message');
+        FLL.info('Info message');
+        FLL.warn('Warning message');
+        FLL.error('Error message');
+        FLL.fatal('Fatal message');
+        FLL.event('test_event', {'key': 'value'});
+
+        await FLL.flush();
+
+        final entries = transport.getAllEntries();
+        expect(entries, hasLength(7));
+        expect(entries[0].message, 'Trace message');
+        expect(entries[6].message, 'Event: test_event');
+        expect(FLL.isInitialized, isTrue);
+
+        final stats = FLL.getStats();
+        expect(stats['isInitialized'], isTrue);
+      });
+
+      test('FLLogger alias should work identically to FlutterLiveLogger',
+          () async {
+        final transport = MemoryTransport(maxEntries: 100);
+        await FLLogger.init(
+          config: LoggerConfig(
+            logLevel: LogLevel.trace, // Enable all log levels
+            transports: [transport],
+            userId: 'test_user',
+            sessionId: 'test_session',
+          ),
+        );
+
+        // Test all log levels with FLLogger
+        FLLogger.trace('Trace message');
+        FLLogger.debug('Debug message');
+        FLLogger.info('Info message');
+        FLLogger.warn('Warning message');
+        FLLogger.error('Error message');
+        FLLogger.fatal('Fatal message');
+        FLLogger.event('test_event', {'key': 'value'});
+
+        await FLLogger.flush();
+
+        final entries = transport.getAllEntries();
+        expect(entries, hasLength(7));
+        expect(entries[0].message, 'Trace message');
+        expect(entries[6].message, 'Event: test_event');
+        expect(FLLogger.isInitialized, isTrue);
+
+        final stats = FLLogger.getStats();
+        expect(stats['isInitialized'], isTrue);
+      });
+
+      test('All three APIs should be interchangeable', () async {
+        final transport = MemoryTransport(maxEntries: 100);
+
+        // Initialize with FLL
+        await FLL.init(
+          config: LoggerConfig(
+            logLevel: LogLevel.trace, // Enable all log levels
+            transports: [transport],
+            userId: 'test_user',
+            sessionId: 'test_session',
+          ),
+        );
+
+        // Use different APIs
+        FlutterLiveLogger.info('Full API');
+        FLL.info('Short alias');
+        FLLogger.info('Medium alias');
+
+        await FLL.flush();
+
+        final entries = transport.getAllEntries();
+        expect(entries, hasLength(3));
+        expect(entries[0].message, 'Full API');
+        expect(entries[1].message, 'Short alias');
+        expect(entries[2].message, 'Medium alias');
+
+        // All should report same initialization status
+        expect(FlutterLiveLogger.isInitialized, isTrue);
+        expect(FLL.isInitialized, isTrue);
+        expect(FLLogger.isInitialized, isTrue);
+      });
+    });
   });
 }
 

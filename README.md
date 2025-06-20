@@ -94,11 +94,17 @@ class HomeScreen extends StatelessWidget {
       body: Center(
         child: ElevatedButton(
           onPressed: () {
-            // Simple logging
+            // Full API (traditional)
             FlutterLiveLogger.info('User clicked button');
             
+            // Short alias (recommended for frequent use)
+            FLL.info('User clicked button');
+            
+            // Medium alias (balance of brevity and clarity)
+            FLLogger.info('User clicked button');
+            
             // Event tracking with structured data
-            FlutterLiveLogger.event('button_click', {
+            FLL.event('button_click', {
               'button_id': 'main_cta',
               'screen': 'home',
               'timestamp': DateTime.now().toIso8601String(),
@@ -108,7 +114,7 @@ class HomeScreen extends StatelessWidget {
             try {
               throw Exception('Demo error');
             } catch (error, stackTrace) {
-              FlutterLiveLogger.error(
+              FLL.error(
                 'Operation failed',
                 data: {'operation': 'demo'},
                 error: error,
@@ -122,6 +128,26 @@ class HomeScreen extends StatelessWidget {
     );
   }
 }
+```
+
+## 🎯 **Developer-Friendly API**
+
+Flutter Live Logger provides multiple ways to access the same functionality:
+
+```dart
+// 1. Full API (explicit and clear)
+FlutterLiveLogger.info('Message');
+FlutterLiveLogger.error('Error occurred', error: e);
+
+// 2. FLL (ultra-short for frequent use)
+FLL.info('Message');
+FLL.error('Error occurred', error: e);
+
+// 3. FLLogger (balanced brevity)
+FLLogger.info('Message');
+FLLogger.error('Error occurred', error: e);
+
+// All three are interchangeable and use the same underlying system
 ```
 
 ---

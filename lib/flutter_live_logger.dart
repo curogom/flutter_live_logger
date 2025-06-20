@@ -20,12 +20,16 @@
 ///   ),
 /// );
 ///
-/// // Log messages
+/// // Log messages (full API)
 /// FlutterLiveLogger.info('User action completed');
 /// FlutterLiveLogger.error('Something went wrong', data: {'error': 'details'});
 ///
+/// // Or use convenient shortcuts
+/// FLL.info('User action completed');
+/// FLL.error('Something went wrong', data: {'error': 'details'});
+///
 /// // Log custom events
-/// FlutterLiveLogger.event('button_click', {
+/// FLL.event('button_click', {
 ///   'button_id': 'purchase',
 ///   'amount': 29.99,
 /// });
@@ -45,7 +49,7 @@
 /// ## Production Configuration
 ///
 /// ```dart
-/// await FlutterLiveLogger.init(
+/// await FLL.init(
 ///   config: LoggerConfig.production(
 ///     transports: [
 ///       HttpTransport(config: HttpTransportConfig(
@@ -79,3 +83,135 @@ export 'src/transport/file_transport.dart';
 export 'src/transport/http_transport.dart';
 export 'src/transport/log_transport.dart';
 export 'src/transport/memory_transport.dart';
+
+// Convenience imports
+import 'src/core/flutter_live_logger.dart';
+import 'src/core/logger_config.dart';
+
+/// Short alias for FlutterLiveLogger
+///
+/// Use this for a more convenient API:
+/// ```dart
+/// FLL.info('User logged in');
+/// FLL.error('API call failed', error: e);
+/// FLL.event('purchase_completed', {'amount': 29.99});
+/// ```
+class FLL {
+  FLL._(); // Private constructor to prevent instantiation
+
+  /// Initialize the logger with the given configuration
+  static Future<void> init({required LoggerConfig config}) =>
+      FlutterLiveLogger.init(config: config);
+
+  /// Log an informational message
+  static void info(String message, {Map<String, dynamic>? data}) =>
+      FlutterLiveLogger.info(message, data: data);
+
+  /// Log a debug message
+  static void debug(String message, {Map<String, dynamic>? data}) =>
+      FlutterLiveLogger.debug(message, data: data);
+
+  /// Log a warning message
+  static void warn(String message, {Map<String, dynamic>? data}) =>
+      FlutterLiveLogger.warn(message, data: data);
+
+  /// Log an error message
+  static void error(String message,
+          {Map<String, dynamic>? data,
+          Object? error,
+          StackTrace? stackTrace}) =>
+      FlutterLiveLogger.error(message,
+          data: data, error: error, stackTrace: stackTrace);
+
+  /// Log a trace message
+  static void trace(String message, {Map<String, dynamic>? data}) =>
+      FlutterLiveLogger.trace(message, data: data);
+
+  /// Log a fatal message
+  static void fatal(String message,
+          {Map<String, dynamic>? data,
+          Object? error,
+          StackTrace? stackTrace}) =>
+      FlutterLiveLogger.fatal(message,
+          data: data, error: error, stackTrace: stackTrace);
+
+  /// Log a custom event
+  static void event(String name, Map<String, dynamic> properties) =>
+      FlutterLiveLogger.event(name, properties);
+
+  /// Manually flush pending log entries
+  static Future<void> flush() => FlutterLiveLogger.flush();
+
+  /// Dispose of the logger and clean up resources
+  static Future<void> dispose() => FlutterLiveLogger.dispose();
+
+  /// Get logger statistics
+  static Map<String, dynamic> getStats() => FlutterLiveLogger.getStats();
+
+  /// Check if logger is initialized
+  static bool get isInitialized => FlutterLiveLogger.isInitialized;
+}
+
+/// Alternative short alias for FlutterLiveLogger
+///
+/// Use this for a slightly longer but more descriptive API:
+/// ```dart
+/// FLLogger.info('User logged in');
+/// FLLogger.error('API call failed', error: e);
+/// FLLogger.event('purchase_completed', {'amount': 29.99});
+/// ```
+class FLLogger {
+  FLLogger._(); // Private constructor to prevent instantiation
+
+  /// Initialize the logger with the given configuration
+  static Future<void> init({required LoggerConfig config}) =>
+      FlutterLiveLogger.init(config: config);
+
+  /// Log an informational message
+  static void info(String message, {Map<String, dynamic>? data}) =>
+      FlutterLiveLogger.info(message, data: data);
+
+  /// Log a debug message
+  static void debug(String message, {Map<String, dynamic>? data}) =>
+      FlutterLiveLogger.debug(message, data: data);
+
+  /// Log a warning message
+  static void warn(String message, {Map<String, dynamic>? data}) =>
+      FlutterLiveLogger.warn(message, data: data);
+
+  /// Log an error message
+  static void error(String message,
+          {Map<String, dynamic>? data,
+          Object? error,
+          StackTrace? stackTrace}) =>
+      FlutterLiveLogger.error(message,
+          data: data, error: error, stackTrace: stackTrace);
+
+  /// Log a trace message
+  static void trace(String message, {Map<String, dynamic>? data}) =>
+      FlutterLiveLogger.trace(message, data: data);
+
+  /// Log a fatal message
+  static void fatal(String message,
+          {Map<String, dynamic>? data,
+          Object? error,
+          StackTrace? stackTrace}) =>
+      FlutterLiveLogger.fatal(message,
+          data: data, error: error, stackTrace: stackTrace);
+
+  /// Log a custom event
+  static void event(String name, Map<String, dynamic> properties) =>
+      FlutterLiveLogger.event(name, properties);
+
+  /// Manually flush pending log entries
+  static Future<void> flush() => FlutterLiveLogger.flush();
+
+  /// Dispose of the logger and clean up resources
+  static Future<void> dispose() => FlutterLiveLogger.dispose();
+
+  /// Get logger statistics
+  static Map<String, dynamic> getStats() => FlutterLiveLogger.getStats();
+
+  /// Check if logger is initialized
+  static bool get isInitialized => FlutterLiveLogger.isInitialized;
+}
