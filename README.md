@@ -478,7 +478,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📞 Support
 
-- 📖 [Documentation](docs/api/README.md)
+- 📖 [Documentation](doc/api/README.md)
 - 🐛 [Issue Tracker](https://github.com/curogom/flutter_live_logger/issues)
 - 📧 [Email Support](mailto:i_am@curogom.dev) - Direct support
 - 🔗 [API Documentation](doc/api/README.md) - Complete API reference
@@ -496,3 +496,5 @@ Built with ❤️ for the Flutter community.
 - Thanks to all [contributors](https://github.com/curogom/flutter_live_logger/graphs/contributors)
 - Inspired by best practices from the Flutter and Dart ecosystem
 - Special thanks to the Flutter team for creating an amazing framework
+
+<!-- Link check test -->
