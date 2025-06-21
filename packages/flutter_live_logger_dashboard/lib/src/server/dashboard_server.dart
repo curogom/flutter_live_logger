@@ -334,8 +334,9 @@ class DashboardServer {
         final response = await innerHandler(request);
         stopwatch.stop();
 
+        // Logging disabled for production
         // print('${request.method} ${request.requestedUri.path} - '
-            '${response.statusCode} (${stopwatch.elapsedMilliseconds}ms)');
+        //     '${response.statusCode} (${stopwatch.elapsedMilliseconds}ms)');
 
         return response;
       };
