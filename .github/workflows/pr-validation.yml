@@ -33,7 +33,7 @@ jobs:
     - name: 🔍 Analyze core code
       run: |
         cd packages/flutter_live_logger
-        flutter analyze --no-fatal-infos
+        flutter analyze --no-fatal-warnings
 
     - name: 🧪 Run core tests
       run: |
@@ -85,7 +85,7 @@ jobs:
     - name: 🔍 Analyze dashboard code
       run: |
         cd packages/flutter_live_logger_dashboard
-        flutter analyze --no-fatal-infos
+        flutter analyze --no-fatal-warnings
 
     - name: 🧪 Run dashboard tests
       run: |

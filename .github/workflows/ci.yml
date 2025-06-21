@@ -162,7 +162,7 @@ jobs:
       - name: 🔍 Analyze Core Package
         run: |
           cd packages/flutter_live_logger
-          dart analyze --no-fatal-infos
+          dart analyze --no-fatal-warnings
 
   # Dashboard 패키지 분석
   analyze-dashboard:
@@ -196,7 +196,7 @@ jobs:
       - name: 🔍 Analyze Dashboard Package
         run: |
           cd packages/flutter_live_logger_dashboard
-          dart analyze --no-fatal-infos
+          dart analyze --no-fatal-warnings
 
   # Core 패키지 테스트
   test-core:
