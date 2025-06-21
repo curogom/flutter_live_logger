@@ -13,6 +13,7 @@
 ///   'timestamp': DateTime.now().millisecondsSinceEpoch,
 /// });
 /// ```
+library;
 
 import 'dart:io';
 import 'package:drift/drift.dart';

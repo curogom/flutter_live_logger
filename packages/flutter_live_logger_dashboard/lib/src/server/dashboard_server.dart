@@ -33,7 +33,7 @@ class DashboardServer {
       try {
         _server = await shelf_io.serve(handler, 'localhost', tryPort);
         _actualPort = tryPort;
-        print('Flutter Live Logger Dashboard Server started on port $tryPort');
+        // print('Flutter Live Logger Dashboard Server started on port $tryPort');
         return _server!;
       } catch (e) {
         if (tryPort == portsToTry.last) {
@@ -334,7 +334,7 @@ class DashboardServer {
         final response = await innerHandler(request);
         stopwatch.stop();
 
-        print('${request.method} ${request.requestedUri.path} - '
+        // print('${request.method} ${request.requestedUri.path} - '
             '${response.statusCode} (${stopwatch.elapsedMilliseconds}ms)');
 
         return response;

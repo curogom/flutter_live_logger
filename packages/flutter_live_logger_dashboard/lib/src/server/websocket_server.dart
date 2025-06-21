@@ -42,7 +42,7 @@ class WebSocketServer {
     try {
       _server = await shelf_io.serve(handler, 'localhost', port);
       _actualPort = port;
-      print('Flutter Live Logger WebSocket Server started on port $port');
+      // print('Flutter Live Logger WebSocket Server started on port $port');
     } catch (e) {
       throw Exception('Could not start WebSocket server on port $port: $e');
     }
@@ -60,7 +60,7 @@ class WebSocketServer {
     await _server?.close(force: true);
     _server = null;
     _actualPort = null;
-    print('Flutter Live Logger WebSocket Server stopped');
+    // print('Flutter Live Logger WebSocket Server stopped');
   }
 
   /// Get the actual port the server is running on
@@ -129,7 +129,7 @@ class WebSocketServer {
       );
 
       _clients[clientId] = client;
-      print('WebSocket client connected: $clientId (${_clients.length} total)');
+      // print('WebSocket client connected: $clientId (${_clients.length} total)');
 
       // Send welcome message
       client.sendMessage({
@@ -197,13 +197,13 @@ class WebSocketServer {
   /// Handle client disconnection
   void _handleClientDisconnect(String clientId) {
     _clients.remove(clientId);
-    print(
+    // print(
         'WebSocket client disconnected: $clientId (${_clients.length} total)');
   }
 
   /// Handle client errors
   void _handleClientError(String clientId, dynamic error) {
-    print('WebSocket client error: $clientId - $error');
+    // print('WebSocket client error: $clientId - $error');
     _clients.remove(clientId);
   }
 
@@ -319,7 +319,7 @@ class _WebSocketClient {
     try {
       channel.sink.add(jsonEncode(message));
     } catch (e) {
-      print('Failed to send message to client $id: $e');
+      // print('Failed to send message to client $id: $e');
     }
   }
 
@@ -328,7 +328,7 @@ class _WebSocketClient {
     try {
       await channel.sink.close();
     } catch (e) {
-      print('Error closing client $id: $e');
+      // print('Error closing client $id: $e');
     }
   }
 }
