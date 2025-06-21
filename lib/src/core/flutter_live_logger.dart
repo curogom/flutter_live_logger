@@ -25,6 +25,10 @@ class FlutterLiveLogger {
   static Timer? _flushTimer;
   static bool _isDisposed = false;
 
+  // Performance optimization: Cache frequently accessed values
+  static LogLevel? _cachedLogLevel;
+  static bool _isInitialized = false;
+
   /// Initialize the logger with the given configuration
   static Future<void> init({required LoggerConfig config}) async {
     _config = config;
@@ -32,6 +36,10 @@ class FlutterLiveLogger {
     _transports = config.effectiveTransports;
     _storage = config.effectiveStorage;
     _isDisposed = false;
+    _isInitialized = true;
+
+    // Cache log level for performance
+    _cachedLogLevel = config.logLevel;
 
     // Initialize SQLite storage if needed
     if (_storage is SQLiteStorage) {
@@ -63,194 +71,243 @@ class FlutterLiveLogger {
     _log(LogLevel.debug, message, data: data);
   }
 
+  /// Log a trace message
+  static void trace(String message, {Map<String, dynamic>? data}) {
+    _log(LogLevel.trace, message, data: data);
+  }
+
   /// Log a warning message
   static void warn(String message, {Map<String, dynamic>? data}) {
     _log(LogLevel.warn, message, data: data);
   }
 
   /// Log an error message
-  static void error(String message,
-      {Map<String, dynamic>? data, Object? error, StackTrace? stackTrace}) {
+  static void error(
+    String message, {
+    Object? error,
+    StackTrace? stackTrace,
+    Map<String, dynamic>? data,
+  }) {
     _log(LogLevel.error, message,
-        data: data, error: error, stackTrace: stackTrace);
+        error: error, stackTrace: stackTrace, data: data);
   }
 
-  /// Log a trace message
-  static void trace(String message, {Map<String, dynamic>? data}) {
-    _log(LogLevel.trace, message, data: data);
-  }
-
-  /// Log a fatal message
-  static void fatal(String message,
-      {Map<String, dynamic>? data, Object? error, StackTrace? stackTrace}) {
+  /// Log a fatal error message
+  static void fatal(
+    String message, {
+    Object? error,
+    StackTrace? stackTrace,
+    Map<String, dynamic>? data,
+  }) {
     _log(LogLevel.fatal, message,
-        data: data, error: error, stackTrace: stackTrace);
+        error: error, stackTrace: stackTrace, data: data);
   }
 
-  /// Log a custom event
-  static void event(String name, Map<String, dynamic> properties) {
-    _log(LogLevel.info, 'Event: $name', data: properties);
+  /// Log a custom event with structured data
+  static void event(String eventName, Map<String, dynamic> data) {
+    _log(LogLevel.info, 'Event: $eventName', data: data);
   }
 
-  /// Manually flush pending log entries
-  static Future<void> flush() async {
-    if (_isDisposed || _config == null) return;
-
-    try {
-      await _processPendingEntries();
-    } catch (e) {
-      // Log internal errors to avoid infinite recursion
-      print('FlutterLiveLogger: Failed to flush entries: $e');
-    }
-  }
-
-  /// Dispose of the logger and clean up resources
-  static Future<void> dispose() async {
-    _isDisposed = true;
-    _flushTimer?.cancel();
-    _flushTimer = null;
-
-    // Flush any remaining entries
-    await flush();
-
-    // Dispose of transports and storage
-    if (_transports != null) {
-      await Future.wait(_transports!.map((t) => t.dispose()));
-      _transports = null;
-    }
-
-    if (_storage != null) {
-      await _storage!.dispose();
-      _storage = null;
-    }
-
-    _pendingEntries.clear();
-    _config = null;
-    _instance = null;
-  }
-
+  /// Internal logging method with performance optimizations
   static void _log(
     LogLevel level,
     String message, {
-    Map<String, dynamic>? data,
     Object? error,
     StackTrace? stackTrace,
+    Map<String, dynamic>? data,
   }) {
-    if (_isDisposed ||
-        _config == null ||
-        !level.isEnabledFor(_config!.logLevel)) {
+    // Performance optimization: Early return if not initialized or disposed
+    if (!_isInitialized || _isDisposed) return;
+
+    // Performance optimization: Early level filtering using cached value
+    if (_cachedLogLevel != null && level.index < _cachedLogLevel!.index) {
       return;
     }
+
+    final config = _config;
+    if (config == null) return;
+
+    // Performance optimization: Avoid expensive operations for filtered logs
+    if (level.index < config.logLevel.index) return;
 
     final entry = LogEntry(
       message: message,
       level: level,
       timestamp: DateTime.now(),
-      data: data,
+      userId: config.userId,
+      sessionId: config.sessionId,
       error: error,
       stackTrace: stackTrace,
-      userId: _config!.userId,
-      sessionId: _config!.sessionId,
+      data: data,
     );
 
-    // Add to pending queue
+    // Performance optimization: Add to queue without immediate processing
     _pendingEntries.add(entry);
 
-    // Auto-flush for high priority levels
-    if (level == LogLevel.fatal || level == LogLevel.error) {
-      unawaited(flush());
-    } else if (_pendingEntries.length >= _config!.batchSize) {
-      // Flush when batch size is reached
-      unawaited(flush());
-    }
-
-    // Fallback console output for development
-    if (_config!.environment == 'development') {
-      print('[${level.name.toUpperCase()}] $message');
-      if (data != null) print('  Data: $data');
-      if (error != null) print('  Error: $error');
+    // Performance optimization: Only flush if queue is full (avoid frequent I/O)
+    if (_pendingEntries.length >= config.batchSize) {
+      unawaited(_flushBatch());
     }
   }
 
+  /// Start the periodic flush timer
   static void _startFlushTimer() {
+    final config = _config;
+    if (config == null) return;
+
     _flushTimer?.cancel();
-    if (_config != null && !_isDisposed) {
-      _flushTimer = Timer.periodic(_config!.flushInterval, (_) {
-        unawaited(flush());
-      });
-    }
+    _flushTimer = Timer.periodic(config.flushInterval, (_) {
+      if (_pendingEntries.isNotEmpty) {
+        unawaited(_flushBatch());
+      }
+    });
   }
 
-  static Future<void> _processPendingEntries() async {
-    if (_pendingEntries.isEmpty || _transports == null) return;
+  /// Flush pending entries to transports
+  static Future<void> _flushBatch() async {
+    if (_pendingEntries.isEmpty || _isDisposed) return;
 
-    final entries = List<LogEntry>.from(_pendingEntries);
-    _pendingEntries.clear();
+    // Performance optimization: Process batch without blocking
+    final batch = <LogEntry>[];
+    final batchSize = _config?.batchSize ?? 10;
 
-    // Try to send through transports
-    var success = false;
-    for (final transport in _transports!) {
-      if (!transport.isAvailable) continue;
-
-      try {
-        await transport.send(entries);
-        success = true;
-        break; // Successfully sent through at least one transport
-      } catch (e) {
-        // Continue trying other transports
-        continue;
-      }
+    // Take up to batchSize entries
+    while (batch.length < batchSize && _pendingEntries.isNotEmpty) {
+      batch.add(_pendingEntries.removeFirst());
     }
 
-    // Store offline if all transports failed and offline support is enabled
-    if (!success &&
-        _config!.enableOfflineSupport &&
-        _storage != null &&
-        _storage!.isAvailable) {
-      try {
-        await _storage!.store(entries);
-      } catch (e) {
-        // Log storage failure but don't crash
-        print('FlutterLiveLogger: Failed to store entries offline: $e');
-      }
-    }
-  }
+    if (batch.isEmpty) return;
 
-  static Future<void> _retryOfflineEntries() async {
-    if (_storage == null || !_storage!.isAvailable) return;
+    final transports = _transports;
+    if (transports == null || transports.isEmpty) return;
+
+    // Performance optimization: Send to all transports in parallel
+    final futures = <Future>[];
+    for (final transport in transports) {
+      futures.add(_sendToTransport(transport, batch));
+    }
 
     try {
-      final offlineEntries =
-          await _storage!.query(LogQuery.recent(limit: 1000));
-      if (offlineEntries.isNotEmpty) {
-        // Try to send offline entries
-        var success = false;
-        for (final transport in _transports!) {
-          if (!transport.isAvailable) continue;
+      await Future.wait(futures);
+    } catch (e) {
+      // Performance optimization: Handle transport failures gracefully
+      // Store failed entries for offline retry if enabled
+      if (_config?.enableOfflineSupport == true && _storage != null) {
+        try {
+          await _storage!.store(batch);
+        } catch (storageError) {
+          // Silent failure - don't crash the app
+        }
+      }
+    }
+  }
 
+  /// Send batch to a specific transport with error handling
+  static Future<void> _sendToTransport(
+    LogTransport transport,
+    List<LogEntry> batch,
+  ) async {
+    try {
+      await transport.send(batch);
+    } catch (e) {
+      // Performance optimization: Silent failure for individual transports
+      // This prevents one failing transport from affecting others
+    }
+  }
+
+  /// Manually flush all pending entries
+  static Future<void> flush() async {
+    if (_isDisposed || !_isInitialized) return;
+
+    // Safety: Limit flush attempts to prevent infinite loops
+    int maxAttempts = 10;
+    int attempts = 0;
+
+    while (_pendingEntries.isNotEmpty && attempts < maxAttempts) {
+      final initialCount = _pendingEntries.length;
+      await _flushBatch();
+
+      // If no progress was made, break to avoid infinite loop
+      if (_pendingEntries.length >= initialCount) {
+        break;
+      }
+
+      attempts++;
+    }
+  }
+
+  /// Retry offline entries
+  static Future<void> _retryOfflineEntries() async {
+    final storage = _storage;
+    if (storage == null) return;
+
+    try {
+      final offlineEntries = await storage.query(LogQuery.recent(limit: 100));
+      if (offlineEntries.isNotEmpty) {
+        final transports = _transports ?? [];
+        for (final transport in transports) {
           try {
             await transport.send(offlineEntries);
-            success = true;
-            break;
+            // If successful, remove from storage
+            await storage.delete(LogQuery.recent(limit: offlineEntries.length));
+            break; // Success with one transport is enough
           } catch (e) {
+            // Try next transport
             continue;
           }
         }
-
-        // Clear offline entries if successfully sent
-        if (success) {
-          await _storage!.clear();
-        }
       }
     } catch (e) {
-      // Ignore retry failures
+      // Ignore errors during offline retry
     }
   }
 
-  /// Get logger statistics
+  /// Dispose of the logger and clean up resources
+  static Future<void> dispose() async {
+    if (_isDisposed) return;
+
+    _isDisposed = true;
+    _isInitialized = false;
+
+    // Flush any remaining entries
+    await flush();
+
+    // Cancel timer
+    _flushTimer?.cancel();
+    _flushTimer = null;
+
+    // Dispose transports
+    final transports = _transports;
+    if (transports != null) {
+      for (final transport in transports) {
+        try {
+          await transport.dispose();
+        } catch (e) {
+          // Ignore disposal errors
+        }
+      }
+    }
+
+    // Dispose storage
+    try {
+      await _storage?.dispose();
+    } catch (e) {
+      // Ignore disposal errors
+    }
+
+    // Clear state
+    _instance = null;
+    _config = null;
+    _transports = null;
+    _storage = null;
+    _cachedLogLevel = null;
+    _pendingEntries.clear();
+  }
+
+  /// Get logger statistics for monitoring and debugging
   static Map<String, dynamic> getStats() {
     return {
-      'isInitialized': _instance != null,
+      'isInitialized': _isInitialized && !_isDisposed,
       'pendingEntries': _pendingEntries.length,
       'transports': _transports?.length ?? 0,
       'hasStorage': _storage != null,
@@ -267,7 +324,7 @@ class FlutterLiveLogger {
   }
 
   /// Check if logger is initialized
-  static bool get isInitialized => _instance != null && !_isDisposed;
+  static bool get isInitialized => _isInitialized && !_isDisposed;
 }
 
 /// Helper to avoid unawaited future warnings

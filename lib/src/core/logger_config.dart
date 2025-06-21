@@ -159,7 +159,14 @@ class LoggerConfig {
       enableCrashReporting: true,
       userId: userId,
       sessionId: sessionId,
-      transports: transports ?? [MemoryTransport(maxEntries: 500)],
+      transports: transports ??
+          [
+            MemoryTransport(
+              maxEntries: 500,
+              enableConsoleOutput:
+                  false, // Disable console output for performance
+            )
+          ],
       storage: MemoryStorage(maxEntries: 2000),
       batchSize: 200, // Larger batches for efficiency
       flushInterval: const Duration(minutes: 1), // Less frequent flushing
