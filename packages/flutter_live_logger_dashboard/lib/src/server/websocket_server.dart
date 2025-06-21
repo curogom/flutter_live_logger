@@ -197,8 +197,8 @@ class WebSocketServer {
   /// Handle client disconnection
   void _handleClientDisconnect(String clientId) {
     _clients.remove(clientId);
-    // print(
-        'WebSocket client disconnected: $clientId (${_clients.length} total)');
+    // Logging disabled for production
+    // print('WebSocket client disconnected: $clientId (${_clients.length} total)');
   }
 
   /// Handle client errors
