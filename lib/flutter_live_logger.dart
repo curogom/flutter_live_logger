@@ -84,6 +84,11 @@ export 'src/transport/http_transport.dart';
 export 'src/transport/log_transport.dart';
 export 'src/transport/memory_transport.dart';
 
+// Web Dashboard exports
+export 'src/web_dashboard/dashboard_server.dart';
+export 'src/web_dashboard/websocket_server.dart';
+export 'src/web_dashboard/dashboard_database.dart';
+
 // Convenience imports
 import 'src/core/flutter_live_logger.dart';
 import 'src/core/logger_config.dart';
