@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:path/path.dart' as path;
 import 'package:flutter_live_logger_dashboard/src/database/dashboard_database.dart';
 import 'package:flutter_live_logger/flutter_live_logger.dart';
 
