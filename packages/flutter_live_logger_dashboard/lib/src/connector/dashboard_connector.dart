@@ -27,9 +27,9 @@ class DashboardConnector {
     // WebSocket 서버 시작
     _wsServer = await WebSocketServer.start(port: wsPort);
 
-    print('Dashboard connected:');
-    print('- HTTP API: http://localhost:${_apiServer!.port}');
-    print('- WebSocket: ws://localhost:${_wsServer!.port}');
+    // Dashboard connected successfully
+    // HTTP API: http://localhost:${_apiServer!.port}
+    // WebSocket: ws://localhost:${_wsServer!.port}
   }
 
   /// Dashboard 연결을 해제합니다.
