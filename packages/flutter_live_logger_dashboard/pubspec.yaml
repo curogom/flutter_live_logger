@@ -1,7 +1,9 @@
 name: flutter_live_logger_dashboard
 description: Web dashboard for Flutter Live Logger - Real-time log monitoring and analytics
 version: 0.2.0
-publish_to: 'none' # 초기에는 pub.dev에 배포하지 않음
+# publish_to: none # pub.dev 배포 활성화
+homepage: https://curogom.dev
+repository: https://github.com/curogom/flutter_live_logger
 
 environment:
   sdk: '>=3.0.0 <4.0.0'
@@ -11,9 +13,8 @@ dependencies:
   flutter:
     sdk: flutter
   
-  # Core 패키지 의존성 (모노레포 내 경로)
-  flutter_live_logger:
-    path: ../flutter_live_logger
+  # Core 로깅 라이브러리 (pub.dev)
+  flutter_live_logger: ^0.2.0
   
   # 웹 서버
   shelf: ^1.4.0
