@@ -1,0 +1,50 @@
+name: flutter_live_logger
+description: High-performance real-time logging solution for Flutter applications
+version: 0.2.0
+publish_to: 'none' # 초기에는 pub.dev에 배포하지 않음
+
+# Repository and documentation links
+homepage: https://github.com/curogom/flutter_live_logger
+repository: https://github.com/curogom/flutter_live_logger
+issue_tracker: https://github.com/curogom/flutter_live_logger/issues
+documentation: https://github.com/curogom/flutter_live_logger#-documentation
+
+# Package metadata for better discoverability
+topics:
+  - logging
+  - flutter
+  - debugging
+  - monitoring
+  - analytics
+
+# Platform compatibility
+platforms:
+  android:
+  ios:
+  linux:
+  macos:
+  web:
+  windows:
+
+# Flutter and Dart version constraints
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+  flutter: ">=3.16.0"
+
+# Dependencies
+dependencies:
+  flutter:
+    sdk: flutter
+  sqflite: ^2.3.0
+  http: ^1.1.0
+  path: ^1.8.3
+
+# Development dependencies
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+  mockito: ^5.4.2
+  build_runner: ^2.4.7
+
+flutter: 
