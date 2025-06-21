@@ -10,6 +10,7 @@
 ///
 /// final recentLogs = await storage.query(LogQuery.recent(limit: 50));
 /// ```
+library flutter_live_logger_memory_storage;
 
 import 'dart:collection';
 import '../core/log_entry.dart';

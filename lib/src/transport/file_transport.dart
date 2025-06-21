@@ -13,6 +13,8 @@
 /// );
 /// ```
 
+library flutter_live_logger_file_transport;
+
 import 'dart:convert';
 import 'dart:io';
 import 'dart:async';

@@ -13,6 +13,8 @@
 /// }
 /// ```
 
+library flutter_live_logger_log_transport;
+
 import '../core/log_entry.dart';
 
 /// Exception thrown when transport operations fail

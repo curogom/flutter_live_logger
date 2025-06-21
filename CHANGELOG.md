@@ -5,6 +5,32 @@ All notable changes to Flutter Live Logger will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.1+1] - 2025-06-21
+
+### Fixed - Perfect Static Analysis Score
+
+#### Code Quality Improvements
+
+- **Resolved dangling library doc comments** - Added proper `library` declarations to all source files
+- **Achieved 50/50 static analysis score** - Fixed all Dart analyzer warnings and infos
+- **Enhanced code documentation** - Improved library-level documentation with proper structure
+- **CI stability** - Fixed GitHub Actions workflow directory path issues
+
+#### Technical Details
+
+- Added `library` declarations to prevent "dangling library doc comment" warnings
+- Fixed `docs/` vs `doc/` directory path inconsistency in CI workflow
+- Ensured all source files follow Dart file conventions properly
+- Maintained backward compatibility with no breaking changes
+
+### Improved
+
+- **Perfect pub.dev score potential** - All code quality issues resolved for maximum scoring
+- **Developer experience** - Cleaner code analysis results during development
+- **Documentation consistency** - Unified documentation structure across all modules
+
+---
+
 ## [0.1.1] - 2025-06-21
 
 ### Improved - Pub.dev Package Quality

@@ -12,6 +12,7 @@
 ///   // ... rest of app configuration
 /// );
 /// ```
+library flutter_live_logger_navigator_observer;
 
 import 'package:flutter/material.dart';
 import 'flutter_live_logger.dart';

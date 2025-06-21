@@ -14,6 +14,8 @@
 /// );
 /// ```
 
+library flutter_live_logger_http_transport;
+
 import 'dart:convert';
 import 'dart:io';
 import 'dart:async';

@@ -12,6 +12,7 @@
 ///   }
 /// }
 /// ```
+library flutter_live_logger_storage_interface;
 
 import '../core/log_entry.dart';
 import '../core/log_level.dart';

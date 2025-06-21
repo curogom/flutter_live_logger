@@ -11,6 +11,7 @@
 ///
 /// final recentLogs = await storage.query(LogQuery.recent(limit: 100));
 /// ```
+library flutter_live_logger_sqlite_storage;
 
 import 'dart:async';
 import 'dart:convert';

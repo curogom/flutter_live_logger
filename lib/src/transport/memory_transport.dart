@@ -11,6 +11,8 @@
 /// final recentLogs = transport.getRecentEntries(50);
 /// ```
 
+library flutter_live_logger_memory_transport;
+
 import 'dart:collection';
 import '../core/log_entry.dart';
 import '../core/log_level.dart';
