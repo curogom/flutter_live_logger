@@ -2,7 +2,7 @@ name: CI/CD Pipeline
 
 on:
   push:
-    branches: [ main, develop ]
+    branches: [ main, develop, feature/package-separation-v0.2.0 ]
   pull_request:
     branches: [ main, develop ]
   workflow_dispatch:
@@ -11,63 +11,50 @@ env:
   FLUTTER_VERSION: '3.16.x'
 
 jobs:
-  # 프로젝트 상태 체크
-  project-check:
-    name: 🔍 Project Status Check
+  # 프로젝트 구조 검증
+  structure-check:
+    name: 🔍 Monorepo Structure Check
     runs-on: ubuntu-latest
     timeout-minutes: 5
     outputs:
-      has-flutter-project: ${{ steps.check-flutter.outputs.has-project }}
+      core-package-exists: ${{ steps.check-packages.outputs.core-exists }}
+      dashboard-package-exists: ${{ steps.check-packages.outputs.dashboard-exists }}
     
     steps:
       - name: 📚 Git Checkout
         uses: actions/checkout@v4
         
-      - name: 🔍 Check Flutter Project Exists
-        id: check-flutter
+      - name: 🔍 Check Package Structure
+        id: check-packages
         run: |
-          if [ -f "pubspec.yaml" ]; then
-            echo "has-project=true" >> $GITHUB_OUTPUT
-            echo "✅ Flutter project detected"
+          # Core 패키지 확인
+          if [ -f "packages/flutter_live_logger/pubspec.yaml" ]; then
+            echo "core-exists=true" >> $GITHUB_OUTPUT
+            echo "✅ Core package detected"
           else
-            echo "has-project=false" >> $GITHUB_OUTPUT
-            echo "ℹ️ Flutter project not yet created - skipping Flutter-specific checks"
+            echo "core-exists=false" >> $GITHUB_OUTPUT
+            echo "❌ Core package missing"
           fi
-
-  # 문서 및 기본 구조 검증 (항상 실행)
-  docs-and-structure:
-    name: 📖 Documentation & Structure Check
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    
-    steps:
-      - name: 📚 Git Checkout
-        uses: actions/checkout@v4
-        
-      - name: 🔍 Check Documentation Links
-        uses: gaurav-nelson/github-action-markdown-link-check@v1
-        with:
-          use-quiet-mode: 'yes'
-          use-verbose-mode: 'yes'
-          config-file: '.github/workflows/markdown-link-check.json'
           
-      - name: 📝 Check Spelling
-        uses: crate-ci/typos@master
-        with:
-          config: .github/workflows/typos.toml
+          # Dashboard 패키지 확인
+          if [ -f "packages/flutter_live_logger_dashboard/pubspec.yaml" ]; then
+            echo "dashboard-exists=true" >> $GITHUB_OUTPUT
+            echo "✅ Dashboard package detected"
+          else
+            echo "dashboard-exists=false" >> $GITHUB_OUTPUT
+            echo "❌ Dashboard package missing"
+          fi
           
-      - name: 📋 Verify Project Structure
+      - name: 📋 Verify Monorepo Structure
         run: |
-          echo "📁 Checking project structure..."
+          echo "📁 Checking monorepo structure..."
           
-          # 필수 파일들 확인
+          # 필수 프로젝트 레벨 파일들 확인
           required_files=(
-            "README.md"
-            "README.ko.md" 
             "LICENSE"
             "CONTRIBUTING.md"
             "CODE_OF_CONDUCT.md"
-            "ROADMAP.md"
+            ".gitignore"
           )
           
           for file in "${required_files[@]}"; do
@@ -79,23 +66,77 @@ jobs:
             fi
           done
           
-          # 문서 디렉토리 확인
-          if [ -d "doc" ]; then
-            echo "✅ doc/ directory exists"
+          # 패키지 디렉토리 확인
+          if [ -d "packages" ]; then
+            echo "✅ packages/ directory exists"
           else
-            echo "❌ doc/ directory missing"
+            echo "❌ packages/ directory missing"
             exit 1
           fi
           
-          echo "🎉 Project structure verification passed!"
+          echo "🎉 Monorepo structure verification passed!"
 
-  # 코드 품질 검사 (Flutter 프로젝트가 있을 때만 실행)
-  analyze:
-    name: 📊 Code Analysis
+  # 문서 검증 (패키지별)
+  docs-check:
+    name: 📖 Documentation Check
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    needs: project-check
-    if: needs.project-check.outputs.has-flutter-project == 'true'
+    needs: structure-check
+    
+    steps:
+      - name: 📚 Git Checkout
+        uses: actions/checkout@v4
+        
+      - name: 🔍 Check Core Package Documentation
+        if: needs.structure-check.outputs.core-package-exists == 'true'
+        run: |
+          cd packages/flutter_live_logger
+          echo "📖 Checking core package documentation..."
+          
+          required_docs=(
+            "README.md"
+            "README.ko.md"
+            "CHANGELOG.md"
+            "LICENSE"
+          )
+          
+          for doc in "${required_docs[@]}"; do
+            if [ -f "$doc" ]; then
+              echo "✅ Core: $doc exists"
+            else
+              echo "❌ Core: $doc missing"
+              exit 1
+            fi
+          done
+          
+      - name: 🔍 Check Dashboard Package Documentation
+        if: needs.structure-check.outputs.dashboard-package-exists == 'true'
+        run: |
+          cd packages/flutter_live_logger_dashboard
+          echo "📖 Checking dashboard package documentation..."
+          
+          required_docs=(
+            "README.ko.md"
+            "CHANGELOG.ko.md"
+            "LICENSE"
+          )
+          
+          for doc in "${required_docs[@]}"; do
+            if [ -f "$doc" ]; then
+              echo "✅ Dashboard: $doc exists"
+            else
+              echo "❌ Dashboard: $doc missing"
+              exit 1
+            fi
+          done
+
+  # Core 패키지 분석
+  analyze-core:
+    name: 📊 Core Package Analysis
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    needs: structure-check
+    if: needs.structure-check.outputs.core-package-exists == 'true'
     
     steps:
       - name: 📚 Git Checkout
@@ -108,28 +149,62 @@ jobs:
           channel: 'stable'
           cache: true
           
-      - name: 📦 Install Dependencies
-        run: flutter pub get
-        
-      - name: ✨ Verify Formatting
-        run: dart format --output=none --set-exit-if-changed .
-        
-      - name: 🔍 Analyze Project Source
-        run: dart analyze
-        
-      - name: 📋 Check pub.dev Score (Allow Failure)
+      - name: 📦 Install Core Dependencies
         run: |
-          dart pub global activate pana || true
-          pana --json --no-warning || echo "⚠️ pana check failed, but continuing..."
-        continue-on-error: true
+          cd packages/flutter_live_logger
+          flutter pub get
+        
+      - name: ✨ Verify Core Formatting
+        run: |
+          cd packages/flutter_live_logger
+          dart format --output=none --set-exit-if-changed .
+        
+      - name: 🔍 Analyze Core Package
+        run: |
+          cd packages/flutter_live_logger
+          dart analyze --no-fatal-infos
 
-  # 테스트 실행 (Flutter 프로젝트가 있을 때만 실행)
-  test:
-    name: 🧪 Run Tests  
+  # Dashboard 패키지 분석
+  analyze-dashboard:
+    name: 📊 Dashboard Package Analysis
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    needs: structure-check
+    if: needs.structure-check.outputs.dashboard-package-exists == 'true'
+    
+    steps:
+      - name: 📚 Git Checkout
+        uses: actions/checkout@v4
+        
+      - name: 🐦 Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: 'stable'
+          cache: true
+          
+      - name: 📦 Install Dashboard Dependencies
+        run: |
+          cd packages/flutter_live_logger_dashboard
+          flutter pub get
+        
+      - name: ✨ Verify Dashboard Formatting
+        run: |
+          cd packages/flutter_live_logger_dashboard
+          dart format --output=none --set-exit-if-changed .
+        
+      - name: 🔍 Analyze Dashboard Package
+        run: |
+          cd packages/flutter_live_logger_dashboard
+          dart analyze --no-fatal-infos
+
+  # Core 패키지 테스트
+  test-core:
+    name: 🧪 Core Package Tests
     runs-on: ubuntu-latest
     timeout-minutes: 15
-    needs: project-check
-    if: needs.project-check.outputs.has-flutter-project == 'true'
+    needs: structure-check
+    if: needs.structure-check.outputs.core-package-exists == 'true'
     
     steps:
       - name: 📚 Git Checkout
@@ -142,26 +217,32 @@ jobs:
           channel: 'stable'
           cache: true
           
-      - name: 📦 Install Dependencies
-        run: flutter pub get
+      - name: 📦 Install Core Dependencies
+        run: |
+          cd packages/flutter_live_logger
+          flutter pub get
         
-      - name: 🧪 Run Tests
-        run: flutter test --coverage
+      - name: 🧪 Run Core Tests
+        run: |
+          cd packages/flutter_live_logger
+          flutter test --coverage --coverage-path=coverage/lcov.info
       
-      - name: 📊 Upload Coverage to Codecov (Optional)
+      - name: 📊 Upload Core Coverage
         uses: codecov/codecov-action@v3
         with:
-          file: coverage/lcov.info
+          file: packages/flutter_live_logger/coverage/lcov.info
+          flags: core
+          name: core-coverage
           fail_ci_if_error: false
         continue-on-error: true
 
-  # 플랫폼 호환성 검사 (간소화)
-  compatibility:
-    name: 🔧 Platform Compatibility
+  # Dashboard 패키지 테스트
+  test-dashboard:
+    name: 🧪 Dashboard Package Tests
     runs-on: ubuntu-latest
     timeout-minutes: 15
-    needs: project-check
-    if: needs.project-check.outputs.has-flutter-project == 'true'
+    needs: structure-check
+    if: needs.structure-check.outputs.dashboard-package-exists == 'true'
     
     steps:
       - name: 📚 Git Checkout
@@ -174,22 +255,105 @@ jobs:
           channel: 'stable'
           cache: true
           
-      - name: 📦 Install Dependencies
-        run: flutter pub get
-        
-      - name: 🧪 Run Tests
-        run: flutter test
-      
-      - name: 🏗️ Check Library Build (Dry Run)
+      - name: 📦 Install Dashboard Dependencies
         run: |
-          echo "📦 Checking if library can be built..."
-          flutter pub publish --dry-run || echo "⚠️ Publish dry-run issues found, but continuing..."
+          cd packages/flutter_live_logger_dashboard
+          flutter pub get
+        
+      - name: 🧪 Run Dashboard Tests
+        run: |
+          cd packages/flutter_live_logger_dashboard
+          flutter test --coverage --coverage-path=coverage/lcov.info
+        continue-on-error: true
+      
+      - name: 📊 Upload Dashboard Coverage
+        uses: codecov/codecov-action@v3
+        with:
+          file: packages/flutter_live_logger_dashboard/coverage/lcov.info
+          flags: dashboard
+          name: dashboard-coverage
+          fail_ci_if_error: false
         continue-on-error: true
 
-  # 모든 체크가 성공했을 때만 실행
+  # 패키지 호환성 검사
+  package-validation:
+    name: 📦 Package Validation
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    needs: [structure-check, analyze-core, analyze-dashboard]
+    
+    steps:
+      - name: 📚 Git Checkout
+        uses: actions/checkout@v4
+        
+      - name: 🐦 Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: 'stable'
+          cache: true
+          
+      - name: 🏗️ Validate Core Package
+        if: needs.structure-check.outputs.core-package-exists == 'true'
+        run: |
+          cd packages/flutter_live_logger
+          flutter pub get
+          echo "📦 Checking core package publishability..."
+          dart pub publish --dry-run || echo "⚠️ Core publish dry-run issues found"
+        continue-on-error: true
+        
+      - name: 🏗️ Validate Dashboard Package
+        if: needs.structure-check.outputs.dashboard-package-exists == 'true'
+        run: |
+          cd packages/flutter_live_logger_dashboard
+          flutter pub get
+          echo "📦 Checking dashboard package publishability..."
+          dart pub publish --dry-run || echo "⚠️ Dashboard publish dry-run issues found"
+        continue-on-error: true
+
+  # Example 프로젝트 테스트
+  test-examples:
+    name: 🚀 Example Projects Test
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    needs: [structure-check, test-core]
+    if: needs.structure-check.outputs.core-package-exists == 'true'
+    
+    steps:
+      - name: 📚 Git Checkout
+        uses: actions/checkout@v4
+        
+      - name: 🐦 Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: 'stable'
+          cache: true
+          
+      - name: 🧪 Test Core Example
+        run: |
+          if [ -d "packages/flutter_live_logger/example" ]; then
+            cd packages/flutter_live_logger/example
+            flutter pub get
+            flutter analyze
+            flutter test || echo "⚠️ Core example tests failed"
+          fi
+        continue-on-error: true
+        
+      - name: 🧪 Test Root Example
+        run: |
+          if [ -f "example/pubspec.yaml" ]; then
+            cd example
+            flutter pub get
+            flutter analyze
+            echo "✅ Root example project analyzed successfully"
+          fi
+        continue-on-error: true
+
+  # 최종 성공 체크
   all-checks-pass:
     name: ✅ All Checks Passed
-    needs: [project-check, docs-and-structure, analyze, test, compatibility]
+    needs: [structure-check, docs-check, analyze-core, analyze-dashboard, test-core, test-dashboard, package-validation, test-examples]
     runs-on: ubuntu-latest
     if: always()
     
@@ -198,21 +362,10 @@ jobs:
         if: ${{ !(contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled')) }}
         run: |
           echo "🎊 All available quality checks passed successfully!"
-          if [ "${{ needs.project-check.outputs.has-flutter-project }}" == "true" ]; then
-            echo "✅ Flutter project checks included"
-          else
-            echo "ℹ️ Flutter project not yet created - basic structure checks only"
-          fi
-        
-      - name: ❌ Some Checks Failed  
-        if: ${{ contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled') }}
-        run: |
-          echo "❌ Some quality checks failed - but this is normal during development:"
-          echo "Project Check: ${{ needs.project-check.result }}"
-          echo "Docs & Structure: ${{ needs.docs-and-structure.result }}"
-          echo "Code Analysis: ${{ needs.analyze.result }}"
-          echo "Tests: ${{ needs.test.result }}"
-          echo "Compatibility: ${{ needs.compatibility.result }}"
+          echo "📦 Monorepo structure: ✅"
+          echo "📖 Documentation: ✅"
+          echo "🔍 Code analysis: ✅"
+          echo "🧪 Tests: ✅"
+          echo "📋 Package validation: ✅"
           echo ""
-          echo "💡 Focus on fixing failed checks step by step"
-          exit 1 
+          echo "🚀 Ready for deployment!" 

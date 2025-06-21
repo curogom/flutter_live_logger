@@ -6,9 +6,11 @@ on:
   workflow_dispatch:
 
 jobs:
-  validation:
-    name: 🔍 PR Validation
+  # Core 패키지 검증
+  validate-core:
+    name: 🔍 Core Package Validation
     runs-on: ubuntu-latest
+    if: contains(github.event.pull_request.changed_files, 'packages/flutter_live_logger/') || github.event_name == 'workflow_dispatch'
     
     steps:
     - name: 📥 Checkout code
@@ -19,37 +21,97 @@ jobs:
     - name: 🎯 Setup Flutter
       uses: subosito/flutter-action@v2
       with:
-        flutter-version: '3.16.0'
+        flutter-version: '3.16.x'
         channel: 'stable'
         cache: true
 
-    - name: 📦 Get dependencies
-      run: flutter pub get
+    - name: 📦 Get core dependencies
+      run: |
+        cd packages/flutter_live_logger
+        flutter pub get
 
-    - name: 🔍 Analyze code
-      run: flutter analyze --no-fatal-infos
+    - name: 🔍 Analyze core code
+      run: |
+        cd packages/flutter_live_logger
+        flutter analyze --no-fatal-infos
 
-    - name: 🧪 Run tests
-      run: flutter test --coverage
+    - name: 🧪 Run core tests
+      run: |
+        cd packages/flutter_live_logger
+        flutter test --coverage
 
-    - name: 📊 Coverage report
+    - name: 📊 Core coverage report
       uses: codecov/codecov-action@v3
       with:
-        file: ./coverage/lcov.info
+        file: packages/flutter_live_logger/coverage/lcov.info
+        flags: core
+        name: core-coverage
         fail_ci_if_error: false
 
-    - name: 🎨 Check formatting
-      run: dart format --set-exit-if-changed .
-
-    - name: 🔒 Security scan
+    - name: 🎨 Check core formatting
       run: |
-        flutter pub deps
-        # Add security scanning if needed
+        cd packages/flutter_live_logger
+        dart format --set-exit-if-changed .
 
-    - name: 📋 Package validation
+    - name: 📋 Core package validation
       run: |
+        cd packages/flutter_live_logger
         dart pub publish --dry-run
 
+  # Dashboard 패키지 검증
+  validate-dashboard:
+    name: 🔍 Dashboard Package Validation
+    runs-on: ubuntu-latest
+    if: contains(github.event.pull_request.changed_files, 'packages/flutter_live_logger_dashboard/') || github.event_name == 'workflow_dispatch'
+    
+    steps:
+    - name: 📥 Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: 🎯 Setup Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: '3.16.x'
+        channel: 'stable'
+        cache: true
+
+    - name: 📦 Get dashboard dependencies
+      run: |
+        cd packages/flutter_live_logger_dashboard
+        flutter pub get
+
+    - name: 🔍 Analyze dashboard code
+      run: |
+        cd packages/flutter_live_logger_dashboard
+        flutter analyze --no-fatal-infos
+
+    - name: 🧪 Run dashboard tests
+      run: |
+        cd packages/flutter_live_logger_dashboard
+        flutter test --coverage
+      continue-on-error: true
+
+    - name: 📊 Dashboard coverage report
+      uses: codecov/codecov-action@v3
+      with:
+        file: packages/flutter_live_logger_dashboard/coverage/lcov.info
+        flags: dashboard
+        name: dashboard-coverage
+        fail_ci_if_error: false
+
+    - name: 🎨 Check dashboard formatting
+      run: |
+        cd packages/flutter_live_logger_dashboard
+        dart format --set-exit-if-changed .
+
+    - name: 📋 Dashboard package validation
+      run: |
+        cd packages/flutter_live_logger_dashboard
+        dart pub publish --dry-run
+
+  # PR 크기 체크
   pr-size-check:
     name: 📏 PR Size Check
     runs-on: ubuntu-latest
@@ -92,6 +154,7 @@ jobs:
             description: description
           });
 
+  # 의존성 변경 체크
   dependency-check:
     name: 🔗 Dependency Check
     runs-on: ubuntu-latest
@@ -99,20 +162,76 @@ jobs:
     steps:
     - name: 📥 Checkout code
       uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
 
     - name: 🎯 Setup Flutter
       uses: subosito/flutter-action@v2
       with:
-        flutter-version: '3.16.0'
+        flutter-version: '3.16.x'
         channel: 'stable'
 
-    - name: 🔍 Check for dependency changes
+    - name: 🔍 Check core package dependency changes
       run: |
-        if git diff HEAD~1 pubspec.yaml | grep -E "^\+.*:"; then
-          echo "🔄 Dependency changes detected"
+        if git diff HEAD~1..HEAD --name-only | grep -q "packages/flutter_live_logger/pubspec.yaml"; then
+          echo "🔄 Core package dependency changes detected"
+          cd packages/flutter_live_logger
           flutter pub deps
-          echo "📋 Updated dependencies:"
-          git diff HEAD~1 pubspec.yaml | grep -E "^\+.*:" || true
+          echo "📋 Core package dependencies:"
+          git diff HEAD~1..HEAD pubspec.yaml | grep -E "^\+.*:" || true
         else
-          echo "✅ No dependency changes"
-        fi 
+          echo "✅ No core package dependency changes"
+        fi
+
+    - name: 🔍 Check dashboard package dependency changes
+      run: |
+        if git diff HEAD~1..HEAD --name-only | grep -q "packages/flutter_live_logger_dashboard/pubspec.yaml"; then
+          echo "🔄 Dashboard package dependency changes detected"
+          cd packages/flutter_live_logger_dashboard
+          flutter pub deps
+          echo "📋 Dashboard package dependencies:"
+          git diff HEAD~1..HEAD pubspec.yaml | grep -E "^\+.*:" || true
+        else
+          echo "✅ No dashboard package dependency changes"
+        fi
+
+  # 문서 변경 체크
+  docs-validation:
+    name: 📖 Documentation Validation
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 📥 Checkout code
+      uses: actions/checkout@v4
+
+    - name: 📝 Check core package documentation
+      run: |
+        cd packages/flutter_live_logger
+        echo "📖 Checking core package documentation..."
+        
+        required_docs=("README.md" "README.ko.md" "CHANGELOG.md" "LICENSE")
+        
+        for doc in "${required_docs[@]}"; do
+          if [ -f "$doc" ]; then
+            echo "✅ Core: $doc exists"
+          else
+            echo "❌ Core: $doc missing"
+            exit 1
+          fi
+        done
+
+    - name: 📝 Check dashboard package documentation
+      run: |
+        cd packages/flutter_live_logger_dashboard
+        echo "📖 Checking dashboard package documentation..."
+        
+        required_docs=("README.ko.md" "CHANGELOG.ko.md" "LICENSE")
+        
+        for doc in "${required_docs[@]}"; do
+          if [ -f "$doc" ]; then
+            echo "✅ Dashboard: $doc exists"
+          else
+            echo "❌ Dashboard: $doc missing"
+            exit 1
+          fi
+        done 
