@@ -16,7 +16,6 @@ class SettingsWidget extends ConsumerStatefulWidget {
 class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
   bool _autoRefresh = true;
   bool _darkMode = false;
-  int _maxLogEntries = 1000;
 
   @override
   Widget build(BuildContext context) {
