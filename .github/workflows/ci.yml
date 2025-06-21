@@ -188,6 +188,16 @@ jobs:
           cd packages/flutter_live_logger_dashboard
           flutter pub get
         
+      - name: 🧹 Clean Dashboard build artifacts
+        run: |
+          cd packages/flutter_live_logger_dashboard
+          flutter packages pub run build_runner clean
+        
+      - name: 🔧 Generate Dashboard code
+        run: |
+          cd packages/flutter_live_logger_dashboard
+          dart run build_runner build --delete-conflicting-outputs
+        
       - name: ✨ Verify Dashboard Formatting
         run: |
           cd packages/flutter_live_logger_dashboard
@@ -259,6 +269,16 @@ jobs:
         run: |
           cd packages/flutter_live_logger_dashboard
           flutter pub get
+        
+      - name: 🧹 Clean Dashboard build artifacts for tests
+        run: |
+          cd packages/flutter_live_logger_dashboard
+          flutter packages pub run build_runner clean
+        
+      - name: 🔧 Generate Dashboard code for tests
+        run: |
+          cd packages/flutter_live_logger_dashboard
+          dart run build_runner build --delete-conflicting-outputs
         
       - name: 🧪 Run Dashboard Tests
         run: |
