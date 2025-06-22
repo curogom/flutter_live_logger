@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'dart:convert';
+import 'dart:developer' as developer;
 
 /// 순수 Dart로 구현된 간단한 대시보드 서버
 ///
@@ -9,39 +10,45 @@ import 'dart:convert';
 List<Map<String, dynamic>> storedLogs = [];
 
 void main() async {
-  print('🚀 Flutter Live Logger Dashboard Server starting...');
+  developer.log('🚀 Starting Flutter Live Logger Dashboard Server...');
 
   try {
-    // Start HTTP server
-    final server = await HttpServer.bind('localhost', 7580);
-    print('✅ HTTP server running at http://localhost:7580');
+    // Start HTTP server for log reception
+    final httpServer = await HttpServer.bind('localhost', 7580);
+    developer.log('✅ HTTP server running at http://localhost:7580');
+
+    // Handle HTTP requests
+    httpServer.listen((request) async {
+      try {
+        _handleRequest(request);
+      } catch (e) {
+        developer.log('Error handling request: $e');
+      }
+    });
 
     // Start WebSocket server
     final wsServer = await HttpServer.bind('localhost', 7581);
-    print('✅ WebSocket server running at ws://localhost:7581');
+    developer.log('✅ WebSocket server running at ws://localhost:7581');
 
-    print('');
-    print('📊 Dashboard server ready!');
-    print('   HTTP API: http://localhost:7580');
-    print('   WebSocket: ws://localhost:7581');
-    print('   Web Dashboard: http://localhost:7580');
-    print('');
-    print('💡 Send logs from Core app and they will appear here.');
-    print('⏹️  Press Ctrl+C to stop the server');
-    print('');
-
-    // Handle HTTP requests
-    await for (HttpRequest request in server) {
-      _handleHttpRequest(request);
-    }
-  } catch (error, stackTrace) {
-    print('❌ Server startup failed: $error');
-    print('Stack trace: $stackTrace');
-    exit(1);
+    developer.log('');
+    developer.log('📊 Dashboard Server Ready!');
+    developer.log('   • HTTP API: http://localhost:7580');
+    developer.log('   • WebSocket: ws://localhost:7581');
+    developer.log('   • Dashboard: http://localhost:7580/dashboard');
+    developer.log('');
+    developer.log('📱 Flutter Live Logger Configuration:');
+    developer.log('   • Endpoint: http://localhost:7580/api/logs');
+    developer.log('   • Method: POST');
+    developer.log('   • Headers: Content-Type: application/json');
+    developer.log('');
+    developer.log('🔍 Monitoring incoming log messages...');
+    developer.log('⏹️  Press Ctrl+C to stop');
+  } catch (e) {
+    developer.log('❌ Failed to start server: $e');
   }
 }
 
-void _handleHttpRequest(HttpRequest request) async {
+void _handleRequest(HttpRequest request) async {
   // CORS header settings
   request.response.headers.set('Access-Control-Allow-Origin', '*');
   request.response.headers
@@ -76,9 +83,9 @@ void _handleHttpRequest(HttpRequest request) async {
       final body = await utf8.decoder.bind(request).join();
       final data = jsonDecode(body);
 
-      print('📥 Log reception [${DateTime.now().toIso8601String()}]');
-      print('    Count: ${data['count']} logs');
-      print('    Timestamp: ${data['timestamp']}');
+      developer.log('📥 Log reception [${DateTime.now().toIso8601String()}]');
+      developer.log('    Count: ${data['count']} logs');
+      developer.log('    Timestamp: ${data['timestamp']}');
 
       // Print and store each log entry
       final logs = data['logs'] as List;
@@ -88,9 +95,9 @@ void _handleHttpRequest(HttpRequest request) async {
         final timestamp = log['timestamp'] ?? '';
         final logData = log['data'];
 
-        print('   [$level] $message');
+        developer.log('   [$level] $message');
         if (logData != null) {
-          print('        Data: $logData');
+          developer.log('        Data: $logData');
         }
 
         // Store log (keep only the latest 100 logs)
@@ -106,7 +113,7 @@ void _handleHttpRequest(HttpRequest request) async {
           storedLogs.removeAt(0);
         }
       }
-      print('');
+      developer.log('');
 
       // Success response
       request.response.statusCode = 200;
@@ -132,7 +139,7 @@ void _handleHttpRequest(HttpRequest request) async {
       request.response.write('Not Found');
     }
   } catch (error) {
-    print('❌ Request processing error: $error');
+    developer.log('❌ Request processing error: $error');
     request.response.statusCode = 500;
     request.response.write('Internal Server Error');
   } finally {

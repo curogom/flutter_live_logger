@@ -120,7 +120,7 @@ class WebSocketServer {
       return Response.forbidden('Invalid token');
     }
 
-    return webSocketHandler((WebSocketChannel webSocket) {
+    return webSocketHandler((WebSocketChannel webSocket, String? protocol) {
       final clientId = _generateClientId();
       final client = _WebSocketClient(
         id: clientId,

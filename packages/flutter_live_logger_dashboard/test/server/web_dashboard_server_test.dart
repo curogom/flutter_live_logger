@@ -1,9 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:shelf/shelf.dart';
 import 'package:flutter_live_logger_dashboard/src/server/dashboard_server.dart';
-import 'package:flutter_live_logger/flutter_live_logger.dart';
+import 'package:http/http.dart' as http;
 
 /// TDD Test Cases for Flutter Live Logger Web Dashboard Server
 ///

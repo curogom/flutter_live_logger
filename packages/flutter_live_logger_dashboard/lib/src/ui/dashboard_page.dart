@@ -1,3 +1,10 @@
+/// Flutter Live Logger Dashboard - Dashboard Page
+///
+/// Main dashboard page that orchestrates all dashboard components including
+/// log display, filters, analytics, and performance monitoring.
+
+library flutter_live_logger_dashboard_page;
+
 /// Flutter Live Logger - Web Dashboard Main Page
 ///
 /// Main dashboard page with responsive layout, sidebar navigation,

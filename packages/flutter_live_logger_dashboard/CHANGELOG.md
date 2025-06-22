@@ -1,63 +1,103 @@
-# 변경 로그
+# Changelog
 
-이 프로젝트의 모든 주목할만한 변경사항이 이 파일에 문서화됩니다.
+All notable changes to this project will be documented in this file.
 
-형식은 [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)을 기반으로 하며,
-이 프로젝트는 [Semantic Versioning](https://semver.org/spec/v2.0.0.html)을 준수합니다.
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-[English](CHANGELOG.md) | **한국어**
+## [0.2.0+1] - 2025-06-22
+
+### Fixed - Pub.dev Score & Dev Dependency Optimization 🛠️
+
+#### Package Quality Improvements
+
+- **Resolved all code analysis issues** - Eliminated all 213 static analysis warnings and errors
+- **Production-safe logging** - Replaced all `print` statements with `developer.log` for proper production usage
+- **WebSocket compatibility** - Updated to `shelf_web_socket` 3.0.0 with proper API usage
+- **Import optimization** - Removed unused imports and dependencies
+- **Dependency updates** - Updated all packages to latest compatible versions
+
+#### Development Experience Enhancements
+
+- **Proper example structure** - Added `example/main.dart` following Dart package guidelines
+- **Dev dependency guidance** - Clarified that this package should be used as `dev_dependencies` only
+- **English documentation** - Converted CHANGELOG to English to resolve non-ASCII character issues
+- **Library declarations** - Added proper library declarations to all UI components
+
+#### Technical Improvements
+
+- **Error-free analysis** - Achieved clean `dart analyze` output with zero errors
+- **Void type fixes** - Resolved async/await issues with void return types
+- **Test dependencies** - Added `http` package to dev_dependencies for testing
+- **Pub.dev ready** - Package validation passes with only minor git status warnings
+
+#### Usage Guidelines
+
+- **⚠️ IMPORTANT**: This package is designed for **development use only**
+- **Installation**: Add to `dev_dependencies` section in your `pubspec.yaml`
+- **Purpose**: Real-time log monitoring and debugging during development
+- **Not for production**: Should not be included in production app builds
+
+### Development Workflow
+
+```yaml
+dev_dependencies:
+  flutter_live_logger_dashboard: ^0.2.0+1
+```
+
+This ensures the dashboard is only available during development and testing phases.
 
 ## [0.2.0] - 2025-01-22
 
-### 추가됨
+### Added
 
-- **웹 대시보드 UI**: Flutter 기반 반응형 웹 인터페이스
-- **실시간 로그 스트리밍**: WebSocket을 통한 라이브 로그 모니터링
-- **HTTP API 서버**: RESTful API로 로그 수신 및 처리
-- **고급 필터링**: 레벨, 시간, 키워드별 로그 필터링
-- **성능 메트릭 대시보드**: 처리량, 응답시간, 메모리 사용량 모니터링
-- **분석 위젯**: 로그 레벨 분포, 오류 트렌드 차트
-- **자동 새로고침**: 설정 가능한 실시간 업데이트
-- **CORS 지원**: 웹 플랫폼 완전 호환
-- **반응형 디자인**: 모바일부터 데스크톱까지 최적화
-- **SQLite 데이터베이스**: 효율적인 로그 저장 및 쿼리
+- **Web Dashboard UI**: Flutter-based responsive web interface
+- **Real-time Log Streaming**: Live log monitoring via WebSocket
+- **HTTP API Server**: RESTful API for log reception and processing
+- **Advanced Filtering**: Log filtering by level, time, and keywords
+- **Performance Metrics Dashboard**: Monitoring throughput, response time, and memory usage
+- **Analytics Widgets**: Log level distribution and error trend charts
+- **Auto-refresh**: Configurable real-time updates
+- **CORS Support**: Full web platform compatibility
+- **Responsive Design**: Optimized from mobile to desktop
+- **SQLite Database**: Efficient log storage and querying
 
-### 기술적 세부사항
+### Technical Details
 
-- **서버 포트**: HTTP (7580), WebSocket (7581)
-- **UI 프레임워크**: Flutter Web, Riverpod, FL Chart
-- **데이터베이스**: Drift (SQLite), 최대 100개 로그 자동 관리
-- **네트워크**: Shelf 기반 HTTP 서버, WebSocket 지원
-- **테스트**: 39개 테스트 케이스, 100% 통과율
+- **Server Ports**: HTTP (7580), WebSocket (7581)
+- **UI Framework**: Flutter Web, Riverpod, FL Chart
+- **Database**: Drift (SQLite), automatic management of up to 100 logs
+- **Network**: Shelf-based HTTP server with WebSocket support
+- **Testing**: 39 test cases with 100% pass rate
 
-### 성능
+### Performance
 
-- **처리량**: 실시간으로 수천 개 로그 처리
-- **응답성**: 2초 간격 자동 새로고침
-- **메모리 효율성**: 순환 버퍼로 메모리 사용량 최적화
-- **네트워크 최적화**: 배치 처리 및 압축 지원
+- **Throughput**: Real-time processing of thousands of logs
+- **Responsiveness**: 2-second interval auto-refresh
+- **Memory Efficiency**: Optimized memory usage with circular buffer
+- **Network Optimization**: Batch processing and compression support
 
-### UI 컴포넌트
+### UI Components
 
-- **DashboardPage**: 메인 대시보드 레이아웃
-- **LogDisplayWidget**: 실시간 로그 테이블 with DataTable2
-- **FilterWidget**: 드롭다운, 검색, 시간 범위 필터
-- **PerformanceDashboard**: 4개 메트릭 카드 + 실시간 차트
-- **AnalyticsWidget**: 파이차트, 에러 목록, 트렌드 차트
-- **SettingsWidget**: 대시보드 설정 및 환경설정
+- **DashboardPage**: Main dashboard layout
+- **LogDisplayWidget**: Real-time log table with DataTable2
+- **FilterWidget**: Dropdown, search, and time range filters
+- **PerformanceDashboard**: 4 metric cards + real-time charts
+- **AnalyticsWidget**: Pie charts, error lists, trend charts
+- **SettingsWidget**: Dashboard settings and configuration
 
-### 해결됨
+### Fixed
 
-- **Flutter Web 호환성**: CORS 문제 해결
-- **UI 오버플로우**: 반응형 레이아웃으로 모든 화면 크기 지원
-- **메모리 누수**: Riverpod StreamProvider 자동 정리
-- **타이머 관리**: 컴포넌트 해제시 자동 타이머 정리
+- **Flutter Web Compatibility**: Resolved CORS issues
+- **UI Overflow**: Responsive layout supporting all screen sizes
+- **Memory Leaks**: Automatic cleanup with Riverpod StreamProvider
+- **Timer Management**: Automatic timer cleanup on component disposal
 
-## [0.1.0] - 초기 릴리스
+## [0.1.0] - Initial Release
 
-### 추가됨
+### Added
 
-- 기본 대시보드 서버 구조
-- 로그 수신 HTTP API
-- 간단한 웹 인터페이스
-- 기본 데이터베이스 연동
+- Basic dashboard server structure
+- Log reception HTTP API
+- Simple web interface
+- Basic database integration

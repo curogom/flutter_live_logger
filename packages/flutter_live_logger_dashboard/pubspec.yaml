@@ -1,6 +1,6 @@
 name: flutter_live_logger_dashboard
 description: Web dashboard for Flutter Live Logger - Real-time log monitoring and analytics
-version: 0.2.0
+version: 0.2.0+1
 # publish_to: none # pub.dev 배포 활성화
 homepage: https://curogom.dev
 repository: https://github.com/curogom/flutter_live_logger
@@ -18,29 +18,30 @@ dependencies:
   
   # 웹 서버
   shelf: ^1.4.0
-  shelf_web_socket: ^1.0.4
+  shelf_web_socket: ^3.0.0
   shelf_cors_headers: ^0.1.5
   
   # UI 컴포넌트
   flutter_riverpod: ^2.4.9
   data_table_2: ^2.5.0
-  fl_chart: ^0.68.0
+  fl_chart: ^1.0.0
   
   # 데이터베이스
-  drift: ^2.13.2
+  drift: ^2.27.0
   sqlite3_flutter_libs: ^0.5.0
   
   # 웹소켓 클라이언트
-  web_socket_channel: ^2.4.0
+  web_socket_channel: ^3.0.3
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^3.0.0
-  drift_dev: ^2.13.2
-  build_runner: ^2.4.7
+  drift_dev: ^2.27.0
+  build_runner: ^2.4.12
   mockito: ^5.4.2
   build_test: ^2.1.7
+  http: ^1.2.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

@@ -1,6 +1,9 @@
-/// Flutter Live Logger - Filter Widget
+/// Flutter Live Logger Dashboard - Filter Widget
 ///
-/// Filtering and search widget for log entries.
+/// Filter controls for log level, time range, search queries and other
+/// filtering options in the dashboard interface.
+
+library flutter_live_logger_dashboard_filter;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

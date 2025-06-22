@@ -2,6 +2,8 @@
 ///
 /// Analytics and insights widget.
 
+library flutter_live_logger_dashboard_analytics;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fl_chart/fl_chart.dart';
