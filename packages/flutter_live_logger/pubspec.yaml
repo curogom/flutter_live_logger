@@ -1,6 +1,6 @@
 name: flutter_live_logger
 description: High-performance real-time logging solution for Flutter applications
-version: 0.2.0
+version: 0.2.0+1
 
 # Repository and documentation links
 homepage: https://github.com/curogom/flutter_live_logger

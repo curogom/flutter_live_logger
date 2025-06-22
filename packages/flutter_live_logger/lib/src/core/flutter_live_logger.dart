@@ -15,7 +15,6 @@ import 'package:flutter_live_logger/src/transport/log_transport.dart';
 class FlutterLiveLogger {
   FlutterLiveLogger._();
 
-  static FlutterLiveLogger? _instance;
   static LoggerConfig? _config;
   static List<LogTransport>? _transports;
   static LogStorage? _storage;
@@ -32,7 +31,6 @@ class FlutterLiveLogger {
   /// Initialize the logger with the given configuration
   static Future<void> init({required LoggerConfig config}) async {
     _config = config;
-    _instance = FlutterLiveLogger._();
     _transports = config.effectiveTransports;
     _storage = config.effectiveStorage;
     _isDisposed = false;
@@ -225,19 +223,6 @@ class FlutterLiveLogger {
     }
   }
 
-  /// Send batch to a specific transport with error handling (legacy)
-  static Future<void> _sendToTransport(
-    LogTransport transport,
-    List<LogEntry> batch,
-  ) async {
-    try {
-      await transport.send(batch);
-    } catch (e) {
-      // Performance optimization: Silent failure for individual transports
-      // This prevents one failing transport from affecting others
-    }
-  }
-
   /// Manually flush all pending entries
   static Future<void> flush() async {
     if (_isDisposed || !_isInitialized) return;
@@ -319,7 +304,6 @@ class FlutterLiveLogger {
     }
 
     // Clear state
-    _instance = null;
     _config = null;
     _transports = null;
     _storage = null;

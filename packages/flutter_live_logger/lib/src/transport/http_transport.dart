@@ -17,9 +17,8 @@
 library flutter_live_logger_http_transport;
 
 import 'dart:convert';
-import 'dart:io' show gzip, Platform;
+import 'dart:io' show gzip;
 import 'dart:async';
-import 'dart:typed_data';
 
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;

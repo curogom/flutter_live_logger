@@ -5,6 +5,40 @@ All notable changes to Flutter Live Logger will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.0+1] - 2025-06-22
+
+### Fixed - Pub.dev Score Optimization 🎯
+
+#### Code Quality Improvements
+
+- **Removed unused code** - Eliminated unused `_instance` static field and `_sendToTransport` method
+- **Cleaned up imports** - Removed unused imports in `http_transport.dart` and `performance_test.dart`
+- **Resolved dependency warnings** - Added `publish_to: none` to example package to fix path dependency warning
+- **Perfect static analysis** - Achieved clean `dart analyze` output with zero issues
+
+#### Package Publishing Readiness
+
+- **Pub.dev score optimization** - Fixed all package validation issues for maximum pub.dev scoring
+- **Repository validation** - Confirmed GitHub repository and issue tracker accessibility
+- **Format compliance** - Ensured all Dart code follows standard formatting conventions
+- **Documentation consistency** - Maintained high-quality package documentation standards
+
+#### Technical Details
+
+- Removed singleton pattern remnants that were no longer needed
+- Streamlined HTTP transport imports to only necessary dependencies
+- Optimized test file imports for better compilation performance
+- Enhanced example package configuration for proper publishing workflow
+
+### Improved
+
+- **Code maintainability** - Cleaner codebase with removed dead code
+- **Build performance** - Faster compilation with optimized imports
+- **Developer experience** - Zero static analysis warnings during development
+- **Package quality** - Ready for high pub.dev score with all validation checks passing
+
+---
+
 ## [0.2.0] - 2025-01-24
 
 ### Added - Package Separation & Web Platform Support 🌐

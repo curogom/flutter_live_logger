@@ -1,6 +1,8 @@
 name: flutter_live_logger_example
 description: A simple example app for Flutter Live Logger
 
+publish_to: none
+
 version: 1.0.0+1
 
 environment:
