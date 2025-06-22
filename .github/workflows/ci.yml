@@ -116,8 +116,9 @@ jobs:
           echo "📖 Checking dashboard package documentation..."
           
           required_docs=(
+            "README.md"
             "README.ko.md"
-            "CHANGELOG.ko.md"
+            "CHANGELOG.md"
             "LICENSE"
           )
           
