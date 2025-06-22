@@ -47,6 +47,17 @@ dev_dependencies:
 
 This ensures the dashboard is only available during development and testing phases.
 
+**Bug Fixes:**
+
+- Fixed `fl_chart` version compatibility issue by downgrading from 1.0.0 to 0.68.0
+- Resolved Dart SDK version conflicts (now compatible with Dart 3.3.4+)
+- Fixed dependency resolution failures in CI/CD environments
+
+**Compatibility:**
+
+- Now fully compatible with Flutter 3.19.x and Dart 3.3.4+
+- Maintained backward compatibility with existing functionality
+
 ## [0.2.0] - 2025-01-22
 
 ### Added
