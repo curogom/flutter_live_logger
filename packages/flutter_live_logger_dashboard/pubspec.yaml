@@ -27,7 +27,7 @@ dependencies:
   fl_chart: ^1.0.0
   
   # 데이터베이스
-  drift: ^2.27.0
+  drift: ^2.22.0
   sqlite3_flutter_libs: ^0.5.0
   
   # 웹소켓 클라이언트
@@ -37,7 +37,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^3.0.0
-  drift_dev: ^2.27.0
+  drift_dev: ^2.22.0
   build_runner: ^2.4.12
   mockito: ^5.4.2
   build_test: ^2.1.7
