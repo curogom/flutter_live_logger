@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
 
 env:
-  FLUTTER_VERSION: '3.16.x'
+  FLUTTER_VERSION: '3.19.x'
 
 jobs:
   # 프로젝트 구조 검증
