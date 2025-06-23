@@ -6,8 +6,8 @@ homepage: https://curogom.dev
 repository: https://github.com/curogom/flutter_live_logger
 
 environment:
-  sdk: '>=3.3.0 <4.0.0'
-  flutter: ">=3.19.0"
+  sdk: '>=3.6.0 <4.0.0'
+  flutter: ">=3.24.0"
 
 dependencies:
   flutter:
@@ -24,7 +24,7 @@ dependencies:
   # UI 컴포넌트
   flutter_riverpod: ^2.4.9
   data_table_2: ^2.5.0
-  fl_chart: ^0.68.0
+  fl_chart: ^1.0.0
   
   # 데이터베이스
   drift: ^2.22.0
