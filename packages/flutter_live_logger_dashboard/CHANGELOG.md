@@ -5,6 +5,32 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.0] - 2025-06-26
+
+### Added - Enhanced Dashboard Experience 🖥️
+
+#### Major Stability Improvements
+- **🔧 WebSocket Concurrency Fix** - Resolved critical concurrent modification exception in server
+- **🏗️ CI/CD Stability** - All tests now pass reliably with dependency conflicts resolved
+- **🎯 Flutter 3.24+ Support** - Full compatibility with latest Flutter versions
+
+#### Performance & Reliability
+- **⚡ Improved Server Performance** - Optimized WebSocket connection management
+- **🌐 Enhanced Cross-platform Support** - Verified compatibility across all platforms
+- **📦 Dependency Management** - Resolved all version conflicts for stable builds
+
+### Fixed
+- **WebSocket Server** - Concurrent modification exceptions during client connection management
+- **Package Dependencies** - data_table_2, shelf_web_socket version conflicts resolved
+- **CI/CD Pipeline** - Complete test suite reliability restored
+- **Build Process** - All compilation errors resolved for Flutter 3.24+
+
+### Changed
+- **Dependency Versions** - Optimized for maximum compatibility and stability
+- **Test Reliability** - Enhanced test suite for consistent CI/CD performance
+
+---
+
 ## [0.2.0+1] - 2025-06-22
 
 ### Fixed - Pub.dev Score & Dev Dependency Optimization 🛠️

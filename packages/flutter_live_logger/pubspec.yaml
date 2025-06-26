@@ -1,6 +1,6 @@
 name: flutter_live_logger
 description: Production-ready real-time logging for Flutter with offline support, performance monitoring, and dashboard UI. Features 400K+ logs/sec throughput.
-version: 0.2.0+1
+version: 0.3.0
 
 # Repository and documentation links
 homepage: https://github.com/curogom/flutter_live_logger

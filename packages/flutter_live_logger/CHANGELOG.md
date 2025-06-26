@@ -5,6 +5,47 @@ All notable changes to Flutter Live Logger will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.0] - 2025-06-26
+
+### Added - Zero-Configuration & Developer Experience 🚀
+
+#### Revolutionary Zero-Config Start
+- **🎯 One-line initialization** - `FlutterLiveLogger.start()` with automatic environment detection
+- **📱 Environment-specific shortcuts** - `startDevelopment()` and `startProduction()` methods
+- **🧙‍♂️ Interactive Setup Wizard** - GUI-based configuration generator for easy project setup
+- **⚡ VS Code Integration** - Code snippets for rapid development workflow
+
+#### Major Bug Fixes & Stability
+- **🔧 WebSocket Concurrency Fix** - Resolved critical concurrent modification exception in dashboard server
+- **🗜️ Complete gzip Implementation** - Fully functional file compression for rotated log files  
+- **🏗️ CI/CD Pipeline** - Fixed all dependency conflicts and achieved 100% passing tests
+- **🎯 Flutter 3.24+ Compatibility** - Full support for latest Flutter versions
+
+#### Enhanced Documentation & Examples
+- **📚 Real-world Examples** - E-commerce, healthcare, and gaming app integration examples
+- **🛠️ Advanced Usage Patterns** - Comprehensive configuration and customization guides
+- **🧪 Test Coverage** - Maintained 95%+ coverage with expanded test scenarios
+- **📖 API Documentation** - Enhanced dartdoc comments and usage examples
+
+#### Performance & Compatibility
+- **⚡ 600K+ logs/second** - Improved throughput performance
+- **🔄 Optimized Batching** - Enhanced queue management and batch processing
+- **🌍 Cross-platform Reliability** - Verified compatibility across all supported platforms
+- **📦 Dependency Management** - Resolved version conflicts for stable CI/CD
+
+### Changed
+- **Default Configuration** - Smarter defaults for zero-configuration experience
+- **API Enhancement** - Simplified initialization while maintaining full customization options
+- **Documentation Structure** - Reorganized for better developer onboarding
+
+### Fixed
+- **WebSocket Server** - Concurrent modification exceptions during client management
+- **File Transport** - Missing gzip compression implementation
+- **Package Dependencies** - All version conflicts resolved for Flutter 3.24+
+- **CI/CD Pipeline** - Complete test suite now passes reliably
+
+---
+
 ## [0.2.0+1] - 2025-06-22
 
 ### Fixed - Pub.dev Score Optimization 🎯

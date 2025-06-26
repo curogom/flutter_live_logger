@@ -1,6 +1,6 @@
 name: flutter_live_logger_dashboard
 description: Web dashboard for Flutter Live Logger - Real-time log monitoring and analytics
-version: 0.2.0+1
+version: 0.3.0
 # publish_to: none # pub.dev 배포 활성화
 homepage: https://curogom.dev
 repository: https://github.com/curogom/flutter_live_logger
