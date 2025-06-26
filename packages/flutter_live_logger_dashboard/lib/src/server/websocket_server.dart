@@ -52,7 +52,7 @@ class WebSocketServer {
   Future<void> stop() async {
     // Create a copy of clients to avoid concurrent modification
     final clientsCopy = Map<String, _WebSocketClient>.from(_clients);
-    
+
     // Close all client connections
     for (final client in clientsCopy.values) {
       await client.close();
@@ -85,7 +85,7 @@ class WebSocketServer {
 
     // Create a copy of clients to avoid concurrent modification
     final clientsCopy = Map<String, _WebSocketClient>.from(_clients);
-    
+
     // Broadcast to all connected clients with filtering
     final futures = <Future>[];
     for (final client in clientsCopy.values) {
