@@ -1,0 +1,50 @@
+{
+  "Flutter Live Logger - Quick Start": {
+    "prefix": "fll-start",
+    "body": [
+      "await FlutterLiveLogger.start();"
+    ],
+    "description": "Initialize Flutter Live Logger with auto-configuration"
+  },
+  
+  "Flutter Live Logger - Log Info": {
+    "prefix": "fll-info",
+    "body": [
+      "FlutterLiveLogger.info('${1:message}');"
+    ],
+    "description": "Log an info message"
+  },
+  
+  "Flutter Live Logger - Log Error": {
+    "prefix": "fll-error",
+    "body": [
+      "FlutterLiveLogger.error('${1:message}', error: ${2:error}, stackTrace: ${3:stackTrace});"
+    ],
+    "description": "Log an error with details"
+  },
+  
+  "Flutter Live Logger - Log Event": {
+    "prefix": "fll-event",
+    "body": [
+      "FlutterLiveLogger.event('${1:event_name}', {",
+      "  '${2:key}': ${3:value},",
+      "});"
+    ],
+    "description": "Log a custom event"
+  },
+  
+  "Flutter Live Logger - Try Catch": {
+    "prefix": "fll-try",
+    "body": [
+      "try {",
+      "  ${1:// Your code here}",
+      "} catch (error, stackTrace) {",
+      "  FlutterLiveLogger.error('${2:Operation failed}', ",
+      "    error: error, ",
+      "    stackTrace: stackTrace",
+      "  );",
+      "}"
+    ],
+    "description": "Try-catch block with automatic error logging"
+  }
+}

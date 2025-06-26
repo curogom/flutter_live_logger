@@ -28,6 +28,24 @@ class FlutterLiveLogger {
   static LogLevel? _cachedLogLevel;
   static bool _isInitialized = false;
 
+  /// Quick start with automatic configuration
+  static Future<void> start() async {
+    await init(config: LoggerConfig.development());
+  }
+
+  /// Start with development configuration
+  static Future<void> startDevelopment() async {
+    await init(config: LoggerConfig.development());
+  }
+
+  /// Start with production configuration  
+  static Future<void> startProduction() async {
+    await init(config: LoggerConfig.production(
+      userId: null,
+      sessionId: null,
+    ));
+  }
+
   /// Initialize the logger with the given configuration
   static Future<void> init({required LoggerConfig config}) async {
     _config = config;

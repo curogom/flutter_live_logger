@@ -55,8 +55,9 @@ This ensures the dashboard is only available during development and testing phas
 
 **Compatibility:**
 
-- Now fully compatible with Flutter 3.19.x and Dart 3.3.4+
-- Maintained backward compatibility with existing functionality
+- Minimum Flutter version: 3.22.0 (balanced modern features with broad compatibility)
+- Minimum Dart SDK version: 3.5.0 (supports current development environments)
+- Works with Flutter 3.22+ and Dart 3.5+
 
 **Breaking Changes:**
 
@@ -68,13 +69,13 @@ This ensures the dashboard is only available during development and testing phas
 - Updated to latest library versions for better performance and features:
   - `fl_chart` upgraded to ^1.0.0 (latest chart library with new features)
   - `shelf_web_socket` upgraded to ^3.0.0 (improved WebSocket performance)
-  - Full compatibility with latest Flutter/Dart ecosystem
+  - Full compatibility with modern Flutter/Dart ecosystem
 
 **Rationale:**
 
-- Dashboard is a development tool - supporting latest Flutter ensures access to newest features
+- Dashboard is a development tool supporting current Flutter versions
 - Better pub.dev scores with up-to-date dependencies
-- Future-proof architecture for ongoing development
+- Balanced approach between modern features and compatibility
 
 **Migration Guide:**
 

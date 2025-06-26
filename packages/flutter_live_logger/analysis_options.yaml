@@ -1,0 +1,29 @@
+include: package:flutter_lints/flutter.yaml
+
+linter:
+  rules:
+    - public_member_api_docs
+    - prefer_single_quotes
+    - avoid_print
+    - avoid_unnecessary_containers
+    - prefer_const_constructors
+    - prefer_const_constructors_in_immutables
+    - sized_box_for_whitespace
+    - use_key_in_widget_constructors
+    - avoid_redundant_argument_values
+    - always_declare_return_types
+    - prefer_final_fields
+    - require_trailing_commas
+
+analyzer:
+  exclude:
+    - "**/*.g.dart"
+    - "**/*.freezed.dart"
+  errors:
+    missing_required_param: error
+    missing_return: error
+    todo: info
+  language:
+    strict-casts: true
+    strict-inference: true
+    strict-raw-types: true

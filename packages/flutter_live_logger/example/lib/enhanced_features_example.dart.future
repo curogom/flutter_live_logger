@@ -1,0 +1,244 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_live_logger/flutter_live_logger.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  
+  // 1. 기본 시작
+  await FlutterLiveLogger.start();
+  
+  // 2. DevTools 통합 활성화
+  await FlutterLiveLoggerDevToolsExtension.initialize();
+  
+  // 3. 알림 시스템 설정
+  _setupAlerts();
+  
+  // 4. 성능 모니터링 활성화
+  PerformanceMonitor.instance.enableAutoReporting();
+  
+  // 5. 플러그인 등록
+  await _registerPlugins();
+  
+  runApp(MyApp());
+}
+
+void _setupAlerts() {
+  // 에러율 알림
+  AlertSystem.instance.addRule(
+    AlertRule(
+      id: 'high-error-rate',
+      name: '높은 에러율 감지',
+      trigger: AlertTrigger.errorRate,
+      conditions: {'rate': 10.0}, // 분당 10개 이상
+      channels: [AlertChannel.console, AlertChannel.inApp],
+    ),
+  );
+  
+  // 특정 키워드 알림
+  AlertSystem.instance.addRule(
+    AlertRule(
+      id: 'critical-keyword',
+      name: '심각한 오류 감지',
+      trigger: AlertTrigger.keyword,
+      conditions: {'keyword': 'OutOfMemory'},
+      channels: [AlertChannel.console, AlertChannel.webhook],
+    ),
+  );
+  
+  // 성능 임계값 알림
+  AlertSystem.instance.addRule(
+    AlertRule(
+      id: 'slow-response',
+      name: '느린 응답 시간',
+      trigger: AlertTrigger.threshold,
+      conditions: {'metric': 'responseTime', 'value': 3000}, // 3초 이상
+      channels: [AlertChannel.console],
+    ),
+  );
+}
+
+Future<void> _registerPlugins() async {
+  // 메타데이터 추가 플러그인
+  await PluginManager.instance.register(
+    MetadataPlugin(
+      metadataProvider: () => {
+        'deviceModel': 'iPhone 14',
+        'osVersion': 'iOS 16.0',
+        'appVersion': '1.0.0',
+        'buildNumber': '100',
+      },
+    ),
+  );
+  
+  // 민감 데이터 제거 플러그인
+  await PluginManager.instance.register(
+    DataSanitizerPlugin(
+      sensitiveKeys: ['password', 'apiKey', 'creditCard'],
+    ),
+  );
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: '향상된 기능 예제',
+      theme: ThemeData(primarySwatch: Colors.blue),
+      home: EnhancedFeaturesDemo(),
+    );
+  }
+}
+
+class EnhancedFeaturesDemo extends StatefulWidget {
+  @override
+  _EnhancedFeaturesDemoState createState() => _EnhancedFeaturesDemoState();
+}
+
+class _EnhancedFeaturesDemoState extends State<EnhancedFeaturesDemo> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Flutter Live Logger - 향상된 기능'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.analytics),
+            onPressed: _showPerformanceReport,
+          ),
+        ],
+      ),
+      body: ListView(
+        padding: EdgeInsets.all(16),
+        children: [
+          _buildSection(
+            '성능 측정',
+            'API 호출 시간을 자동으로 측정합니다',
+            ElevatedButton(
+              onPressed: _performApiCall,
+              child: Text('API 호출 시뮬레이션'),
+            ),
+          ),
+          _buildSection(
+            '에러 알림',
+            '많은 에러가 발생하면 자동으로 알림을 받습니다',
+            ElevatedButton(
+              onPressed: _generateErrors,
+              child: Text('에러 생성 (알림 테스트)'),
+            ),
+          ),
+          _buildSection(
+            '민감 데이터 보호',
+            '비밀번호나 API 키가 자동으로 제거됩니다',
+            ElevatedButton(
+              onPressed: _logSensitiveData,
+              child: Text('민감 데이터 로깅 테스트'),
+            ),
+          ),
+          _buildSection(
+            'DevTools 통합',
+            'Flutter DevTools에서 로그를 확인할 수 있습니다',
+            ElevatedButton(
+              onPressed: _logToDevTools,
+              child: Text('DevTools로 로그 전송'),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+  
+  Widget _buildSection(String title, String description, Widget action) {
+    return Card(
+      margin: EdgeInsets.only(bottom: 16),
+      child: Padding(
+        padding: EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(title, style: Theme.of(context).textTheme.titleLarge),
+            SizedBox(height: 8),
+            Text(description, style: TextStyle(color: Colors.grey[600])),
+            SizedBox(height: 16),
+            action,
+          ],
+        ),
+      ),
+    );
+  }
+  
+  Future<void> _performApiCall() async {
+    // 성능 측정과 함께 로깅
+    await PerformanceAwareLogger.measureAsyncLogOperation(
+      'api-call',
+      () async {
+        FlutterLiveLogger.info('API 호출 시작');
+        
+        // API 호출 시뮬레이션
+        await Future.delayed(Duration(milliseconds: 500));
+        
+        FlutterLiveLogger.info('API 호출 완료', data: {
+          'responseTime': 500,
+          'statusCode': 200,
+        });
+      },
+    );
+  }
+  
+  void _generateErrors() {
+    // 알림을 트리거하기 위해 여러 에러 생성
+    for (int i = 0; i < 15; i++) {
+      FlutterLiveLogger.error('테스트 에러 #$i', 
+        error: Exception('시뮬레이션된 에러'));
+    }
+  }
+  
+  void _logSensitiveData() {
+    // 민감 데이터가 자동으로 제거됨
+    FlutterLiveLogger.info('사용자 로그인', data: {
+      'username': 'john_doe',
+      'password': 'secret123', // 자동으로 [REDACTED]로 변경됨
+      'apiKey': 'sk-1234567890', // 자동으로 [REDACTED]로 변경됨
+      'sessionId': 'abc123', // 안전한 데이터는 그대로
+    });
+  }
+  
+  void _logToDevTools() {
+    // DevTools에서 확인 가능한 로그
+    FlutterLiveLogger.debug('DevTools 테스트 로그');
+    FlutterLiveLogger.info('정보 레벨 로그', data: {'source': 'demo'});
+    FlutterLiveLogger.warn('경고 레벨 로그');
+    FlutterLiveLogger.error('에러 레벨 로그');
+  }
+  
+  void _showPerformanceReport() {
+    final report = PerformanceMonitor.instance.getReport();
+    
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('성능 리포트'),
+        content: SingleChildScrollView(
+          child: Text(
+            report,
+            style: TextStyle(fontFamily: 'monospace', fontSize: 12),
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: Text('닫기'),
+          ),
+        ],
+      ),
+    );
+  }
+  
+  @override
+  void dispose() {
+    // 정리
+    AlertSystem.instance.removeRule('high-error-rate');
+    AlertSystem.instance.removeRule('critical-keyword');
+    AlertSystem.instance.removeRule('slow-response');
+    super.dispose();
+  }
+}

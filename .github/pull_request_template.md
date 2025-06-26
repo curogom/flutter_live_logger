@@ -1,38 +1,65 @@
-## 📝 설명 / Description
-<!-- 이 PR이 무엇을 하는지 간단히 설명해주세요 -->
-<!-- Please include a summary of the change and which issue is fixed -->
+## 📋 PR Checklist
 
-Fixes #(issue)
+### 변경 사항 유형
+- [ ] 🐛 Bug fix (기존 기능을 수정하는 변경)
+- [ ] ✨ New feature (새로운 기능을 추가하는 변경)
+- [ ] 💥 Breaking change (기존 API를 변경하는 변경)
+- [ ] 📚 Documentation (문서만 변경)
+- [ ] 🎨 Code style (포맷, 세미콜론 누락 등, 기능 변경 없음)
+- [ ] ♻️ Refactoring (기능 변경 없는 코드 개선)
+- [ ] ⚡ Performance (성능 개선)
+- [ ] ✅ Test (테스트 추가 또는 수정)
+- [ ] 🔧 Chore (빌드 프로세스, 도구 설정 등)
 
-## 🔄 변경 유형 / Type of Change
-<!-- 해당하는 항목에 체크해주세요 -->
-<!-- Please check the relevant option -->
+### 📝 변경 사항 설명
 
-- [ ] 🐛 버그 수정 / Bug fix (non-breaking change which fixes an issue)
-- [ ] ✨ 새 기능 / New feature (non-breaking change which adds functionality)
-- [ ] 💥 호환성 깨는 변경 / Breaking change (fix or feature that would cause existing functionality to not work as expected)
-- [ ] 📚 문서 업데이트 / Documentation update
-- [ ] 🔧 리팩토링 / Code refactoring
-- [ ] ✅ 테스트 추가/수정 / Test addition/modification
-- [ ] 🎨 스타일/포맷팅 / Style/formatting
+#### 무엇을 변경했나요?
+<!-- 변경 사항을 명확하게 설명해주세요 -->
 
-## ✔️ 체크리스트 / Checklist
-<!-- PR을 제출하기 전에 다음 사항을 확인해주세요 -->
-<!-- Before submitting your PR, please review the following checklist -->
+#### 왜 이 변경이 필요한가요?
+<!-- 이슈 링크나 변경의 동기를 설명해주세요 -->
+Fixes #(이슈 번호)
 
-- [ ] 내 코드는 이 프로젝트의 코드 스타일을 따릅니다 / My code follows the code style of this project
-- [ ] 셀프 리뷰를 수행했습니다 / I have performed a self-review of my own code
-- [ ] 코드에 주석을 달았습니다 (특히 이해하기 어려운 부분) / I have commented my code, particularly in hard-to-understand areas
-- [ ] 문서를 업데이트했습니다 / I have made corresponding changes to the documentation
-- [ ] 내 변경사항이 새로운 경고를 생성하지 않습니다 / My changes generate no new warnings
-- [ ] 새로운 테스트를 추가했고 통과합니다 / I have added tests that prove my fix is effective or that my feature works
-- [ ] 기존 및 새로운 단위 테스트가 로컬에서 통과합니다 / New and existing unit tests pass locally with my changes
-- [ ] 의존성 변경사항이 있다면 업데이트했습니다 / Any dependent changes have been merged and published
+#### 어떻게 테스트했나요?
+<!-- 변경 사항이 올바르게 작동하는지 확인한 방법을 설명해주세요 -->
 
-## 📸 스크린샷 / Screenshots (if applicable)
-<!-- UI 변경사항이 있다면 스크린샷을 첨부해주세요 -->
-<!-- If there are UI changes, please attach screenshots -->
+### 🧪 테스트
 
-## 📋 추가 정보 / Additional Notes
-<!-- 리뷰어가 알아야 할 추가 정보가 있다면 작성해주세요 -->
-<!-- Any additional information that reviewers should know -->
+- [ ] 기존 테스트가 모두 통과합니다
+- [ ] 새로운 기능에 대한 테스트를 추가했습니다
+- [ ] 테스트 커버리지가 95% 이상을 유지합니다
+- [ ] 수동 테스트를 수행했습니다
+
+### 📖 문서
+
+- [ ] README.md를 업데이트했습니다 (필요한 경우)
+- [ ] API 문서를 업데이트했습니다 (필요한 경우)
+- [ ] CHANGELOG.md를 업데이트했습니다
+- [ ] dartdoc 주석을 추가/수정했습니다 (새 API의 경우)
+
+### 🔄 Breaking Changes
+
+- [ ] 이 PR에는 breaking change가 없습니다
+- [ ] breaking change가 있고 CHANGELOG.md에 문서화했습니다
+- [ ] 마이그레이션 가이드를 작성했습니다
+
+### 📱 플랫폼 테스트
+
+- [ ] Android에서 테스트했습니다
+- [ ] iOS에서 테스트했습니다  
+- [ ] Web에서 테스트했습니다
+- [ ] Desktop에서 테스트했습니다 (관련 변경 사항이 있는 경우)
+
+### 🎯 성능
+
+- [ ] 성능에 영향을 주지 않습니다
+- [ ] 성능 개선이 있습니다 (벤치마크 결과 첨부)
+- [ ] 성능에 약간의 영향이 있지만 정당화됩니다
+
+### 📸 스크린샷 (UI 변경 사항이 있는 경우)
+
+<!-- 변경 전후 스크린샷을 첨부해주세요 -->
+
+### 💬 추가 컨텍스트
+
+<!-- 리뷰어가 알아야 할 추가 정보가 있다면 여기에 작성해주세요 -->

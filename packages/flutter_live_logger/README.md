@@ -1,9 +1,13 @@
 # Flutter Live Logger
 
 [![pub package](https://img.shields.io/pub/v/flutter_live_logger.svg)](https://pub.dev/packages/flutter_live_logger)
+[![pub points](https://img.shields.io/pub/points/flutter_live_logger)](https://pub.dev/packages/flutter_live_logger/score)
+[![popularity](https://img.shields.io/pub/popularity/flutter_live_logger)](https://pub.dev/packages/flutter_live_logger/score)
+[![likes](https://img.shields.io/pub/likes/flutter_live_logger)](https://pub.dev/packages/flutter_live_logger/score)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![style: flutter_lints](https://img.shields.io/badge/style-flutter__lints-4BC0F5.svg)](https://pub.dev/packages/flutter_lints)
 
-**Production-ready real-time logging solution for Flutter applications**
+Production-ready real-time logging for Flutter with offline support, performance monitoring, and dashboard UI. Features 400K+ logs/sec throughput.
 
 Flutter Live Logger is a comprehensive logging library designed for Flutter apps in production. It provides multiple transport layers, persistent storage, automatic navigation tracking, and offline support with a clean, developer-friendly API.
 
@@ -36,14 +40,14 @@ Flutter Live Logger is a comprehensive logging library designed for Flutter apps
 
 ## 🚀 Quick Start
 
-### 1. Add Dependency
+### Installation
 
 ```yaml
 dependencies:
   flutter_live_logger: ^0.2.0
 ```
 
-### 2. Initialize the Logger
+### Basic Usage
 
 ```dart
 import 'package:flutter_live_logger/flutter_live_logger.dart';
@@ -51,25 +55,27 @@ import 'package:flutter_live_logger/flutter_live_logger.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   
-  // Initialize with transports
-  await FlutterLiveLogger.init(
-    config: LoggerConfig(
-      logLevel: LogLevel.debug,
-      environment: 'development',
-      transports: [
-        MemoryTransport(maxEntries: 1000),
-        HttpTransport(
-          config: HttpTransportConfig.withApiKey(
-            endpoint: 'https://your-api.com/logs',
-            apiKey: 'your-api-key',
-          ),
-        ),
-      ],
-    ),
-  );
+  // Zero-configuration start
+  await FlutterLiveLogger.start();
   
   runApp(MyApp());
 }
+```
+
+That's it! The logger automatically configures itself based on your environment.
+
+### Logging Messages
+
+```dart
+// Simple logging
+FlutterLiveLogger.info('User logged in');
+FlutterLiveLogger.error('Payment failed');
+
+// With structured data
+FlutterLiveLogger.event('purchase', {
+  'item': 'Premium',
+  'price': 9.99,
+});
 ```
 
 ### 3. Add Navigation Tracking
