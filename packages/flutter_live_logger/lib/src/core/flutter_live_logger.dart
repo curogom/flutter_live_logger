@@ -7,6 +7,7 @@ import 'package:flutter_live_logger/src/core/logger_config.dart';
 import 'package:flutter_live_logger/src/storage/sqlite_storage.dart';
 import 'package:flutter_live_logger/src/storage/storage_interface.dart';
 import 'package:flutter_live_logger/src/transport/log_transport.dart';
+import 'package:flutter_live_logger/src/transport/memory_transport.dart';
 
 /// Main Flutter Live Logger class
 ///
@@ -42,6 +43,7 @@ class FlutterLiveLogger {
   static Future<void> startProduction() async {
     await init(
         config: LoggerConfig.production(
+      transports: [MemoryTransport(maxEntries: 10000)],
       userId: null,
       sessionId: null,
     ));
