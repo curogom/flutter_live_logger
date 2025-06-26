@@ -9,12 +9,12 @@ class SetupWizard extends StatefulWidget {
 
 class _SetupWizardState extends State<SetupWizard> {
   int currentStep = 0;
-  
+
   // 사용자 선택사항
   bool isProduction = false;
   bool needsRemoteLogging = false;
   bool needsPersistence = false;
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,7 +63,8 @@ class _SetupWizardState extends State<SetupWizard> {
                   title: Text('서버로 로그 전송'),
                   subtitle: Text('API 엔드포인트가 필요합니다'),
                   value: needsRemoteLogging,
-                  onChanged: (value) => setState(() => needsRemoteLogging = value),
+                  onChanged: (value) =>
+                      setState(() => needsRemoteLogging = value),
                 ),
               ],
             ),
@@ -76,7 +77,8 @@ class _SetupWizardState extends State<SetupWizard> {
                   title: Text('로그 파일로 저장'),
                   subtitle: Text('오프라인에서도 로그 보관'),
                   value: needsPersistence,
-                  onChanged: (value) => setState(() => needsPersistence = value),
+                  onChanged: (value) =>
+                      setState(() => needsPersistence = value),
                 ),
               ],
             ),
@@ -85,11 +87,11 @@ class _SetupWizardState extends State<SetupWizard> {
       ),
     );
   }
-  
+
   void _completeSetup() {
     // 사용자 선택에 따른 코드 생성
     final code = _generateCode();
-    
+
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -118,24 +120,26 @@ class _SetupWizardState extends State<SetupWizard> {
       ),
     );
   }
-  
+
   String _generateCode() {
     if (!isProduction && !needsRemoteLogging && !needsPersistence) {
       return '''
 await FlutterLiveLogger.startDevelopment();''';
     }
-    
+
     final buffer = StringBuffer();
     buffer.writeln('await FlutterLiveLogger.init(');
     buffer.writeln('  config: LoggerConfig(');
-    buffer.writeln('    logLevel: LogLevel.${isProduction ? "info" : "debug"},');
-    buffer.writeln('    environment: "${isProduction ? "production" : "development"}",');
+    buffer
+        .writeln('    logLevel: LogLevel.${isProduction ? "info" : "debug"},');
+    buffer.writeln(
+        '    environment: "${isProduction ? "production" : "development"}",');
     buffer.writeln('    transports: [');
-    
+
     if (!isProduction) {
       buffer.writeln('      MemoryTransport(enableConsoleOutput: true),');
     }
-    
+
     if (needsRemoteLogging) {
       buffer.writeln('      HttpTransport(');
       buffer.writeln('        config: HttpTransportConfig(');
@@ -144,7 +148,7 @@ await FlutterLiveLogger.startDevelopment();''';
       buffer.writeln('        ),');
       buffer.writeln('      ),');
     }
-    
+
     if (needsPersistence) {
       buffer.writeln('      FileTransport(');
       buffer.writeln('        config: FileTransportConfig(');
@@ -152,11 +156,11 @@ await FlutterLiveLogger.startDevelopment();''';
       buffer.writeln('        ),');
       buffer.writeln('      ),');
     }
-    
+
     buffer.writeln('    ],');
     buffer.writeln('  ),');
     buffer.writeln(');');
-    
+
     return buffer.toString();
   }
 }

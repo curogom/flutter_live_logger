@@ -4,10 +4,10 @@ import 'package:flutter_live_logger/flutter_live_logger.dart';
 /// 가장 간단한 사용 예제
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  
+
   // 한 줄로 시작!
   await FlutterLiveLogger.start();
-  
+
   runApp(MyApp());
 }
 

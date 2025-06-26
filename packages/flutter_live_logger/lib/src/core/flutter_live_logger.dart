@@ -38,9 +38,10 @@ class FlutterLiveLogger {
     await init(config: LoggerConfig.development());
   }
 
-  /// Start with production configuration  
+  /// Start with production configuration
   static Future<void> startProduction() async {
-    await init(config: LoggerConfig.production(
+    await init(
+        config: LoggerConfig.production(
       userId: null,
       sessionId: null,
     ));

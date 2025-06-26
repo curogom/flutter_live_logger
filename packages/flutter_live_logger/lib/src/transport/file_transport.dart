@@ -244,21 +244,22 @@ class FileTransport extends LogTransport {
     if (files.length <= 1) return; // Keep current file uncompressed
 
     // Skip the current log file (first in list)
-    final filesToCompress = files.skip(1).where((file) => !file.path.endsWith('.gz'));
+    final filesToCompress =
+        files.skip(1).where((file) => !file.path.endsWith('.gz'));
 
     for (final file in filesToCompress) {
       try {
         // Read the original file
         final bytes = await file.readAsBytes();
-        
+
         // Create compressed file
         final compressedPath = '${file.path}.gz';
         final compressedFile = File(compressedPath);
-        
+
         // Write compressed data
         final compressedBytes = gzip.encode(bytes);
         await compressedFile.writeAsBytes(compressedBytes);
-        
+
         // Delete original file after successful compression
         await file.delete();
       } catch (e) {

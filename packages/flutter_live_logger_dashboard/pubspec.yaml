@@ -24,7 +24,7 @@ dependencies:
   # UI 컴포넌트
   flutter_riverpod: ^2.4.9
   data_table_2: ^2.5.0
-  fl_chart: ^1.0.0
+  fl_chart: ^0.69.0
   
   # 데이터베이스
   drift: ^2.22.0
